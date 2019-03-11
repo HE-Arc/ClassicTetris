@@ -11,43 +11,99 @@ namespace ClassicTetris
     /// </summary>
     class GameLogic
     {
-        //TODO Change int to
-        private Tuple<int, int> topLeftShape;
-        private int shape;
+        private struct ShapeGrid
+        {
+            public int shape;
+            public int[,] currentShape;
+            // i, j represent the top left corner of the piece
+            public int i;
+            public int j;
+            public ShapeGrid Clone()
+            {
+                ShapeGrid newShape;
+                newShape = this;
+                newShape.currentShape = currentShape.Clone();
+            }
+        }
+
+        //TODO Change int to;
+        private ShapeGrid currentShape;
 
         private int[,] landedShape;
 
+        /// <summary>
+        /// Trigger when a turn must be run
+        /// </summary>
+        public void Tick()
+        {
+            if (Down())
+            {
+                //Piece not down
+            }
+            else
+            {
+                //TODO prepare for next piece
+                //TODO Check end of game
+            }
+        }
 
         /// <summary>
         /// Turn the pieces
         /// </summary>
         public void Turn()
         {
+            //TODO turn currentShape
+            int[,] nextShape = null;
 
+            if(CanMove(nextShape, topLeftShape))
+            {
+                currentShape = nextShape;
+            }
         }
 
         /// <summary>
         /// Move the piece one column to the right
         /// </summary>
-        public void Right()
+        public bool Right()
         {
-            
+            ShapeGrid nextShape = currentShape.Clone();
+            nextShape.i++;
+            if (CanMove(nextShape))
+            {
+                currentShape = nextShape;
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
         /// Move the piece one column left
         /// </summary>
-        public void Left()
+        public bool Left()
         {
-
+            ShapeGrid nextShape = currentShape.Clone();
+            nextShape.i--;
+            if (CanMove(nextShape))
+            {
+                currentShape = nextShape;
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
         /// Move the pieces one line down
         /// </summary>
-        public void Down()
+        public bool Down()
         {
-
+            ShapeGrid nextShape = currentShape.Clone();
+            nextShape.j++;
+            if (CanMove(nextShape))
+            {
+                currentShape = nextShape;
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -55,7 +111,7 @@ namespace ClassicTetris
         /// </summary>
         public void Drop()
         {
-
+            while (Down()) { };
         }
 
         /// <summary>
@@ -73,7 +129,7 @@ namespace ClassicTetris
         /// <param name="nextPos"></param>
         /// <param name="shape"></param>
         /// <returns></returns>
-        private bool CanMove(int[,] nextShape, Tuple<int,int> topLeftCorner)
+        private bool CanMove(ShapeGrid shape)
         {
             //TODO Manage shape out of grid
             int n = nextShape.Length;
@@ -82,7 +138,10 @@ namespace ClassicTetris
             {
                 for (int j = 0; j < n; ++j)
                 {
-                    if (landedShape[topLeftCorner.Item1+i, topLeftCorner.Item2+j] > 0 && nextShape[i,j] > 0)
+                    if (shape.currentShape[i, j] > 0 &&
+                        i > 0 && i < Settings.WIDTH &&
+                        j > 0 && j < Settings.HEIGHT &&
+                        landedShape[shape.i+i, shape.j+j] > 0)
                     {
                         return false;
                     }
