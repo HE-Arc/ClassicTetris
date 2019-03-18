@@ -23,7 +23,7 @@ namespace ClassicTetris
 		///     d2&3 : grid of boolean, false == empty, true == in shape
         /// </summary>
 		public static readonly Dictionary<Shape, bool[,,]> rotations;
-
+        
 		static Tetromino()
 		{
 			rotations = new Dictionary<Shape, bool[,,]>();

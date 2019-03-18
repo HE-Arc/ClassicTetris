@@ -11,54 +11,111 @@ namespace ClassicTetris
     /// </summary>
     class GameLogic
     {
-        private struct ShapeGrid
-        {
-            public int shape;
-            public int[,] currentShape;
-            // i, j represent the top left corner of the piece
-            public int i;
-            public int j;
-            public ShapeGrid Clone()
-            {
-                ShapeGrid newShape;
-                newShape = this;
-                newShape.currentShape = currentShape.Clone();
-            }
-        }
-
         //TODO Change int to;
-        private ShapeGrid currentShape;
+        private Tetromino currentShape;
+        private Tetromino nextShape;
 
-        private int[,] landedShape;
+        private int[][] landedShape;
 
         /// <summary>
         /// Trigger when a turn must be run
         /// </summary>
         public void Tick()
         {
-            if (Down())
+            if (!Down())
             {
-                //Piece not down
+                //Merge shape to current grid
+                this.landedShape = GetGrid();
+
+                //Clear lines
+                ClearLines(currentShape.J);
+
+                //Change current shape
+                currentShape = nextShape;
+                
+                //Generate next shape
+                nextShape = Tetromino.Random(Settings.START_X, Settings.START_Y);
             }
             else
             {
-                //TODO prepare for next piece
-                //TODO Check end of game
+                //Tetromino not down Nothing to do
             }
+        }
+
+        /// <summary>
+        /// Remove all full lines
+        /// </summary>
+        /// <param name="startLine"></param>
+        /// <returns>Number of row removed</returns>
+        private int ClearLines(int startLine)
+        {
+            int nbRow = 4;   //check fourth row
+            int rowId = startLine + nbRow - 1;
+
+            int nbRowRemoved = 0;
+
+            while (nbRow > 0)
+            {
+                if (RowIsFull(rowId))
+                {
+                    //Move all content above one line below
+                    MoveDownAllRowAbove(rowId);
+                    ++nbRowRemoved;
+                }
+                else
+                {
+                    //Look at the row above
+                    --rowId;
+                }
+                --nbRow;
+            }
+            return nbRowRemoved;
+        }
+
+        /// <summary>
+        /// Move all rows above the given row one row below
+        /// The given rowId will be deleted
+        /// </summary>
+        /// <param name="rowId"></param>
+        private void MoveDownAllRowAbove(int rowId)
+        {
+            for(int i = rowId; i > 0; --i)
+            {
+                landedShape[i] = (int[])landedShape[i - 1].Clone();
+            }
+            landedShape[0] = new int[Settings.WIDTH];
+        }
+
+        /// <summary>
+        /// Check if a row is full
+        /// </summary>
+        /// <param name="row">Number of the row</param>
+        /// <returns>True is the row is full</returns>
+        private bool RowIsFull(int row)
+        {
+            for (int col = 0; col < landedShape.GetLength(1); ++col)
+            {
+                if (landedShape[row][col] == 0)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         /// <summary>
         /// Turn the pieces
         /// </summary>
-        public void Turn()
+        public bool Turn()
         {
             //TODO turn currentShape
-            int[,] nextShape = null;
-
-            if(CanMove(nextShape, topLeftShape))
+            Tetromino nextShape = currentShape.Turn();
+            if(CanMove(nextShape))
             {
                 currentShape = nextShape;
+                return true;
             }
+            return false;
         }
 
         /// <summary>
@@ -66,8 +123,7 @@ namespace ClassicTetris
         /// </summary>
         public bool Right()
         {
-            ShapeGrid nextShape = currentShape.Clone();
-            nextShape.i++;
+            Tetromino nextShape = currentShape.Right();
             if (CanMove(nextShape))
             {
                 currentShape = nextShape;
@@ -81,8 +137,7 @@ namespace ClassicTetris
         /// </summary>
         public bool Left()
         {
-            ShapeGrid nextShape = currentShape.Clone();
-            nextShape.i--;
+            Tetromino nextShape = currentShape.Left();
             if (CanMove(nextShape))
             {
                 currentShape = nextShape;
@@ -96,8 +151,7 @@ namespace ClassicTetris
         /// </summary>
         public bool Down()
         {
-            ShapeGrid nextShape = currentShape.Clone();
-            nextShape.j++;
+            Tetromino nextShape = currentShape.Clone();
             if (CanMove(nextShape))
             {
                 currentShape = nextShape;
@@ -114,13 +168,31 @@ namespace ClassicTetris
             while (Down()) { };
         }
 
+        static int[][] CopyArrayLinq(int[][] source)
+        {
+            return source.Select(s => s.ToArray()).ToArray();
+        }
+
         /// <summary>
         /// Return the grid
         /// </summary>
         /// <returns></returns>
-        public int[,] GetGrid()
+        public int[][] GetGrid()
         {
-            return null;
+            //TODO Concat landedShape with currentShape
+            int[,] shape = currentShape.Grid;
+            int[][] grid = CopyArrayLinq(landedShape);
+
+            int n = shape.Length;
+            for (int i = 0; i < n; ++i)
+            {
+                for (int j = 0; j < n; ++j)
+                {
+                    grid[currentShape.I + i][currentShape.J + j]
+                        = shape[currentShape.I +1][currentShape.J];
+                }
+            }
+            return grid;
         }
 
         /// <summary>
@@ -129,19 +201,18 @@ namespace ClassicTetris
         /// <param name="nextPos"></param>
         /// <param name="shape"></param>
         /// <returns></returns>
-        private bool CanMove(ShapeGrid shape)
+        private bool CanMove(Tetromino shape)
         {
-            //TODO Manage shape out of grid
-            int n = nextShape.Length;
+            int n = shape.Grid.Length;
             
             for(int i = 0; i < n; ++i)
             {
                 for (int j = 0; j < n; ++j)
                 {
-                    if (shape.currentShape[i, j] > 0 &&
-                        i > 0 && i < Settings.WIDTH &&
-                        j > 0 && j < Settings.HEIGHT &&
-                        landedShape[shape.i+i, shape.j+j] > 0)
+                    if (shape.Grid[i, j] > 0 && (
+                        shape.I + i < 0 || shape.I + i >= Settings.WIDTH ||
+                        shape.J + j < 0 || shape.J + j >= Settings.HEIGHT ||
+                        landedShape[shape.I+i][shape.I+j] > 0))
                     {
                         return false;
                     }
