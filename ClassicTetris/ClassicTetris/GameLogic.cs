@@ -25,10 +25,10 @@ namespace ClassicTetris
             if (!Down())
             {
                 //Merge shape to current grid
-                this.landedShape = GetGrid();
+                this.landedShape = MergeGridWithShape();
 
                 //Clear lines
-                ClearLines(currentShape.J);
+                ClearLines(currentShape.y);
 
                 //Change current shape
                 currentShape = nextShape;
@@ -109,7 +109,7 @@ namespace ClassicTetris
         public bool Turn()
         {
             //TODO turn currentShape
-            Tetromino nextShape = currentShape.Turn();
+            Tetromino nextShape = currentShape.Rotate();
             if(CanMove(nextShape))
             {
                 currentShape = nextShape;
@@ -151,7 +151,7 @@ namespace ClassicTetris
         /// </summary>
         public bool Down()
         {
-            Tetromino nextShape = currentShape.Clone();
+            Tetromino nextShape = currentShape.Down();
             if (CanMove(nextShape))
             {
                 currentShape = nextShape;
@@ -173,13 +173,8 @@ namespace ClassicTetris
             return source.Select(s => s.ToArray()).ToArray();
         }
 
-        /// <summary>
-        /// Return the grid
-        /// </summary>
-        /// <returns></returns>
-        public int[][] GetGrid()
+        private int[][] MergeGridWithShape()
         {
-            //TODO Concat landedShape with currentShape
             int[,] shape = currentShape.Grid;
             int[][] grid = CopyArrayLinq(landedShape);
 
@@ -188,12 +183,18 @@ namespace ClassicTetris
             {
                 for (int j = 0; j < n; ++j)
                 {
-                    grid[currentShape.I + i][currentShape.J + j]
-                        = shape[currentShape.I +1][currentShape.J];
+                    grid[currentShape.x + i][currentShape.y + j]
+                        = shape[currentShape.x, currentShape.y];
                 }
             }
             return grid;
         }
+
+        /// <summary>
+        /// Return the grid
+        /// </summary>
+        /// <returns></returns>
+        public int[][] GetGrid() => MergeGridWithShape();
 
         /// <summary>
         /// Return true if the move is valid
@@ -210,9 +211,9 @@ namespace ClassicTetris
                 for (int j = 0; j < n; ++j)
                 {
                     if (shape.Grid[i, j] > 0 && (
-                        shape.I + i < 0 || shape.I + i >= Settings.WIDTH ||
-                        shape.J + j < 0 || shape.J + j >= Settings.HEIGHT ||
-                        landedShape[shape.I+i][shape.I+j] > 0))
+                        shape.x + i < 0 || shape.x + i >= Settings.WIDTH ||
+                        shape.y + j < 0 || shape.y + j >= Settings.HEIGHT ||
+                        landedShape[shape.x+i][shape.y+j] > 0))
                     {
                         return false;
                     }
