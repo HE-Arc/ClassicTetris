@@ -20,8 +20,8 @@ namespace ClassicTetris
         /// <summary>
 		/// Key : Shape
 		/// Value :
-		///     d1 : Rotation
-		///     d2&3 : grid of boolean, Shape.None == empty, true == in shape
+		///     - first array : rotation
+		///     - second array : 2d grid with the pattern
         /// </summary>
 		private static readonly Dictionary<Shape, Shape[][,]> sequence = new Dictionary<Shape, Shape[][,]>();
         private static readonly Random random = new Random();
@@ -150,7 +150,7 @@ namespace ClassicTetris
                 {Shape.Z, Shape.Z, Shape.None},
                 {Shape.None, Shape.Z, Shape.Z}
             };
-			sequence[Shape.Z][0] = new Shape[,] {
+			sequence[Shape.Z][1] = new Shape[,] {
 				{Shape.None, Shape.None, Shape.Z},
                 {Shape.None, Shape.Z, Shape.Z},
                 {Shape.None, Shape.Z, Shape.None}
@@ -186,7 +186,7 @@ namespace ClassicTetris
 			get
 			{
 				Shape[][,] rotation = GetCurrentShapeSequence();
-				return rotation[this.sequenceIndex];            
+				return rotation[this.sequenceIndex];
 			}
 		}
 
