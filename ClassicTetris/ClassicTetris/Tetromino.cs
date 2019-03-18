@@ -6,11 +6,10 @@ namespace ClassicTetris
     public class Tetromino
     {
         #region Static
-
-        public enum Shape
-        {
+		public enum Shape
+		{
             None = 0,
-            I = 1,
+			I = 1,
             O = 2,
             J = 3,
             L = 4,
@@ -181,7 +180,7 @@ namespace ClassicTetris
         }
 
         #endregion
-
+        
         #region Attributes
         public readonly int x;
         public readonly int y;
