@@ -18,6 +18,8 @@ namespace ClassicTetris
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 1025;
+            graphics.PreferredBackBufferHeight = 895;
             Content.RootDirectory = "Content";
             isReadyToDraw = false;
         }
