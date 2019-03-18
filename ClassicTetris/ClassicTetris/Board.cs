@@ -7,15 +7,25 @@ using System.Threading.Tasks;
 namespace ClassicTetris
 {
     /// <summary>
-    /// Main class managing alf the logic of Tetris
+    /// Main class managing all the logic of Tetris
     /// </summary>
-    class GameLogic
+    class Board
     {
-        //TODO Change int to;
+        #region Attributes
         private Tetromino currentShape;
         private Tetromino nextShape;
 
         private int[][] landedShape;
+
+        #endregion
+
+        /// <summary>
+        /// Constructor of the board
+        /// </summary>
+        public Board()
+        {
+            //Nothing
+        }
 
         /// <summary>
         /// Trigger when a turn must be run

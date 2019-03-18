@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace ClassicTetris
 {
+    /// <summary>
+    /// Represent a Tetrominos
+    /// Those objects are immutable
+    /// </summary>
     public class Tetromino
     {
         #region Static
