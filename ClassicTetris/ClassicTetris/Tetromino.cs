@@ -198,11 +198,17 @@ namespace ClassicTetris
 			sequenceIndex = 0;
 		}
 
-        public void Rotate()
-		{
-			sequenceIndex += 1;
-			sequenceIndex %= GetCurrentShapeSequence().GetLength(0);
-		}
+		public void Rotate()
+        {
+            sequenceIndex += 1;
+            sequenceIndex %= GetCurrentShapeSequence().GetLength(0);
+        }
+
+		public void RotateCounterClockwise()
+        {
+            sequenceIndex -= 1;
+            sequenceIndex %= GetCurrentShapeSequence().GetLength(0);
+        }
 
 		private Shape[][,] GetCurrentShapeSequence()
 		{
