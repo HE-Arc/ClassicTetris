@@ -41,15 +41,23 @@ namespace ClassicTetris
         /// <summary>
         /// Trigger when a turn must be run
         /// </summary>
-        public void Tick()
+        /// <returns>Nb line removed - (-1) for Game Over</returns>
+        public int Tick()
         {
             if (!Down())
             {
+                // Detect Game Over
+                if(currentShape.y < 0)
+                {
+                    Console.WriteLine("Game Over !");
+                    return -1;
+                }
+
                 //Merge shape to current grid
                 this.landedShape = MergeGridWithShape();
 
                 //Clear lines
-                ClearLines(currentShape.y);
+                int nbLignesRemoved = ClearLines(currentShape.y);
 
                 //Change current shape
                 currentShape = nextShape;
@@ -61,6 +69,7 @@ namespace ClassicTetris
             {
                 //Tetromino not down Nothing to do
             }
+            return 0;
         }
 
         /// <summary>
@@ -68,7 +77,7 @@ namespace ClassicTetris
         /// </summary>
         public bool Turn()
         {
-            //TODO turn currentShape
+            //turn currentShape
             Tetromino nextShape = currentShape.Rotate();
             if(CanMove(nextShape))
             {
@@ -177,7 +186,7 @@ namespace ClassicTetris
             {
                 for (int j = 0; j < n; ++j)
                 {
-                    if(shape[i, j] > 0)
+                    if(shape[i, j] > 0 && currentShape.y + i >= 0)
                     {
                         grid[currentShape.y + i][currentShape.x + j]
                             = shape[i, j];
@@ -245,8 +254,8 @@ namespace ClassicTetris
             {
                 for (int j = 0; j < n; ++j)
                 {
-                    if (shape.Grid[i, j] > 0 && (
-                        shape.y + i < 0 || shape.y + i >= Settings.HEIGHT ||
+                    if (shape.Grid[i, j] > 0 && shape.y + i >= 0 && (
+                        shape.y + i >= Settings.HEIGHT ||
                         shape.x + j < 0 || shape.x + j >= Settings.WIDTH ||
                         landedShape[shape.y+i][shape.x+j] > 0))
                     {

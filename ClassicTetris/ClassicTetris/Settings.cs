@@ -11,8 +11,8 @@ namespace ClassicTetris
         public const int WIDTH = 10;
         public const int HEIGHT = 20;
 
-        public const int START_X = 0;
-        public const int START_Y = WIDTH / 2 - 2;
+        public const int START_X = WIDTH / 2 - 2;
+        public const int START_Y = -1;
 
 
         // HUD
