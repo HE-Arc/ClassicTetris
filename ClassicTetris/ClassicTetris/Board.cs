@@ -24,7 +24,18 @@ namespace ClassicTetris
         /// </summary>
         public Board()
         {
-            //Nothing
+            //Init grid
+            landedShape = new int[Settings.HEIGHT][];
+            for (int i = 0; i < landedShape.Length; i++)
+            {
+                landedShape[i] = new int[Settings.WIDTH];
+            }
+
+            //Create first shape
+            currentShape = Tetromino.Random(Settings.START_X, Settings.START_Y);
+
+            //Create next shape
+            nextShape = Tetromino.Random(Settings.START_X, Settings.START_Y);
         }
 
         /// <summary>
@@ -50,67 +61,6 @@ namespace ClassicTetris
             {
                 //Tetromino not down Nothing to do
             }
-        }
-
-        /// <summary>
-        /// Remove all full lines
-        /// </summary>
-        /// <param name="startLine"></param>
-        /// <returns>Number of row removed</returns>
-        private int ClearLines(int startLine)
-        {
-            int nbRow = 4;   //check fourth row
-            int rowId = startLine + nbRow - 1;
-
-            int nbRowRemoved = 0;
-
-            while (nbRow > 0)
-            {
-                if (RowIsFull(rowId))
-                {
-                    //Move all content above one line below
-                    MoveDownAllRowAbove(rowId);
-                    ++nbRowRemoved;
-                }
-                else
-                {
-                    //Look at the row above
-                    --rowId;
-                }
-                --nbRow;
-            }
-            return nbRowRemoved;
-        }
-
-        /// <summary>
-        /// Move all rows above the given row one row below
-        /// The given rowId will be deleted
-        /// </summary>
-        /// <param name="rowId"></param>
-        private void MoveDownAllRowAbove(int rowId)
-        {
-            for(int i = rowId; i > 0; --i)
-            {
-                landedShape[i] = (int[])landedShape[i - 1].Clone();
-            }
-            landedShape[0] = new int[Settings.WIDTH];
-        }
-
-        /// <summary>
-        /// Check if a row is full
-        /// </summary>
-        /// <param name="row">Number of the row</param>
-        /// <returns>True is the row is full</returns>
-        private bool RowIsFull(int row)
-        {
-            for (int col = 0; col < landedShape.GetLength(1); ++col)
-            {
-                if (landedShape[row][col] == 0)
-                {
-                    return false;
-                }
-            }
-            return true;
         }
 
         /// <summary>
@@ -178,11 +128,45 @@ namespace ClassicTetris
             while (Down()) { };
         }
 
-        static int[][] CopyArrayLinq(int[][] source)
+        /// <summary>
+        /// Return the grid
+        /// </summary>
+        /// <returns>The grid</returns>
+        public int[][] GetGrid() => MergeGridWithShape();
+
+        #region Private methods
+
+        /// <summary>
+        /// Check if a row is full
+        /// </summary>
+        /// <param name="row">Number of the row</param>
+        /// <returns>True is the row is full</returns>
+        private bool RowIsFull(int row)
+        {
+            for (int col = 0; col < landedShape.GetLength(1); ++col)
+            {
+                if (landedShape[row][col] == 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Function to clone a 2d array
+        /// </summary>
+        /// <param name="source">Clone of the 2d array</param>
+        /// <returns></returns>
+        private static int[][] CopyArrayLinq(int[][] source)
         {
             return source.Select(s => s.ToArray()).ToArray();
         }
 
+        /// <summary>
+        /// Merge the grid with the current shape
+        /// </summary>
+        /// <returns>Complete grid</returns>
         private int[][] MergeGridWithShape()
         {
             int[,] shape = currentShape.Grid;
@@ -201,10 +185,48 @@ namespace ClassicTetris
         }
 
         /// <summary>
-        /// Return the grid
+        /// Remove all full lines
         /// </summary>
-        /// <returns></returns>
-        public int[][] GetGrid() => MergeGridWithShape();
+        /// <param name="startLine"></param>
+        /// <returns>Number of row removed</returns>
+        private int ClearLines(int startLine)
+        {
+            int nbRow = 4;   //check fourth row
+            int rowId = startLine + nbRow - 1;
+
+            int nbRowRemoved = 0;
+
+            while (nbRow > 0)
+            {
+                if (RowIsFull(rowId))
+                {
+                    //Move all content above one line below
+                    MoveDownAllRowAbove(rowId);
+                    ++nbRowRemoved;
+                }
+                else
+                {
+                    //Look at the row above
+                    --rowId;
+                }
+                --nbRow;
+            }
+            return nbRowRemoved;
+        }
+
+        /// <summary>
+        /// Move all rows above the given row one row below
+        /// The given rowId will be deleted
+        /// </summary>
+        /// <param name="rowId"></param>
+        private void MoveDownAllRowAbove(int rowId)
+        {
+            for (int i = rowId; i > 0; --i)
+            {
+                landedShape[i] = (int[])landedShape[i - 1].Clone();
+            }
+            landedShape[0] = new int[Settings.WIDTH];
+        }
 
         /// <summary>
         /// Return true if the move is valid
@@ -231,5 +253,7 @@ namespace ClassicTetris
             }
             return true;
         }
+
+        #endregion
     }
 }
