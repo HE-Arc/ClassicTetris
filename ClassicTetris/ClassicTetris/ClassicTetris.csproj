@@ -49,6 +49,7 @@
     <Compile Include="Tetromino.cs" />
     <Compile Include="GameLogic.cs" />
     <Compile Include="Inputs\Actions.cs" />
+    <Compile Include="Inputs\Action.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

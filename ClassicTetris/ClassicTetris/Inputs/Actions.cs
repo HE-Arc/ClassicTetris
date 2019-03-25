@@ -6,25 +6,37 @@ namespace ClassicTetris
 {
     public class Actions
     {
-        private Actions Instance = null;
 
-        public readonly Dictionary<Action, Bind> Binds = new Dictionary<Action, Bind>();
+        private static readonly Dictionary<Action, Bind> Binds = new Dictionary<Action, Bind>();
 
-        public Actions GetInstance()
+        /// <summary>
+        /// Create every actions with the possibles inputs
+        /// </summary>
+        static Actions()
         {
-            if (Instance == null)
-                Instance = new Actions();
-            return Instance;
-        }
-
-        private Actions()
-        {
-            Binds[Action.Left] = new Bind(Keys.Left, Keys.A);
+			// Possible input with the keyboard
+			Binds[Action.Left] = new Bind(Keys.Left, Keys.A);
             Binds[Action.Right] = new Bind(Keys.Right, Keys.D);
             Binds[Action.Down] = new Bind(Keys.Down, Keys.S);
             Binds[Action.Rotate] = new Bind(Keys.Up, Keys.W);
         }
+        
+        /// <summary>
+        /// This indexer return the bind for a specific action
+        /// </summary>
+        /// <param name="action">Action.</param>
+		public Bind this[Action action]
+		{
+			get
+			{
+				return Binds[action];
+			}
+		}
 
+        /// <summary>
+        /// Update every bind with the specified keyboard state
+        /// </summary>
+        /// <param name="state">State.</param>
         public void Update(KeyboardState state)
         {
             foreach(Bind bind in Binds.Values)
@@ -32,13 +44,5 @@ namespace ClassicTetris
                 bind.Update(state);
             }
         }
-    }
-
-    public enum Action
-    {
-        Left,
-        Right,
-        Down,
-        Rotate,
     }
 }
