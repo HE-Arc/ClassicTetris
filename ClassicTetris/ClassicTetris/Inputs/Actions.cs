@@ -1,18 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
+
+using ClassicTetris.Inputs;
 
 namespace ClassicTetris
 {
     public class Actions
     {
+		private static Actions Instance = null;
 
         private static readonly Dictionary<Action, Bind> Binds = new Dictionary<Action, Bind>();
 
         /// <summary>
+        /// Singleton function
+        /// </summary>
+        /// <returns>The instance.</returns>
+        public static Actions GetInstance()
+		{
+			if(Instance == null)
+			{
+				Instance = new Actions();
+			}
+			return Instance;
+		}
+
+
+        /// <summary>
         /// Create every actions with the possibles inputs
         /// </summary>
-        static Actions()
+        private Actions()
         {
 			// Possible input with the keyboard
 			Binds[Action.Left] = new Bind(Keys.Left, Keys.A);
