@@ -12,6 +12,6 @@ namespace ClassicTetris.Inputs
 		Rotate,
         ForceDown,
         Quit,
-        Debug,
+        Debug
     }
 }

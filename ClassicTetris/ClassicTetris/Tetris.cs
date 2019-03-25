@@ -68,10 +68,7 @@ namespace ClassicTetris
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
-        {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
+        {            
 			Actions.GetInstance().Update(Keyboard.GetState());
 
 			if(Actions.GetInstance()[Action.Left].IsPressed())
@@ -101,6 +98,14 @@ namespace ClassicTetris
 			else if (Actions.GetInstance()[Action.Debug].IsPressed())
             {
 				board.Tick();
+            }
+			else if (Actions.GetInstance()[Action.ForceDown].IsPressed())
+            {
+                // todo            
+			}
+			else if (Actions.GetInstance()[Action.Quit].IsPressed())
+            {
+				Exit();           
             }
 
             base.Update(gameTime);
