@@ -12,6 +12,7 @@ namespace ClassicTetris
     public class Tetris : Game
     {
         GraphicsDeviceManager graphics;
+        GameLogic gameLogic;
         SpriteBatch spriteBatch;
         Renderer renderer;
         Board board;
@@ -22,6 +23,7 @@ namespace ClassicTetris
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 1025;
             graphics.PreferredBackBufferHeight = 895;
+            gameLogic = GameLogic.GetInstance;
             Content.RootDirectory = "Content";
             isReadyToDraw = false;
         }

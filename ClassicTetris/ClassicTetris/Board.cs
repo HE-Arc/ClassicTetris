@@ -177,8 +177,7 @@ namespace ClassicTetris
             {
                 for (int j = 0; j < n; ++j)
                 {
-                    grid[currentShape.x + i][currentShape.y + j]
-                        = shape[i, j];
+                    grid[currentShape.x + i][currentShape.y + j] = shape[i, j];
                 }
             }
             return grid;

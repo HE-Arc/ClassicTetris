@@ -77,32 +77,26 @@ namespace ClassicTetris
 
         private void drawCurrentScore(SpriteBatch spriteBatch)
         {
-            //int score = Board.GetScore();
-            int score = 3000; //DEBUG
+            int score = GameLogic.Instance.Score;
             spriteBatch.DrawString(tetrisFont, formatNumberToNDigits(score, Settings.SCORE_DIGITS), new Vector2(770, 215), Color.White);
         }
 
         private void drawTopScore(SpriteBatch spriteBatch)
         {
-            //int topScore = Save.GetTopScore();
             int topScore = 5000;
             spriteBatch.DrawString(tetrisFont, formatNumberToNDigits(topScore, Settings.SCORE_DIGITS), new Vector2(770, 120), Color.White);
         }
 
         private void drawBoard(SpriteBatch spriteBatch, Board board)
         {
-            spriteBatch.DrawString(tetrisFont, "BOARD", new Vector2(381, 160), Color.White);
-
             int[][] b = board.GetGrid(); 
-   
             int offsetX = Settings.BOARD_OFFSET_X;
             int offsetY = Settings.BOARD_OFFSET_Y;
             int squareSize = Settings.SQUARE_SIZE;
-
             Vector2 coor = new Vector2(offsetX, offsetY);
-            for (int i = 0; i < 20; i++) //todo settings
+            for (int i = 0; i < Settings.BOARD_HEIGHT; i++) //todo settings
             {
-                for (int j = 0; j < 10; j++) //todo settings
+                for (int j = 0; j < Settings.BOARD_WIDTH; j++) //todo settings
                 {
                     
                     if(b[i][j] <= 0)

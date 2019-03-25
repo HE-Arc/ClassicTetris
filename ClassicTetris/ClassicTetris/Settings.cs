@@ -8,11 +8,11 @@ namespace ClassicTetris
 {
     class Settings
     {
-        public const int WIDTH = 10;
-        public const int HEIGHT = 20;
+        public const int BOARD_WIDTH = 10;
+        public const int BOARD_HEIGHT = 20;
 
         public const int START_X = 0;
-        public const int START_Y = WIDTH / 2 - 2;
+        public const int START_Y = BOARD_WIDTH / 2 - 2;
 
 
         // HUD
