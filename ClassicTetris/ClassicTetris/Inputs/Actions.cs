@@ -1,11 +1,12 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
+using ClassicTetris.Inputs;
 using Microsoft.Xna.Framework.Input;
 
 namespace ClassicTetris
 {
     public class Actions
-    {
+    {   
 
         private static readonly Dictionary<Action, Bind> Binds = new Dictionary<Action, Bind>();
 
