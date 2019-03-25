@@ -143,7 +143,7 @@ namespace ClassicTetris
         /// <returns>True is the row is full</returns>
         private bool RowIsFull(int row)
         {
-            for (int col = 0; col < landedShape.GetLength(1); ++col)
+            for (int col = 0; col < landedShape[0].Length; ++col)
             {
                 if (landedShape[row][col] == 0)
                 {
@@ -236,15 +236,15 @@ namespace ClassicTetris
         /// <returns></returns>
         private bool CanMove(Tetromino shape)
         {
-            int n = shape.Grid.Length;
+            int n = shape.Grid.GetLength(0);
             
             for(int i = 0; i < n; ++i)
             {
                 for (int j = 0; j < n; ++j)
                 {
                     if (shape.Grid[i, j] > 0 && (
-                        shape.x + i < 0 || shape.x + i >= Settings.WIDTH ||
-                        shape.y + j < 0 || shape.y + j >= Settings.HEIGHT ||
+                        shape.x + i < 0 || shape.x + i >= Settings.HEIGHT ||
+                        shape.y + j < 0 || shape.y + j >= Settings.WIDTH ||
                         landedShape[shape.x+i][shape.y+j] > 0))
                     {
                         return false;
