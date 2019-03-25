@@ -31,12 +31,12 @@ namespace ClassicTetris
             spriteBatch.Draw(background, Vector2.Zero, Color.White);
         }
 
-        public void DrawScene(SpriteBatch spriteBatch)
+        public void DrawScene(SpriteBatch spriteBatch, Board board)
         {
             spriteBatch.Begin();
             {
                 drawBackground(spriteBatch);
-                drawBoard(spriteBatch);
+                drawBoard(spriteBatch, board);
                 drawTopScore(spriteBatch);
                 drawCurrentScore(spriteBatch);
                 drawNextTetromino(spriteBatch);
@@ -97,17 +97,17 @@ namespace ClassicTetris
             spriteBatch.DrawString(tetrisFont, formattedTopScore, new Vector2(770, 120), Color.White);
         }
 
-        private void drawBoard(SpriteBatch spriteBatch)
+        private void drawBoard(SpriteBatch spriteBatch, Board board)
         {
             spriteBatch.DrawString(tetrisFont, "BOARD", new Vector2(381, 160), Color.White);
 
-            int[][] b = new Board().GetGrid(); 
+            int[][] b = board.GetGrid(); 
 
             int offsetX = 383;
             int offsetY = 162;
             int squareSize = 32;
 
-            Texture2D rect = new Texture2D(spriteBatch.GraphicsDevice, squareSize, squareSize);
+            
 
 
             
@@ -120,17 +120,21 @@ namespace ClassicTetris
                     
                     if(b[i][j] <= 0)
                     {
+                        Console.WriteLine($"{i}-{j} : Black");
+                        Texture2D rect = new Texture2D(spriteBatch.GraphicsDevice, squareSize, squareSize);
                         Color[] data = new Color[squareSize * squareSize];
                         for (int k = 0; k < data.Length; ++k) data[k] = Color.Black;
                         rect.SetData(data);
+                        spriteBatch.Draw(rect, coor, Color.White);
                     }
                     else
                     {
+                        Texture2D rect = new Texture2D(spriteBatch.GraphicsDevice, squareSize, squareSize);
                         Color[] data = new Color[squareSize * squareSize];
                         for (int k = 0; k < data.Length; ++k) data[k] = Color.Yellow;
                         rect.SetData(data);
+                        spriteBatch.Draw(rect, coor, Color.White);
                     }
-                    spriteBatch.Draw(rect, coor, Color.White);
                     coor.X += squareSize;
 
                 }

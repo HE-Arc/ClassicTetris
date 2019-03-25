@@ -14,6 +14,7 @@ namespace ClassicTetris
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Renderer renderer;
+        Board board;
         bool isReadyToDraw;
 
         public Tetris()
@@ -34,7 +35,7 @@ namespace ClassicTetris
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            board = new Board();
             base.Initialize();
         }
 
@@ -87,7 +88,7 @@ namespace ClassicTetris
             }
 			else if (Actions.GetInstance()[Action.Rotate].IsPressed())
 			{
-                // todo            
+                board.Tick();            
             }
 
             base.Update(gameTime);
@@ -103,7 +104,7 @@ namespace ClassicTetris
             {
                 GraphicsDevice.Clear(Color.CornflowerBlue);
 
-                renderer.DrawScene(spriteBatch);
+                renderer.DrawScene(spriteBatch, board);
 
                 base.Draw(gameTime);
             }
