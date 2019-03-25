@@ -36,6 +36,7 @@ namespace ClassicTetris
 			Binds[Action.Down] = new Bind(Keys.Down, Keys.S);
 			Binds[Action.Rotate] = new Bind(Keys.Up, Keys.W);
 			Binds[Action.ForceDown] = new Bind(Keys.Space);
+			Binds[Action.Quit] = new Bind(Keys.Escape);
         }
 
         /// <summary>

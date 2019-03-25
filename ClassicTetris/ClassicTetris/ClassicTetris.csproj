@@ -43,15 +43,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Inputs\Bind.cs" />
-    <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Tetromino.cs" />
     <Compile Include="Board.cs" />
-    <Compile Include="GameLogic.cs" />
     <Compile Include="Inputs\Actions.cs" />
     <Compile Include="Inputs\Action.cs" />
+    <Compile Include="Tetris.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

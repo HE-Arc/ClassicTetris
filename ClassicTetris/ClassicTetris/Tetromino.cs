@@ -44,7 +44,7 @@ namespace ClassicTetris
         public static Tetromino Random(int x, int y)
         {
             Array values = Enum.GetValues(typeof(Shape));
-            Shape randomShape = (Shape)values.GetValue(random.Next(values.Length));
+            Shape randomShape = (Shape)values.GetValue(random.Next(1, values.Length));
             return new Tetromino(x, y, randomShape);
         }
 
