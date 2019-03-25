@@ -172,13 +172,13 @@ namespace ClassicTetris
             int[,] shape = currentShape.Grid;
             int[][] grid = CopyArrayLinq(landedShape);
 
-            int n = shape.Length;
+            int n = shape.GetLength(0);
             for (int i = 0; i < n; ++i)
             {
                 for (int j = 0; j < n; ++j)
                 {
                     grid[currentShape.x + i][currentShape.y + j]
-                        = shape[currentShape.x, currentShape.y];
+                        = shape[i, j];
                 }
             }
             return grid;

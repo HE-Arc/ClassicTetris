@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ClassicTetris
 {
@@ -35,16 +36,18 @@ namespace ClassicTetris
         #endregion
 
         #region Static random
-        /// <summary>
-        /// Create a new random Tetromino
-        /// </summary>
-        /// <param name="x">X location</param>
-        /// <param name="y">Y location</param>
-        /// <returns>New newly created tetromino</returns>
-        public static Tetromino Random(int x, int y)
+        
+    /// <summary>
+    /// Create a new random Tetromino
+    /// </summary>
+    /// <param name="x">X location</param>
+    /// <param name="y">Y location</param>
+    /// <returns>New newly created tetromino</returns>
+    public static Tetromino Random(int x, int y)
         {
-            Array values = Enum.GetValues(typeof(Shape));
-            Shape randomShape = (Shape)values.GetValue(random.Next(values.Length));
+            Shape[] values = (Shape[])Enum.GetValues(typeof(Shape));
+            Shape randomShape = (Shape)values.GetValue(random.Next(1,values.Length));
+
             return new Tetromino(x, y, randomShape);
         }
 
