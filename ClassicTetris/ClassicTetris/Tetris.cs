@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using ClassicTetris.Inputs;
+using ClassicTetris.Audio;
 
 namespace ClassicTetris
 {
@@ -47,7 +48,7 @@ namespace ClassicTetris
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            AudioManager.GetInstance().Load(Content);
             renderer = new Renderer(Content);
             isReadyToDraw = true;
             // TODO: use this.Content to load your game content here
@@ -101,6 +102,7 @@ namespace ClassicTetris
 			else if (Actions.GetInstance()[Action.Debug].IsPressed())
             {
 				board.Tick();
+                AudioManager.GetInstance().Play(Music.Theme1);
             }
 
             base.Update(gameTime);
