@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using ClassicTetris.Inputs;
+
 namespace ClassicTetris
 {
     /// <summary>
@@ -69,7 +71,24 @@ namespace ClassicTetris
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+			Actions.GetInstance().Update(Keyboard.GetState());
+
+			if(Actions.GetInstance()[Action.Left].IsPressed())
+			{
+				// move left in logic
+			}
+			else if (Actions.GetInstance()[Action.Right].IsPressed())
+            {
+                // todo
+            }
+			else if (Actions.GetInstance()[Action.Down].IsPressed())
+			{
+                // todo            
+            }
+			else if (Actions.GetInstance()[Action.Rotate].IsPressed())
+			{
+                // todo            
+            }
 
             base.Update(gameTime);
         }
