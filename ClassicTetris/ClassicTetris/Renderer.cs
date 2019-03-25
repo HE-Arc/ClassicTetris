@@ -100,6 +100,44 @@ namespace ClassicTetris
         private void drawBoard(SpriteBatch spriteBatch)
         {
             spriteBatch.DrawString(tetrisFont, "BOARD", new Vector2(381, 160), Color.White);
+
+            int[][] b = Board.GetGrid(); 
+
+            int offsetX = 383;
+            int offsetY = 162;
+            int squareSize = 32;
+
+            Texture2D rect = new Texture2D(spriteBatch.GraphicsDevice, squareSize, squareSize);
+
+
+            
+
+            Vector2 coor = new Vector2(offsetX, offsetY);
+            for (int i = 0; i < 20; i++) //todo settings
+            {
+                for (int j = 0; j < 10; j++) //todo settings
+                {
+                    
+                    if(b[i][j] <= 0)
+                    {
+                        Color[] data = new Color[squareSize * squareSize];
+                        for (int k = 0; k < data.Length; ++k) data[k] = Color.Black;
+                        rect.SetData(data);
+                    }
+                    else
+                    {
+                        Color[] data = new Color[squareSize * squareSize];
+                        for (int k = 0; k < data.Length; ++k) data[k] = Color.Yellow;
+                        rect.SetData(data);
+                    }
+                    spriteBatch.Draw(rect, coor, Color.White);
+                    coor.X += squareSize;
+
+                }
+                coor.X = offsetX;
+                coor.Y += squareSize;
+            }
+            
         }
 
 
