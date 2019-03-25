@@ -111,10 +111,10 @@ namespace ClassicTetris
         /// </summary>
         public bool Down()
         {
-            Tetromino nextShape = currentShape.Down();
-            if (CanMove(nextShape))
+            Tetromino movedShape = currentShape.Down();
+            if (CanMove(movedShape))
             {
-                currentShape = nextShape;
+                currentShape = movedShape;
                 return true;
             }
             return false;
@@ -145,7 +145,7 @@ namespace ClassicTetris
         {
             for (int col = 0; col < landedShape[0].Length; ++col)
             {
-                if (landedShape[row][col] == 0)
+                if (landedShape[row][col] <= 0)
                 {
                     return false;
                 }
@@ -177,8 +177,11 @@ namespace ClassicTetris
             {
                 for (int j = 0; j < n; ++j)
                 {
-                    grid[currentShape.x + i][currentShape.y + j]
-                        = shape[i, j];
+                    if(shape[i, j] > 0)
+                    {
+                        grid[currentShape.y + i][currentShape.x + j]
+                            = shape[i, j];
+                    }
                 }
             }
             return grid;
@@ -191,23 +194,23 @@ namespace ClassicTetris
         /// <returns>Number of row removed</returns>
         private int ClearLines(int startLine)
         {
-            int nbRow = 4;   //check fourth row
-            int rowId = startLine + nbRow - 1;
+            int nbRow = currentShape.Grid.GetLength(0);   //check four row
+            int row = Math.Min(startLine + nbRow, Settings.HEIGHT) - 1;
 
             int nbRowRemoved = 0;
 
             while (nbRow > 0)
             {
-                if (RowIsFull(rowId))
+                if (RowIsFull(row))
                 {
                     //Move all content above one line below
-                    MoveDownAllRowAbove(rowId);
+                    MoveDownAllRowAbove(row);
                     ++nbRowRemoved;
                 }
                 else
                 {
                     //Look at the row above
-                    --rowId;
+                    --row;
                 }
                 --nbRow;
             }
@@ -243,9 +246,9 @@ namespace ClassicTetris
                 for (int j = 0; j < n; ++j)
                 {
                     if (shape.Grid[i, j] > 0 && (
-                        shape.x + i < 0 || shape.x + i >= Settings.HEIGHT ||
-                        shape.y + j < 0 || shape.y + j >= Settings.WIDTH ||
-                        landedShape[shape.x+i][shape.y+j] > 0))
+                        shape.y + i < 0 || shape.y + i >= Settings.HEIGHT ||
+                        shape.x + j < 0 || shape.x + j >= Settings.WIDTH ||
+                        landedShape[shape.y+i][shape.x+j] > 0))
                     {
                         return false;
                     }
