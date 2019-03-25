@@ -76,19 +76,31 @@ namespace ClassicTetris
 
 			if(Actions.GetInstance()[Action.Left].IsPressed())
 			{
-				// move left in logic
+				board.Left();
 			}
 			else if (Actions.GetInstance()[Action.Right].IsPressed())
             {
-                // todo
+				board.Right();
+            }
+			else if (Actions.GetInstance()[Action.Rotate].IsPressed())
+            {
+				board.Turn();
             }
 			else if (Actions.GetInstance()[Action.Down].IsPressed())
 			{
-                // todo            
+				
             }
-			else if (Actions.GetInstance()[Action.Rotate].IsPressed())
-			{
-                board.Tick();            
+			else if (Actions.GetInstance()[Action.ForceDown].IsPressed())
+            {
+				board.Drop();
+			}
+			else if (Actions.GetInstance()[Action.Quit].IsPressed())
+            {
+                Exit();
+			}
+			else if (Actions.GetInstance()[Action.Debug].IsPressed())
+            {
+				board.Tick();
             }
 
             base.Update(gameTime);
