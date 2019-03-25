@@ -7,15 +7,14 @@ namespace ClassicTetris
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class Tetris : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Renderer renderer;
         bool isReadyToDraw;
 
-
-        public Game1()
+        public Tetris()
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 1025;

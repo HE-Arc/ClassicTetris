@@ -101,7 +101,7 @@ namespace ClassicTetris
         {
             spriteBatch.DrawString(tetrisFont, "BOARD", new Vector2(381, 160), Color.White);
 
-            int[][] b = Board.GetGrid(); 
+            int[][] b = new Board().GetGrid(); 
 
             int offsetX = 383;
             int offsetY = 162;
