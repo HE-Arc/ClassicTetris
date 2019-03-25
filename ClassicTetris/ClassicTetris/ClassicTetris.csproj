@@ -42,6 +42,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GameLogic.cs" />
     <Compile Include="Inputs\Bind.cs" />
     <Compile Include="Tetris.cs" />
     <Compile Include="Program.cs" />

@@ -11,8 +11,9 @@ namespace ClassicTetris
         public const int BOARD_WIDTH = 10;
         public const int BOARD_HEIGHT = 20;
 
-        public const int START_X = 0;
-        public const int START_Y = BOARD_WIDTH / 2 - 2;
+
+        public const int START_X = BOARD_WIDTH / 2 - 2;
+        public const int START_Y = -1;
 
 
         // HUD
