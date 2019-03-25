@@ -79,22 +79,14 @@ namespace ClassicTetris
         {
             //int score = Board.GetScore();
             int score = 3000; //DEBUG
-
-            //String formattedTopScore = formatNumberToNDigits(topScore, Settings.SCORE_DIGITS);
-            String formattedScore = formatNumberToNDigits(score, 6);
-
-            spriteBatch.DrawString(tetrisFont, formattedScore, new Vector2(770, 215), Color.White);
+            spriteBatch.DrawString(tetrisFont, formatNumberToNDigits(score, Settings.SCORE_DIGITS), new Vector2(770, 215), Color.White);
         }
 
         private void drawTopScore(SpriteBatch spriteBatch)
         {
             //int topScore = Save.GetTopScore();
             int topScore = 5000;
-
-            //String formattedTopScore = formatNumberToNDigits(topScore, Settings.SCORE_DIGITS);
-            String formattedTopScore = formatNumberToNDigits(topScore, 6);
-
-            spriteBatch.DrawString(tetrisFont, formattedTopScore, new Vector2(770, 120), Color.White);
+            spriteBatch.DrawString(tetrisFont, formatNumberToNDigits(topScore, Settings.SCORE_DIGITS), new Vector2(770, 120), Color.White);
         }
 
         private void drawBoard(SpriteBatch spriteBatch, Board board)
@@ -102,15 +94,10 @@ namespace ClassicTetris
             spriteBatch.DrawString(tetrisFont, "BOARD", new Vector2(381, 160), Color.White);
 
             int[][] b = board.GetGrid(); 
-
-            int offsetX = 383;
-            int offsetY = 162;
-            int squareSize = 32;
-
-            
-
-
-            
+   
+            int offsetX = Settings.BOARD_OFFSET_X;
+            int offsetY = Settings.BOARD_OFFSET_Y;
+            int squareSize = Settings.SQUARE_SIZE;
 
             Vector2 coor = new Vector2(offsetX, offsetY);
             for (int i = 0; i < 20; i++) //todo settings
@@ -120,20 +107,35 @@ namespace ClassicTetris
                     
                     if(b[i][j] <= 0)
                     {
-                        Console.WriteLine($"{i}-{j} : Black");
-                        Texture2D rect = new Texture2D(spriteBatch.GraphicsDevice, squareSize, squareSize);
-                        Color[] data = new Color[squareSize * squareSize];
-                        for (int k = 0; k < data.Length; ++k) data[k] = Color.Black;
-                        rect.SetData(data);
-                        spriteBatch.Draw(rect, coor, Color.White);
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Black);
                     }
-                    else
+                    else if (b[i][j] <= 1)
                     {
-                        Texture2D rect = new Texture2D(spriteBatch.GraphicsDevice, squareSize, squareSize);
-                        Color[] data = new Color[squareSize * squareSize];
-                        for (int k = 0; k < data.Length; ++k) data[k] = Color.Yellow;
-                        rect.SetData(data);
-                        spriteBatch.Draw(rect, coor, Color.White);
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Orange);
+                    }
+                    else if (b[i][j] <= 2)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Cyan);
+                    }
+                    else if (b[i][j] <= 3)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Blue);
+                    }
+                    else if (b[i][j] <= 4)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Green);
+                    }
+                    else if (b[i][j] <= 5)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Magenta);
+                    }
+                    else if (b[i][j] <= 6)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Red);
+                    }
+                    else if (b[i][j] <= 7)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Yellow);
                     }
                     coor.X += squareSize;
 
@@ -160,6 +162,15 @@ namespace ClassicTetris
             String formattedNumber = new String('0', n).Substring(1, n - number.ToString().Length) + number.ToString();
             return formattedNumber;
             
+        }
+
+        private void DrawRectangle(SpriteBatch sb, Vector2 coor, int sizeX, int sizeY, Color color)
+        {
+            Texture2D rect = new Texture2D(sb.GraphicsDevice, sizeX, sizeY);
+            Color[] data = new Color[sizeX * sizeY];
+            for (int k = 0; k < data.Length; ++k) data[k] = color;
+            rect.SetData(data);
+            sb.Draw(rect, coor, Color.White);
         }
     }
 }

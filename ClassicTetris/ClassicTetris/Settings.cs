@@ -13,5 +13,15 @@ namespace ClassicTetris
 
         public const int START_X = 0;
         public const int START_Y = WIDTH / 2 - 2;
+
+
+        // HUD
+
+        public const int SCORE_DIGITS = 6;
+        public const int STATS_DIGITS = 3;
+
+        public const int BOARD_OFFSET_X = 383;
+        public const int BOARD_OFFSET_Y = 162;
+        public const int SQUARE_SIZE = 32;
     }
 }
