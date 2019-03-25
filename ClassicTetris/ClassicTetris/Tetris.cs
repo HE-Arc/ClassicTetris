@@ -15,7 +15,6 @@ namespace ClassicTetris
         GameLogic gameLogic;
         SpriteBatch spriteBatch;
         Renderer renderer;
-        Board board;
         bool isReadyToDraw;
 
         public Tetris()
@@ -37,7 +36,6 @@ namespace ClassicTetris
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            board = new Board();
             base.Initialize();
         }
 
@@ -75,15 +73,15 @@ namespace ClassicTetris
 
 			if(Actions.GetInstance()[Action.Left].IsPressed())
 			{
-				board.Left();
+				GameLogic.Instance.Board.Left();
 			}
 			else if (Actions.GetInstance()[Action.Right].IsPressed())
             {
-				board.Right();
+                GameLogic.Instance.Board.Right();
             }
 			else if (Actions.GetInstance()[Action.Rotate].IsPressed())
             {
-				board.Turn();
+                GameLogic.Instance.Board.Turn();
             }
 			else if (Actions.GetInstance()[Action.Down].IsPressed())
 			{
@@ -91,7 +89,7 @@ namespace ClassicTetris
             }
 			else if (Actions.GetInstance()[Action.ForceDown].IsPressed())
             {
-				board.Drop();
+                GameLogic.Instance.Board.Drop();
 			}
 			else if (Actions.GetInstance()[Action.Quit].IsPressed())
             {
@@ -99,7 +97,8 @@ namespace ClassicTetris
 			}
 			else if (Actions.GetInstance()[Action.Debug].IsPressed())
             {
-				board.Tick();
+				//board.Tick();
+                GameLogic.Instance.Tick();
             }
 			else if (Actions.GetInstance()[Action.ForceDown].IsPressed())
             {
@@ -123,7 +122,7 @@ namespace ClassicTetris
             {
                 GraphicsDevice.Clear(Color.CornflowerBlue);
 
-                renderer.DrawScene(spriteBatch, board);
+                renderer.DrawScene(spriteBatch);
 
                 base.Draw(gameTime);
             }

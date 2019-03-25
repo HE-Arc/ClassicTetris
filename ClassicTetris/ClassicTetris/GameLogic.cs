@@ -42,6 +42,12 @@ namespace ClassicTetris
             this.Statistics = new int[7] { 0, 0, 0, 0, 0, 0, 0 };
             this.Type = 0;
             this.Board = new Board();
-        }        
+        }
+
+        public void Tick()
+        {
+            int test = Board.Tick();
+            score += 10 * test;
+        }
     }
 }

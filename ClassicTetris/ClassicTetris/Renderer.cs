@@ -31,12 +31,12 @@ namespace ClassicTetris
             spriteBatch.Draw(background, Vector2.Zero, Color.White);
         }
 
-        public void DrawScene(SpriteBatch spriteBatch, Board board)
+        public void DrawScene(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
             {
                 drawBackground(spriteBatch);
-                drawBoard(spriteBatch, board);
+                drawBoard(spriteBatch);
                 drawTopScore(spriteBatch);
                 drawCurrentScore(spriteBatch);
                 drawNextTetromino(spriteBatch);
@@ -56,18 +56,18 @@ namespace ClassicTetris
         {
             int xCoord = 200;
             int yCoord = 330;
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < Settings.TETROMINOES; i++)
             {
-                int stat = 21; //DEBUG
-                spriteBatch.DrawString(tetrisFont, formatNumberToNDigits(stat, 3), new Vector2(xCoord, yCoord), Color.White);
+                int stat = GameLogic.Instance.Statistics[i];
+                spriteBatch.DrawString(tetrisFont, formatNumberToNDigits(stat, Settings.STATS_DIGITS), new Vector2(xCoord, yCoord), Color.White);
                 yCoord += 64;
             }
         }
 
         private void drawLevel(SpriteBatch spriteBatch)
         {
-            int level = 9;
-            spriteBatch.DrawString(tetrisFont, formatNumberToNDigits(level, 2), new Vector2(820, 630), Color.White);
+            int level = GameLogic.Instance.Level;
+            spriteBatch.DrawString(tetrisFont, formatNumberToNDigits(level, Settings.LEVEL_DIGITS), new Vector2(820, 630), Color.White);
         }
 
         private void drawNextTetromino(SpriteBatch spriteBatch)
@@ -87,9 +87,9 @@ namespace ClassicTetris
             spriteBatch.DrawString(tetrisFont, formatNumberToNDigits(topScore, Settings.SCORE_DIGITS), new Vector2(770, 120), Color.White);
         }
 
-        private void drawBoard(SpriteBatch spriteBatch, Board board)
+        private void drawBoard(SpriteBatch spriteBatch)
         {
-            int[][] b = board.GetGrid(); 
+            int[][] b = GameLogic.Instance.Board.GetGrid(); 
             int offsetX = Settings.BOARD_OFFSET_X;
             int offsetY = Settings.BOARD_OFFSET_Y;
             int squareSize = Settings.SQUARE_SIZE;
