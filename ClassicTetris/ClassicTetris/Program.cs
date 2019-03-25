@@ -13,8 +13,8 @@ namespace ClassicTetris
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
-                game.Run();
+            using (var tetris = new Tetris())
+                tetris.Run();
         }
     }
 }

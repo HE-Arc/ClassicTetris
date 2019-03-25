@@ -37,7 +37,7 @@ namespace ClassicTetris
 			Binds[Action.Rotate] = new Bind(Keys.Up, Keys.W);
 			Binds[Action.ForceDown] = new Bind(Keys.Space);
         }
-        
+
         /// <summary>
         /// This indexer return the bind for a specific action
         /// </summary>
