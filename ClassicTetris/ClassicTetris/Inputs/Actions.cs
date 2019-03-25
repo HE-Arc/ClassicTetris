@@ -17,8 +17,9 @@ namespace ClassicTetris
 			// Possible input with the keyboard
 			Binds[Action.Left] = new Bind(Keys.Left, Keys.A);
             Binds[Action.Right] = new Bind(Keys.Right, Keys.D);
-            Binds[Action.Down] = new Bind(Keys.Down, Keys.S);
-            Binds[Action.Rotate] = new Bind(Keys.Up, Keys.W);
+			Binds[Action.Down] = new Bind(Keys.Down, Keys.S);
+			Binds[Action.Rotate] = new Bind(Keys.Up, Keys.W);
+			Binds[Action.ForceDown] = new Bind(Keys.Space);
         }
         
         /// <summary>

@@ -8,7 +8,8 @@ namespace ClassicTetris.Inputs
     {
         Left,
         Right,
-        Down,
-        Rotate,
+		Down,
+		Rotate,
+        ForceDown,
     }
 }
