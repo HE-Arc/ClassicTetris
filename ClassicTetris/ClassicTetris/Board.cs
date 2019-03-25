@@ -64,6 +64,7 @@ namespace ClassicTetris
                 
                 //Generate next shape
                 nextShape = Tetromino.Random(Settings.START_X, Settings.START_Y);
+                return nbLignesRemoved;
             }
             else
             {

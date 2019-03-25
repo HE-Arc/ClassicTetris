@@ -26,7 +26,7 @@ namespace ClassicTetris
             tetrisFont = content.Load<SpriteFont>("Fonts/classic_tetris_font");
         }
 
-        private void drawBackground(SpriteBatch spriteBatch)
+        private void DrawBackground(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(background, Vector2.Zero, Color.White);
         }
@@ -35,59 +35,59 @@ namespace ClassicTetris
         {
             spriteBatch.Begin();
             {
-                drawBackground(spriteBatch);
-                drawBoard(spriteBatch);
-                drawTopScore(spriteBatch);
-                drawCurrentScore(spriteBatch);
-                drawNextTetromino(spriteBatch);
-                drawLevel(spriteBatch);
-                drawStatistics(spriteBatch);
-                drawType(spriteBatch);
+                DrawBackground(spriteBatch);
+                DrawBoard(spriteBatch);
+                DrawTopScore(spriteBatch);
+                DrawCurrentScore(spriteBatch);
+                DrawNextTetromino(spriteBatch);
+                DrawLevel(spriteBatch);
+                DrawStatistics(spriteBatch);
+                DrawType(spriteBatch);
             }
             spriteBatch.End();
         }
 
-        private void drawType(SpriteBatch spriteBatch)
+        private void DrawType(SpriteBatch spriteBatch)
         {
             spriteBatch.DrawString(tetrisFont, "A", new Vector2(95, 85), Color.White);
         }
 
-        private void drawStatistics(SpriteBatch spriteBatch)
+        private void DrawStatistics(SpriteBatch spriteBatch)
         {
             int xCoord = 200;
             int yCoord = 330;
             for (int i = 0; i < Settings.TETROMINOES; i++)
             {
                 int stat = GameLogic.Instance.Statistics[i];
-                spriteBatch.DrawString(tetrisFont, formatNumberToNDigits(stat, Settings.STATS_DIGITS), new Vector2(xCoord, yCoord), Color.White);
+                spriteBatch.DrawString(tetrisFont, FormatNumberToNDigits(stat, Settings.STATS_DIGITS), new Vector2(xCoord, yCoord), Color.White);
                 yCoord += 64;
             }
         }
 
-        private void drawLevel(SpriteBatch spriteBatch)
+        private void DrawLevel(SpriteBatch spriteBatch)
         {
             int level = GameLogic.Instance.Level;
-            spriteBatch.DrawString(tetrisFont, formatNumberToNDigits(level, Settings.LEVEL_DIGITS), new Vector2(820, 630), Color.White);
+            spriteBatch.DrawString(tetrisFont, FormatNumberToNDigits(level, Settings.LEVEL_DIGITS), new Vector2(820, 630), Color.White);
         }
 
-        private void drawNextTetromino(SpriteBatch spriteBatch)
+        private void DrawNextTetromino(SpriteBatch spriteBatch)
         {
             spriteBatch.DrawString(tetrisFont, "T", new Vector2(790, 450), Color.White);
         }
 
-        private void drawCurrentScore(SpriteBatch spriteBatch)
+        private void DrawCurrentScore(SpriteBatch spriteBatch)
         {
             int score = GameLogic.Instance.Score;
-            spriteBatch.DrawString(tetrisFont, formatNumberToNDigits(score, Settings.SCORE_DIGITS), new Vector2(770, 215), Color.White);
+            spriteBatch.DrawString(tetrisFont, FormatNumberToNDigits(score, Settings.SCORE_DIGITS), new Vector2(770, 215), Color.White);
         }
 
-        private void drawTopScore(SpriteBatch spriteBatch)
+        private void DrawTopScore(SpriteBatch spriteBatch)
         {
             int topScore = 5000;
-            spriteBatch.DrawString(tetrisFont, formatNumberToNDigits(topScore, Settings.SCORE_DIGITS), new Vector2(770, 120), Color.White);
+            spriteBatch.DrawString(tetrisFont, FormatNumberToNDigits(topScore, Settings.SCORE_DIGITS), new Vector2(770, 120), Color.White);
         }
 
-        private void drawBoard(SpriteBatch spriteBatch)
+        private void DrawBoard(SpriteBatch spriteBatch)
         {
             int[][] b = GameLogic.Instance.Board.GetGrid(); 
             int offsetX = Settings.BOARD_OFFSET_X;
@@ -148,7 +148,7 @@ namespace ClassicTetris
         /// <param name="number">The input number</param>
         /// <param name="n">The number of chars wanted</param>
         /// <returns></returns>
-        private String formatNumberToNDigits(int number, int n)
+        private string FormatNumberToNDigits(int number, int n)
         {
             Debug.Assert(n > 0);
             number %= Convert.ToInt32(Math.Pow(10, n));
