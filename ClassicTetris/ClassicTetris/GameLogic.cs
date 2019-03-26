@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace ClassicTetris
 {
@@ -16,6 +17,7 @@ namespace ClassicTetris
         private int[] statistics; //Array of size=7, containing the number of time that the nth tetromino has spawned.
         private int type; //0 = A, 1 = B
         private Board board;
+        private Timer timer;
         #endregion
 
         public int Score { get => score; set => score = value; }
@@ -42,6 +44,15 @@ namespace ClassicTetris
             this.Statistics = new int[7] { 0, 0, 0, 0, 0, 0, 0 };
             this.Type = 0;
             this.Board = new Board();
+            timer = new Timer(800);
+            timer.Elapsed += (sender, e) => Tick();
+
+            StartGame();
+        }
+
+        private void StartGame()
+        {
+            timer.Start();
         }
 
         public void Tick()
