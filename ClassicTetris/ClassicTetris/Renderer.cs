@@ -14,16 +14,74 @@ namespace ClassicTetris
     {
         private Texture2D background;
         private SpriteFont tetrisFont;
+        private Texture2D[,] texturesTetrominos;
+        private int level = 4;
 
-        public Renderer(ContentManager content)
+        public Renderer(ContentManager content, SpriteBatch sb)
         {
-            LoadContent(content);
+            texturesTetrominos = new Texture2D[Settings.NB_COLORS_LEVELS,Settings.NB_TEXTURES];
+            LoadContent(content, sb);
 
         }
-        private void LoadContent(ContentManager content)
+        private void LoadContent(ContentManager content, SpriteBatch sb)
         {
             background = content.Load<Texture2D>("Textures/tetris_exemple");
             tetrisFont = content.Load<SpriteFont>("Fonts/classic_tetris_font");
+            CreateTextures(sb);
+        }
+
+        private void CreateTextures(SpriteBatch sb)
+        {
+            // [level , textureshape]
+            texturesTetrominos[0, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_0_PRIMARY);
+            texturesTetrominos[0, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_0_PRIMARY);
+            texturesTetrominos[0, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_0_PRIMARY);
+            texturesTetrominos[0, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_0_SECONDARY);
+
+            texturesTetrominos[1, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_1_PRIMARY);
+            texturesTetrominos[1, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_1_PRIMARY);
+            texturesTetrominos[1, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_1_PRIMARY);
+            texturesTetrominos[1, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_1_SECONDARY);
+
+            texturesTetrominos[2, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_2_PRIMARY);
+            texturesTetrominos[2, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_2_PRIMARY);
+            texturesTetrominos[2, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_2_PRIMARY);
+            texturesTetrominos[2, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_2_SECONDARY);
+
+            texturesTetrominos[3, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_3_PRIMARY);
+            texturesTetrominos[3, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_3_PRIMARY);
+            texturesTetrominos[3, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_3_PRIMARY);
+            texturesTetrominos[3, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_3_SECONDARY);
+
+            texturesTetrominos[4, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_4_PRIMARY);
+            texturesTetrominos[4, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_4_PRIMARY);
+            texturesTetrominos[4, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_4_PRIMARY);
+            texturesTetrominos[4, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_4_SECONDARY);
+                               
+            texturesTetrominos[5, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_5_PRIMARY);
+            texturesTetrominos[5, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_5_PRIMARY);
+            texturesTetrominos[5, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_5_PRIMARY);
+            texturesTetrominos[5, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_5_SECONDARY);
+                               
+            texturesTetrominos[6, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_6_PRIMARY);
+            texturesTetrominos[6, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_6_PRIMARY);
+            texturesTetrominos[6, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_6_PRIMARY);
+            texturesTetrominos[6, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_6_SECONDARY);
+                               
+            texturesTetrominos[7, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_7_PRIMARY);
+            texturesTetrominos[7, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_7_PRIMARY);
+            texturesTetrominos[7, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_7_PRIMARY);
+            texturesTetrominos[7, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_7_SECONDARY);
+
+            texturesTetrominos[8, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_8_PRIMARY);
+            texturesTetrominos[8, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_8_PRIMARY);
+            texturesTetrominos[8, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_8_PRIMARY);
+            texturesTetrominos[8, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_8_SECONDARY);
+
+            texturesTetrominos[9, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_9_PRIMARY);
+            texturesTetrominos[9, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_9_PRIMARY);
+            texturesTetrominos[9, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_9_PRIMARY);
+            texturesTetrominos[9, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_9_SECONDARY);
         }
 
         private void DrawBackground(SpriteBatch spriteBatch)
@@ -84,38 +142,38 @@ namespace ClassicTetris
             {
                 for (int j = 0; j < dim; j++)
                 {
-                    
+
                     if (b[i,j] <= 0)
                     {
                         //DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Black);
                     }
-                    else if (b[i,j] <= 1)
+                    else if (b[i,j] <= 1) //I
                     {
-                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Orange);
+                        DrawTexture(spriteBatch, texturesTetrominos[level, 1], coor);
                     }
-                    else if (b[i,j] <= 2)
+                    else if (b[i,j] <= 2) //0
                     {
-                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Cyan);
+                        DrawTexture(spriteBatch, texturesTetrominos[level, 0], coor);
                     }
-                    else if (b[i,j] <= 3)
+                    else if (b[i,j] <= 3) //J
                     {
-                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Blue);
+                        DrawTexture(spriteBatch, texturesTetrominos[level, 2], coor);
                     }
-                    else if (b[i,j] <= 4)
+                    else if (b[i,j] <= 4) //L
                     {
-                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Green);
+                        DrawTexture(spriteBatch, texturesTetrominos[level, 3], coor);
                     }
-                    else if (b[i,j] <= 5)
+                    else if (b[i,j] <= 5) //S
                     {
-                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Magenta);
+                        DrawTexture(spriteBatch, texturesTetrominos[level, 2], coor);
                     }
-                    else if (b[i,j] <= 6)
+                    else if (b[i,j] <= 6) //T
                     {
-                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Red);
+                        DrawTexture(spriteBatch, texturesTetrominos[level, 1], coor);
                     }
-                    else if (b[i,j] <= 7)
+                    else if (b[i,j] <= 7) //Z
                     {
-                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Yellow);
+                        DrawTexture(spriteBatch, texturesTetrominos[level, 3], coor);
                     }
                     coor.X += squareSize;
 
@@ -153,43 +211,48 @@ namespace ClassicTetris
                     
                     if(b[i][j] <= 0)
                     {
-                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Black);
+                        //DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Black);
                     }
-                    else if (b[i][j] <= 1)
+                    else if (b[i][j] <= 1) //I
                     {
-                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Orange);
+                        DrawTexture(spriteBatch, texturesTetrominos[level, 1], coor);
                     }
-                    else if (b[i][j] <= 2)
+                    else if (b[i][j] <= 2) //0
                     {
-                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Cyan);
+                        DrawTexture(spriteBatch, texturesTetrominos[level, 0], coor);
                     }
-                    else if (b[i][j] <= 3)
+                    else if (b[i][j] <= 3) //J
                     {
-                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Blue);
+                        DrawTexture(spriteBatch, texturesTetrominos[level, 2], coor);
                     }
-                    else if (b[i][j] <= 4)
+                    else if (b[i][j] <= 4) //L
                     {
-                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Green);
+                        DrawTexture(spriteBatch, texturesTetrominos[level, 3], coor);
                     }
-                    else if (b[i][j] <= 5)
+                    else if (b[i][j] <= 5) //S
                     {
-                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Magenta);
+                        DrawTexture(spriteBatch, texturesTetrominos[level, 2], coor);
                     }
-                    else if (b[i][j] <= 6)
+                    else if (b[i][j] <= 6) //T
                     {
-                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Red);
+                        DrawTexture(spriteBatch, texturesTetrominos[level, 1], coor);
                     }
-                    else if (b[i][j] <= 7)
+                    else if (b[i][j] <= 7) //Z
                     {
-                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Yellow);
+                        DrawTexture(spriteBatch, texturesTetrominos[level, 3], coor);
                     }
-                    coor.X += squareSize;
+                    coor.X += squareSize + Settings.SQUARE_SPREARD;
 
                 }
                 coor.X = offsetX;
-                coor.Y += squareSize;
+                coor.Y += squareSize + Settings.SQUARE_SPREARD;
             }
             
+        }
+
+        private void DrawTexture(SpriteBatch sb, Texture2D texture, Vector2 coor)
+        {
+            sb.Draw(texture, coor, Color.White);
         }
 
 
@@ -210,6 +273,7 @@ namespace ClassicTetris
             
         }
 
+        
         private void DrawRectangle(SpriteBatch sb, Vector2 coor, int sizeX, int sizeY, Color color)
         {
             Texture2D rect = new Texture2D(sb.GraphicsDevice, sizeX, sizeY);
@@ -217,6 +281,77 @@ namespace ClassicTetris
             for (int k = 0; k < data.Length; ++k) data[k] = color;
             rect.SetData(data);
             sb.Draw(rect, coor, Color.White);
+        }
+
+        private Texture2D CreateTextureType0(SpriteBatch sb, int sizeX, int sizeY, Color color)
+        {
+            Texture2D rect = new Texture2D(sb.GraphicsDevice, sizeX, sizeY);
+            Color[] data = new Color[sizeX * sizeY];
+            int edgeSize = Settings.EDGE_SIZE; //in px
+            for (int k = 0; k < data.Length; ++k)
+            {
+                if (k < sizeX*edgeSize || k % sizeX < edgeSize || k % sizeX > sizeX-edgeSize || k > (sizeX*sizeY)-(edgeSize*sizeX))
+                {
+                    data[k] = color;
+                }
+                else
+                {
+                    data[k] = Color.White;
+                }
+            }
+            rect.SetData(data);
+            return rect;
+        }
+        private Texture2D CreateTextureType1(SpriteBatch sb, int sizeX, int sizeY, Color color)
+        {
+            Texture2D rect = new Texture2D(sb.GraphicsDevice, sizeX, sizeY);
+            Color[] data = new Color[sizeX * sizeY];
+            int edgeSize = Settings.EDGE_SIZE; //in px
+            for (int k = 0; k < data.Length; ++k)
+            {
+                if (k < sizeX * edgeSize || k % sizeX < edgeSize || k % sizeX > sizeX - edgeSize || k > (sizeX * sizeY) - (edgeSize * sizeX))
+                {
+                    data[k] = color;
+                }
+                else
+                {
+                    data[k] = Color.White;
+                }
+            }
+            for(int k = 0; k < edgeSize; k++)
+            {
+                for (int i = 0; i < edgeSize; i++)
+                {
+                    data[i + k * sizeX] = Color.White;
+                }
+            }
+
+            rect.SetData(data);
+            return rect;
+        }
+
+        private Texture2D CreateTextureType2(SpriteBatch sb, int sizeX, int sizeY, Color color)
+        {
+            Texture2D rect = new Texture2D(sb.GraphicsDevice, sizeX, sizeY);
+            Color[] data = new Color[sizeX * sizeY];
+            int edgeSize = Settings.EDGE_SIZE; //in px
+            for (int k = 0; k < data.Length; ++k)
+            {
+                data[k] = color;
+            }
+            for (int k = 0; k < edgeSize; k++)
+            {
+                for (int i = 0; i < edgeSize; i++)
+                {
+                    data[i + k * sizeX] = Color.White;
+                    data[i + k * sizeX + (edgeSize*sizeX) + edgeSize] = Color.White;
+                    data[i + k * sizeX + (edgeSize * sizeX) + 2*edgeSize] = Color.White;
+                    data[i + k * sizeX + 2* (edgeSize * sizeX) + edgeSize] = Color.White;
+                }
+            }
+
+            rect.SetData(data);
+            return rect;
         }
     }
 }

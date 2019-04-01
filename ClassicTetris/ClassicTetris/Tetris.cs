@@ -47,8 +47,7 @@ namespace ClassicTetris
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            renderer = new Renderer(Content);
+            renderer = new Renderer(Content, spriteBatch);
             isReadyToDraw = true;
             // TODO: use this.Content to load your game content here
         }
