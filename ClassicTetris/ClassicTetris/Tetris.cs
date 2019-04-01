@@ -97,7 +97,6 @@ namespace ClassicTetris
 			}
 			else if (Actions.GetInstance()[Action.Debug].IsPressed())
             {
-				//board.Tick();
                 GameLogic.Instance.Tick();
             }
 			else if (Actions.GetInstance()[Action.ForceDown].IsPressed())

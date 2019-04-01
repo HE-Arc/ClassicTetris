@@ -72,8 +72,60 @@ namespace ClassicTetris
 
         private void DrawNextTetromino(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(tetrisFont, "T", new Vector2(790, 450), Color.White);
+            int[,] b = GameLogic.Instance.Board.NextShape.Grid;
+            int dim = b.GetLength(0);
+            int offsetDim = dim != 3 ? 0:15;
+            
+            int offsetX = Settings.NEXT_TETRO_OFFSET_X + offsetDim;
+            int offsetY = Settings.NEXT_TETRO_OFFSET_Y;
+            int squareSize = Settings.SQUARE_SIZE;
+            Vector2 coor = new Vector2(offsetX, offsetY);
+            for (int i = 0; i < dim; i++)
+            {
+                for (int j = 0; j < dim; j++)
+                {
+                    
+                    if (b[i,j] <= 0)
+                    {
+                        //DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Black);
+                    }
+                    else if (b[i,j] <= 1)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Orange);
+                    }
+                    else if (b[i,j] <= 2)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Cyan);
+                    }
+                    else if (b[i,j] <= 3)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Blue);
+                    }
+                    else if (b[i,j] <= 4)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Green);
+                    }
+                    else if (b[i,j] <= 5)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Magenta);
+                    }
+                    else if (b[i,j] <= 6)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Red);
+                    }
+                    else if (b[i,j] <= 7)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Yellow);
+                    }
+                    coor.X += squareSize;
+
+                }
+                coor.X = offsetX;
+                coor.Y += squareSize;
+            }
+
         }
+  
 
         private void DrawCurrentScore(SpriteBatch spriteBatch)
         {
