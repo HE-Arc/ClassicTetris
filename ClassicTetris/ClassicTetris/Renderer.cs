@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ClassicTetris.Tetromino;
 
 namespace ClassicTetris
 {
@@ -14,6 +15,17 @@ namespace ClassicTetris
     {
         private Texture2D background;
         private SpriteFont tetrisFont;
+
+        private static Shape[] shapeStatisticsOrder =
+        {
+            Shape.T,
+            Shape.J,
+            Shape.Z,
+            Shape.O,
+            Shape.S,
+            Shape.L,
+            Shape.I
+        };
 
         public Renderer(ContentManager content)
         {
@@ -56,9 +68,9 @@ namespace ClassicTetris
         {
             int xCoord = 200;
             int yCoord = 330;
-            for (int i = 0; i < Settings.TETROMINOES; i++)
+            for (int i = 0; i < shapeStatisticsOrder.Length; i++)
             {
-                int stat = GameLogic.Instance.Statistics[i];
+                int stat = GameLogic.Instance.GetStatistics()[shapeStatisticsOrder[i]];
                 spriteBatch.DrawString(tetrisFont, FormatNumberToNDigits(stat, Settings.STATS_DIGITS), new Vector2(xCoord, yCoord), Color.White);
                 yCoord += 64;
             }
