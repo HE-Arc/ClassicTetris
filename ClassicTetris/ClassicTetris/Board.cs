@@ -21,12 +21,6 @@ namespace ClassicTetris
         #endregion
 
         /// <summary>
-        /// Get the dictionary of the stitistics
-        /// </summary>
-        /// <returns>Statistics of th pieces</returns>
-        public Dictionary<Tetromino.Shape, int> getStatistics() => statistics.ToDictionary(entry => entry.Key, entry => entry.Value);
-        
-        /// <summary>
         /// Constructor of the board
         /// </summary>
         public Board()
@@ -51,6 +45,12 @@ namespace ClassicTetris
                 statistics.Add(shape, 0);
             }
         }
+
+        /// <summary>
+        /// Get the dictionary of the stitistics
+        /// </summary>
+        /// <returns>Statistics of th pieces</returns>
+        public Dictionary<Tetromino.Shape, int> GetStatistics() => statistics.ToDictionary(entry => entry.Key, entry => entry.Value);
 
         /// <summary>
         /// Trigger when a turn must be run
