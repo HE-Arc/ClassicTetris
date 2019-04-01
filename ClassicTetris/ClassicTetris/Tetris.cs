@@ -49,6 +49,7 @@ namespace ClassicTetris
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             AudioManager.GetInstance().Load(Content);
+			//AudioManager.GetInstance().Play(Music.Theme1);
             renderer = new Renderer(Content);
             isReadyToDraw = true;
             // TODO: use this.Content to load your game content here
@@ -74,41 +75,32 @@ namespace ClassicTetris
 
 			if(Actions.GetInstance()[Action.Left].IsPressed())
 			{
-				GameLogic.Instance.Board.Left();
+				GameLogic.Instance.Left();
 			}
-			else if (Actions.GetInstance()[Action.Right].IsPressed())
+			if (Actions.GetInstance()[Action.Right].IsPressed())
             {
-                GameLogic.Instance.Board.Right();
+                GameLogic.Instance.Right();
             }
-			else if (Actions.GetInstance()[Action.Rotate].IsPressed())
+			if (Actions.GetInstance()[Action.Rotate].IsPressed())
             {
-                GameLogic.Instance.Board.Turn();
+                GameLogic.Instance.Turn();
             }
-			else if (Actions.GetInstance()[Action.Down].IsPressed())
+			if (Actions.GetInstance()[Action.Down].IsDown())
 			{
-
+				GameLogic.Instance.Down();
             }
-			else if (Actions.GetInstance()[Action.ForceDown].IsPressed())
+			if (Actions.GetInstance()[Action.ForceDown].IsPressed())
             {
-                GameLogic.Instance.Board.Drop();
+                GameLogic.Instance.Drop();
 			}
-			else if (Actions.GetInstance()[Action.Quit].IsPressed())
+			if (Actions.GetInstance()[Action.Quit].IsPressed())
             {
                 Exit();
 			}
-			else if (Actions.GetInstance()[Action.Debug].IsPressed())
+			if (Actions.GetInstance()[Action.Debug].IsPressed())
             {
-                AudioManager.GetInstance().Play(Music.Theme1);
 				//board.Tick();
                 GameLogic.Instance.Tick();
-            }
-			else if (Actions.GetInstance()[Action.ForceDown].IsPressed())
-            {
-                // todo
-			}
-			else if (Actions.GetInstance()[Action.Quit].IsPressed())
-            {
-				Exit();
             }
 
             base.Update(gameTime);

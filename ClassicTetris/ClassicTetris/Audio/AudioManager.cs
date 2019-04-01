@@ -31,8 +31,8 @@ namespace ClassicTetris.Audio
 
 		public void Load(ContentManager content)
         {
-            soundEffects[SFX.HitWall] = content.Load<SoundEffect>("hitwall");
-            songs[Music.Theme1] = content.Load<Song>("theme1");
+			soundEffects[SFX.HitWall] = content.Load<SoundEffect>("Audio/SFX/invalid_keypress");
+			songs[Music.Theme1] = content.Load<Song>("Audio/Music/01 - Kalinka");
         }
         
 		public void Play(SFX sfx)
