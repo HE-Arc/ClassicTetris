@@ -1,6 +1,9 @@
 ﻿using System;
 namespace ClassicTetris.Audio
 {
+	/// <summary>
+    /// Sfx enum.
+    /// </summary>
     public enum SFX
     {
 		BlockRotate,

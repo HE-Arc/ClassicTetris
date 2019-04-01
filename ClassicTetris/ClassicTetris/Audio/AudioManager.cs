@@ -29,6 +29,10 @@ namespace ClassicTetris.Audio
 
         }
 
+        /// <summary>
+        /// Load the specified content.
+        /// </summary>
+        /// <param name="content">Content.</param>
 		public void Load(ContentManager content)
 		{
 			soundEffects[SFX.BlockRotate] = content.Load<SoundEffect>("Audio/SFX/block-rotate");
@@ -45,11 +49,19 @@ namespace ClassicTetris.Audio
 			songs[Music.Theme1] = content.Load<Song>("Audio/Music/music");
         }
         
+        /// <summary>
+        /// Play the specified sfx.
+        /// </summary>
+        /// <param name="sfx">Sfx.</param>
 		public void Play(SFX sfx)
         {
 			soundEffects[sfx].Play();
         }
 
+        /// <summary>
+        /// Play the specified music.
+        /// </summary>
+        /// <param name="music">Music.</param>
 		public void Play(Music music)
         {
 			MediaPlayer.Play(songs[music]);

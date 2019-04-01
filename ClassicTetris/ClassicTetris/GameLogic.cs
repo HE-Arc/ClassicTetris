@@ -58,10 +58,14 @@ namespace ClassicTetris
 		public int Tick()
 		{
 			int test = board.Tick();
-			if (test > 1)
+			if (test >= 4)
             {
-				AudioManager.GetInstance().Play(SFX.BlockRotate);
+				AudioManager.GetInstance().Play(SFX.LineRemoval4);
             }
+			else if(test >= 1)
+			{
+				AudioManager.GetInstance().Play(SFX.LineRemove);
+			}
             score += 10 * test;
 			return score;
 		}
@@ -101,7 +105,7 @@ namespace ClassicTetris
 			bool result = board.Down();
 			if (!result)
             {
-				AudioManager.GetInstance().Play(SFX.BlockRotate);
+				AudioManager.GetInstance().Play(SFX.ForceHit);
             }
             return result;
 		}
@@ -109,6 +113,7 @@ namespace ClassicTetris
 		public void Drop()
 		{
 			board.Drop();
+			AudioManager.GetInstance().Play(SFX.LineDrop);
 		}
 
 		public int[][] GetGrid()
