@@ -25,10 +25,10 @@ namespace ClassicTetris
         public Board()
         {
             //Init grid
-            landedShape = new int[Settings.HEIGHT][];
+            landedShape = new int[Settings.BOARD_HEIGHT][];
             for (int i = 0; i < landedShape.Length; i++)
             {
-                landedShape[i] = new int[Settings.WIDTH];
+                landedShape[i] = new int[Settings.BOARD_WIDTH];
             }
 
             //Create first shape
@@ -41,26 +41,36 @@ namespace ClassicTetris
         /// <summary>
         /// Trigger when a turn must be run
         /// </summary>
-        public void Tick()
+        /// <returns>Nb line removed - (-1) for Game Over</returns>
+        public int Tick()
         {
             if (!Down())
             {
+                // Detect Game Over
+                if(currentShape.y < 0)
+                {
+                    Console.WriteLine("Game Over !");
+                    return -1;
+                }
+
                 //Merge shape to current grid
                 this.landedShape = MergeGridWithShape();
 
                 //Clear lines
-                ClearLines(currentShape.y);
+                int nbLignesRemoved = ClearLines(currentShape.y);
 
                 //Change current shape
                 currentShape = nextShape;
                 
                 //Generate next shape
                 nextShape = Tetromino.Random(Settings.START_X, Settings.START_Y);
+                return nbLignesRemoved;
             }
             else
             {
                 //Tetromino not down Nothing to do
             }
+            return 0;
         }
 
         /// <summary>
@@ -68,7 +78,7 @@ namespace ClassicTetris
         /// </summary>
         public bool Turn()
         {
-            //TODO turn currentShape
+            //turn currentShape
             Tetromino nextShape = currentShape.Rotate();
             if(CanMove(nextShape))
             {
@@ -111,10 +121,10 @@ namespace ClassicTetris
         /// </summary>
         public bool Down()
         {
-            Tetromino nextShape = currentShape.Down();
-            if (CanMove(nextShape))
+            Tetromino movedShape = currentShape.Down();
+            if (CanMove(movedShape))
             {
-                currentShape = nextShape;
+                currentShape = movedShape;
                 return true;
             }
             return false;
@@ -143,9 +153,9 @@ namespace ClassicTetris
         /// <returns>True is the row is full</returns>
         private bool RowIsFull(int row)
         {
-            for (int col = 0; col < landedShape.GetLength(1); ++col)
+            for (int col = 0; col < landedShape[0].Length; ++col)
             {
-                if (landedShape[row][col] == 0)
+                if (landedShape[row][col] <= 0)
                 {
                     return false;
                 }
@@ -177,8 +187,11 @@ namespace ClassicTetris
             {
                 for (int j = 0; j < n; ++j)
                 {
-                    grid[currentShape.x + i][currentShape.y + j]
-                        = shape[i, j];
+                    if(shape[i, j] > 0 && currentShape.y + i >= 0)
+                    {
+                        grid[currentShape.y + i][currentShape.x + j]
+                            = shape[i, j];
+                    }
                 }
             }
             return grid;
@@ -191,23 +204,23 @@ namespace ClassicTetris
         /// <returns>Number of row removed</returns>
         private int ClearLines(int startLine)
         {
-            int nbRow = 4;   //check fourth row
-            int rowId = startLine + nbRow - 1;
+            int nbRow = currentShape.Grid.GetLength(0);   //check four row
+            int row = Math.Min(startLine + nbRow, Settings.BOARD_HEIGHT) - 1;
 
             int nbRowRemoved = 0;
 
             while (nbRow > 0)
             {
-                if (RowIsFull(rowId))
+                if (RowIsFull(row))
                 {
                     //Move all content above one line below
-                    MoveDownAllRowAbove(rowId);
+                    MoveDownAllRowAbove(row);
                     ++nbRowRemoved;
                 }
                 else
                 {
                     //Look at the row above
-                    --rowId;
+                    --row;
                 }
                 --nbRow;
             }
@@ -225,7 +238,7 @@ namespace ClassicTetris
             {
                 landedShape[i] = (int[])landedShape[i - 1].Clone();
             }
-            landedShape[0] = new int[Settings.WIDTH];
+            landedShape[0] = new int[Settings.BOARD_WIDTH];
         }
 
         /// <summary>
@@ -236,16 +249,16 @@ namespace ClassicTetris
         /// <returns></returns>
         private bool CanMove(Tetromino shape)
         {
-            int n = shape.Grid.Length;
+            int n = shape.Grid.GetLength(0);
             
             for(int i = 0; i < n; ++i)
             {
                 for (int j = 0; j < n; ++j)
                 {
-                    if (shape.Grid[i, j] > 0 && (
-                        shape.x + i < 0 || shape.x + i >= Settings.WIDTH ||
-                        shape.y + j < 0 || shape.y + j >= Settings.HEIGHT ||
-                        landedShape[shape.x+i][shape.y+j] > 0))
+                    if (shape.Grid[i, j] > 0 && shape.y + i >= 0 && (
+                        shape.y + i >= Settings.BOARD_HEIGHT ||
+                        shape.x + j < 0 || shape.x + j >= Settings.BOARD_WIDTH ||
+                        landedShape[shape.y+i][shape.x+j] > 0))
                     {
                         return false;
                     }

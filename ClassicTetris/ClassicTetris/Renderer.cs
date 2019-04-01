@@ -26,114 +26,110 @@ namespace ClassicTetris
             tetrisFont = content.Load<SpriteFont>("Fonts/classic_tetris_font");
         }
 
-        private void drawBackground(SpriteBatch spriteBatch)
+        private void DrawBackground(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(background, Vector2.Zero, Color.White);
         }
 
-        public void DrawScene(SpriteBatch spriteBatch, Board board)
+        public void DrawScene(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
             {
-                drawBackground(spriteBatch);
-                drawBoard(spriteBatch, board);
-                drawTopScore(spriteBatch);
-                drawCurrentScore(spriteBatch);
-                drawNextTetromino(spriteBatch);
-                drawLevel(spriteBatch);
-                drawStatistics(spriteBatch);
-                drawType(spriteBatch);
+                DrawBackground(spriteBatch);
+                DrawBoard(spriteBatch);
+                DrawTopScore(spriteBatch);
+                DrawCurrentScore(spriteBatch);
+                DrawNextTetromino(spriteBatch);
+                DrawLevel(spriteBatch);
+                DrawStatistics(spriteBatch);
+                DrawType(spriteBatch);
             }
             spriteBatch.End();
         }
 
-        private void drawType(SpriteBatch spriteBatch)
+        private void DrawType(SpriteBatch spriteBatch)
         {
             spriteBatch.DrawString(tetrisFont, "A", new Vector2(95, 85), Color.White);
         }
 
-        private void drawStatistics(SpriteBatch spriteBatch)
+        private void DrawStatistics(SpriteBatch spriteBatch)
         {
             int xCoord = 200;
             int yCoord = 330;
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < Settings.TETROMINOES; i++)
             {
-                int stat = 21; //DEBUG
-                spriteBatch.DrawString(tetrisFont, formatNumberToNDigits(stat, 3), new Vector2(xCoord, yCoord), Color.White);
+                int stat = GameLogic.Instance.Statistics[i];
+                spriteBatch.DrawString(tetrisFont, FormatNumberToNDigits(stat, Settings.STATS_DIGITS), new Vector2(xCoord, yCoord), Color.White);
                 yCoord += 64;
             }
         }
 
-        private void drawLevel(SpriteBatch spriteBatch)
+        private void DrawLevel(SpriteBatch spriteBatch)
         {
-            int level = 9;
-            spriteBatch.DrawString(tetrisFont, formatNumberToNDigits(level, 2), new Vector2(820, 630), Color.White);
+            int level = GameLogic.Instance.Level;
+            spriteBatch.DrawString(tetrisFont, FormatNumberToNDigits(level, Settings.LEVEL_DIGITS), new Vector2(820, 630), Color.White);
         }
 
-        private void drawNextTetromino(SpriteBatch spriteBatch)
+        private void DrawNextTetromino(SpriteBatch spriteBatch)
         {
             spriteBatch.DrawString(tetrisFont, "T", new Vector2(790, 450), Color.White);
         }
 
-        private void drawCurrentScore(SpriteBatch spriteBatch)
+        private void DrawCurrentScore(SpriteBatch spriteBatch)
         {
-            //int score = Board.GetScore();
-            int score = 3000; //DEBUG
-
-            //String formattedTopScore = formatNumberToNDigits(topScore, Settings.SCORE_DIGITS);
-            String formattedScore = formatNumberToNDigits(score, 6);
-
-            spriteBatch.DrawString(tetrisFont, formattedScore, new Vector2(770, 215), Color.White);
+            int score = GameLogic.Instance.Score;
+            spriteBatch.DrawString(tetrisFont, FormatNumberToNDigits(score, Settings.SCORE_DIGITS), new Vector2(770, 215), Color.White);
         }
 
-        private void drawTopScore(SpriteBatch spriteBatch)
+        private void DrawTopScore(SpriteBatch spriteBatch)
         {
-            //int topScore = Save.GetTopScore();
             int topScore = 5000;
-
-            //String formattedTopScore = formatNumberToNDigits(topScore, Settings.SCORE_DIGITS);
-            String formattedTopScore = formatNumberToNDigits(topScore, 6);
-
-            spriteBatch.DrawString(tetrisFont, formattedTopScore, new Vector2(770, 120), Color.White);
+            spriteBatch.DrawString(tetrisFont, FormatNumberToNDigits(topScore, Settings.SCORE_DIGITS), new Vector2(770, 120), Color.White);
         }
 
-        private void drawBoard(SpriteBatch spriteBatch, Board board)
+        private void DrawBoard(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(tetrisFont, "BOARD", new Vector2(381, 160), Color.White);
-
-            int[][] b = board.GetGrid(); 
-
-            int offsetX = 383;
-            int offsetY = 162;
-            int squareSize = 32;
-
-            
-
-
-            
-
+            int[][] b = GameLogic.Instance.Board.GetGrid(); 
+            int offsetX = Settings.BOARD_OFFSET_X;
+            int offsetY = Settings.BOARD_OFFSET_Y;
+            int squareSize = Settings.SQUARE_SIZE;
             Vector2 coor = new Vector2(offsetX, offsetY);
-            for (int i = 0; i < 20; i++) //todo settings
+            for (int i = 0; i < Settings.BOARD_HEIGHT; i++) //todo settings
             {
-                for (int j = 0; j < 10; j++) //todo settings
+                for (int j = 0; j < Settings.BOARD_WIDTH; j++) //todo settings
                 {
                     
                     if(b[i][j] <= 0)
                     {
-                        Console.WriteLine($"{i}-{j} : Black");
-                        Texture2D rect = new Texture2D(spriteBatch.GraphicsDevice, squareSize, squareSize);
-                        Color[] data = new Color[squareSize * squareSize];
-                        for (int k = 0; k < data.Length; ++k) data[k] = Color.Black;
-                        rect.SetData(data);
-                        spriteBatch.Draw(rect, coor, Color.White);
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Black);
                     }
-                    else
+                    else if (b[i][j] <= 1)
                     {
-                        Texture2D rect = new Texture2D(spriteBatch.GraphicsDevice, squareSize, squareSize);
-                        Color[] data = new Color[squareSize * squareSize];
-                        for (int k = 0; k < data.Length; ++k) data[k] = Color.Yellow;
-                        rect.SetData(data);
-                        spriteBatch.Draw(rect, coor, Color.White);
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Orange);
+                    }
+                    else if (b[i][j] <= 2)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Cyan);
+                    }
+                    else if (b[i][j] <= 3)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Blue);
+                    }
+                    else if (b[i][j] <= 4)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Green);
+                    }
+                    else if (b[i][j] <= 5)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Magenta);
+                    }
+                    else if (b[i][j] <= 6)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Red);
+                    }
+                    else if (b[i][j] <= 7)
+                    {
+                        DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Yellow);
                     }
                     coor.X += squareSize;
 
@@ -152,7 +148,7 @@ namespace ClassicTetris
         /// <param name="number">The input number</param>
         /// <param name="n">The number of chars wanted</param>
         /// <returns></returns>
-        private String formatNumberToNDigits(int number, int n)
+        private string FormatNumberToNDigits(int number, int n)
         {
             Debug.Assert(n > 0);
             number %= Convert.ToInt32(Math.Pow(10, n));
@@ -160,6 +156,15 @@ namespace ClassicTetris
             String formattedNumber = new String('0', n).Substring(1, n - number.ToString().Length) + number.ToString();
             return formattedNumber;
             
+        }
+
+        private void DrawRectangle(SpriteBatch sb, Vector2 coor, int sizeX, int sizeY, Color color)
+        {
+            Texture2D rect = new Texture2D(sb.GraphicsDevice, sizeX, sizeY);
+            Color[] data = new Color[sizeX * sizeY];
+            for (int k = 0; k < data.Length; ++k) data[k] = color;
+            rect.SetData(data);
+            sb.Draw(rect, coor, Color.White);
         }
     }
 }

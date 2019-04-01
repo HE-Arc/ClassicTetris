@@ -13,9 +13,9 @@ namespace ClassicTetris
     public class Tetris : Game
     {
         GraphicsDeviceManager graphics;
+        GameLogic gameLogic;
         SpriteBatch spriteBatch;
         Renderer renderer;
-        Board board;
         bool isReadyToDraw;
 
         public Tetris()
@@ -23,6 +23,7 @@ namespace ClassicTetris
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 1025;
             graphics.PreferredBackBufferHeight = 895;
+            gameLogic = GameLogic.Instance;
             Content.RootDirectory = "Content";
             isReadyToDraw = false;
         }
@@ -36,7 +37,6 @@ namespace ClassicTetris
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            board = new Board();
             base.Initialize();
         }
 
@@ -70,30 +70,27 @@ namespace ClassicTetris
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
 			Actions.GetInstance().Update(Keyboard.GetState());
 
 			if(Actions.GetInstance()[Action.Left].IsPressed())
 			{
-				board.Left();
+				GameLogic.Instance.Board.Left();
 			}
 			else if (Actions.GetInstance()[Action.Right].IsPressed())
             {
-				board.Right();
+                GameLogic.Instance.Board.Right();
             }
 			else if (Actions.GetInstance()[Action.Rotate].IsPressed())
             {
-				board.Turn();
+                GameLogic.Instance.Board.Turn();
             }
 			else if (Actions.GetInstance()[Action.Down].IsPressed())
 			{
-				
+
             }
 			else if (Actions.GetInstance()[Action.ForceDown].IsPressed())
             {
-				board.Drop();
+                GameLogic.Instance.Board.Drop();
 			}
 			else if (Actions.GetInstance()[Action.Quit].IsPressed())
             {
@@ -101,8 +98,17 @@ namespace ClassicTetris
 			}
 			else if (Actions.GetInstance()[Action.Debug].IsPressed())
             {
-				board.Tick();
                 AudioManager.GetInstance().Play(Music.Theme1);
+				//board.Tick();
+                GameLogic.Instance.Tick();
+            }
+			else if (Actions.GetInstance()[Action.ForceDown].IsPressed())
+            {
+                // todo
+			}
+			else if (Actions.GetInstance()[Action.Quit].IsPressed())
+            {
+				Exit();
             }
 
             base.Update(gameTime);
@@ -118,7 +124,7 @@ namespace ClassicTetris
             {
                 GraphicsDevice.Clear(Color.CornflowerBlue);
 
-                renderer.DrawScene(spriteBatch, board);
+                renderer.DrawScene(spriteBatch);
 
                 base.Draw(gameTime);
             }
