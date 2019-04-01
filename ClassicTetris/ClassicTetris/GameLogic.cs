@@ -60,7 +60,7 @@ namespace ClassicTetris
 			int test = board.Tick();
 			if (test > 1)
             {
-                AudioManager.GetInstance().Play(SFX.HitWall);
+				AudioManager.GetInstance().Play(SFX.BlockRotate);
             }
             score += 10 * test;
 			return score;
@@ -71,7 +71,7 @@ namespace ClassicTetris
 			bool result = board.Turn();
 			if (!result)
             {
-                AudioManager.GetInstance().Play(SFX.HitWall);
+				AudioManager.GetInstance().Play(SFX.BlockRotate);
             }
 			return result;
 		}
@@ -81,7 +81,7 @@ namespace ClassicTetris
 			bool result = board.Right();
 			if (!result)
             {
-                AudioManager.GetInstance().Play(SFX.HitWall);
+				AudioManager.GetInstance().Play(SFX.BlockRotate);
             }
             return result;
 		}
@@ -91,7 +91,7 @@ namespace ClassicTetris
 			bool result = board.Left();
             if (!result)
 			{
-                AudioManager.GetInstance().Play(SFX.HitWall);            
+				AudioManager.GetInstance().Play(SFX.BlockRotate);            
             }
             return result;
 		}
@@ -101,7 +101,7 @@ namespace ClassicTetris
 			bool result = board.Down();
 			if (!result)
             {
-				AudioManager.GetInstance().Play(SFX.HitWall);
+				AudioManager.GetInstance().Play(SFX.BlockRotate);
             }
             return result;
 		}

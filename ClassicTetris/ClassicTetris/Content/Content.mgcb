@@ -13,41 +13,77 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Audio/Music/01 - Kalinka.mp3
+#begin Audio/Music/music.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
-/build:Audio/Music/01 - Kalinka.mp3
+/build:Audio/Music/music.mp3
 
-#begin Audio/Music/02 - Partisan's Song.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/02 - Partisan's Song.mp3
-
-#begin Audio/Music/03 - Souliko.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/03 - Souliko.mp3
-
-#begin Audio/Music/04 - Korobelniki.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/04 - Korobelniki.mp3
-
-#begin Audio/Music/05 - On the Road.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/05 - On the Road.mp3
-
-#begin Audio/SFX/invalid_keypress.mp3
+#begin Audio/SFX/block-rotate.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/SFX/invalid_keypress.mp3
+/build:Audio/SFX/block-rotate.mp3
+
+#begin Audio/SFX/force-hit.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SFX/force-hit.mp3
+
+#begin Audio/SFX/gameover.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SFX/gameover.mp3
+
+#begin Audio/SFX/line-drop.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SFX/line-drop.mp3
+
+#begin Audio/SFX/line-removal4.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SFX/line-removal4.mp3
+
+#begin Audio/SFX/line-remove.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SFX/line-remove.mp3
+
+#begin Audio/SFX/pause.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SFX/pause.mp3
+
+#begin Audio/SFX/select.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SFX/select.mp3
+
+#begin Audio/SFX/slow-hit.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SFX/slow-hit.mp3
+
+#begin Audio/SFX/start.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SFX/start.mp3
+
+#begin Audio/SFX/whoosh.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SFX/whoosh.mp3
 
 #begin Fonts/File.spritefont
 /importer:FontDescriptionImporter
