@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using ClassicTetris.Audio;
 
 namespace ClassicTetris
 {
-    class GameLogic
+	class GameLogic : TetrisLogic
     {
 
         #region Attributes
@@ -22,9 +23,7 @@ namespace ClassicTetris
 
         public int Score { get => score; set => score = value; }
         public int Level { get => level; set => level = value; }
-        public int[] Statistics { get => statistics; set => statistics = value; }
         public int Type { get => type; set => type = value; }
-        internal Board Board { get => board; set => board = value; }
         internal static GameLogic Instance
         {
             get
@@ -39,11 +38,10 @@ namespace ClassicTetris
 
         protected GameLogic()
         {
-            this.Score = 0;
-            this.Level = 1;
-            this.Statistics = new int[7] { 0, 0, 0, 0, 0, 0, 0 };
-            this.Type = 0;
-            this.Board = new Board();
+            Score = 0;
+            Level = 1;
+            Type = 0;
+			board = new Board();
             timer = new Timer(800);
             timer.Elapsed += (sender, e) => Tick();
 
@@ -55,10 +53,80 @@ namespace ClassicTetris
             timer.Start();
         }
 
-        public void Tick()
+        public Tetromino GetNextShape()
         {
-            int test = Board.Tick();
-            score += 10 * test;
+            return board.NextShape;
         }
+        
+        public Dictionary<Tetromino.Shape, int> GetStatistics()
+        {
+            return board.GetStatistics();
+        }
+
+        public int Tick()
+		{
+			int test = board.Tick();
+			if (test >= 4)
+            {
+				AudioManager.GetInstance().Play(SFX.LineRemoval4);
+            }
+			else if(test >= 1)
+			{
+				AudioManager.GetInstance().Play(SFX.LineRemove);
+			}
+            score += 10 * test;
+			return score;
+		}
+
+		public bool Turn()
+		{
+			bool result = board.Turn();
+			if (!result)
+            {
+				AudioManager.GetInstance().Play(SFX.BlockRotate);
+            }
+			return result;
+		}
+
+		public bool Right()
+		{
+			bool result = board.Right();
+			if (!result)
+            {
+				AudioManager.GetInstance().Play(SFX.BlockRotate);
+            }
+            return result;
+		}
+
+		public bool Left()
+		{
+			bool result = board.Left();
+            if (!result)
+			{
+				AudioManager.GetInstance().Play(SFX.BlockRotate);            
+            }
+            return result;
+		}
+
+		public bool Down()
+		{
+			bool result = board.Down();
+			if (!result)
+            {
+				AudioManager.GetInstance().Play(SFX.ForceHit);
+            }
+            return result;
+		}
+
+		public void Drop()
+		{
+			board.Drop();
+			AudioManager.GetInstance().Play(SFX.LineDrop);
+		}
+
+		public int[][] GetGrid()
+		{
+			return board.GetGrid();
+		}
     }
 }

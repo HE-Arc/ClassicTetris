@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ClassicTetris.Tetromino;
 
 namespace ClassicTetris
 {
@@ -16,6 +17,16 @@ namespace ClassicTetris
         private SpriteFont tetrisFont;
         private Texture2D[,] texturesTetrominos;
         private int level = 4;
+        private static Shape[] shapeStatisticsOrder =
+        {
+            Shape.T,
+            Shape.J,
+            Shape.Z,
+            Shape.O,
+            Shape.S,
+            Shape.L,
+            Shape.I
+        };
 
         public Renderer(ContentManager content, SpriteBatch sb)
         {
@@ -114,9 +125,9 @@ namespace ClassicTetris
         {
             int xCoord = 200;
             int yCoord = 330;
-            for (int i = 0; i < Settings.TETROMINOES; i++)
+            for (int i = 0; i < shapeStatisticsOrder.Length; i++)
             {
-                int stat = GameLogic.Instance.Statistics[i];
+                int stat = GameLogic.Instance.GetStatistics()[shapeStatisticsOrder[i]];
                 spriteBatch.DrawString(tetrisFont, FormatNumberToNDigits(stat, Settings.STATS_DIGITS), new Vector2(xCoord, yCoord), Color.White);
                 yCoord += 64;
             }
@@ -130,7 +141,7 @@ namespace ClassicTetris
 
         private void DrawNextTetromino(SpriteBatch spriteBatch)
         {
-            int[,] b = GameLogic.Instance.Board.NextShape.Grid;
+            int[,] b = GameLogic.Instance.GetNextShape().Grid;
             int dim = b.GetLength(0);
             int offsetDim = dim != 3 ? 0:15;
             
@@ -142,7 +153,7 @@ namespace ClassicTetris
             {
                 for (int j = 0; j < dim; j++)
                 {
-
+                    
                     if (b[i,j] <= 0)
                     {
                         //DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Black);
@@ -175,11 +186,11 @@ namespace ClassicTetris
                     {
                         DrawTexture(spriteBatch, texturesTetrominos[level, 3], coor);
                     }
-                    coor.X += squareSize;
+                    coor.X += squareSize + Settings.SQUARE_SPREARD;
 
                 }
                 coor.X = offsetX;
-                coor.Y += squareSize;
+                coor.Y += squareSize + Settings.SQUARE_SPREARD;
             }
 
         }
@@ -199,7 +210,7 @@ namespace ClassicTetris
 
         private void DrawBoard(SpriteBatch spriteBatch)
         {
-            int[][] b = GameLogic.Instance.Board.GetGrid(); 
+            int[][] b = GameLogic.Instance.GetGrid(); 
             int offsetX = Settings.BOARD_OFFSET_X;
             int offsetY = Settings.BOARD_OFFSET_Y;
             int squareSize = Settings.SQUARE_SIZE;

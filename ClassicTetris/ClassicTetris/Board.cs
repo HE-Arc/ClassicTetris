@@ -9,11 +9,11 @@ namespace ClassicTetris
     /// <summary>
     /// Main class managing all the logic of Tetris
     /// </summary>
-    class Board
+	class Board : TetrisLogic
     {
         #region Attributes
-
         private int[][] landedShape;
+        private Dictionary<Tetromino.Shape, int> statistics;
 
         public Tetromino NextShape { get; private set; }
         public Tetromino CurrentShape { get; private set; }
@@ -37,7 +37,20 @@ namespace ClassicTetris
 
             //Create next shape
             NextShape = Tetromino.Random(Settings.START_X, Settings.START_Y);
+
+            //Statistics
+            statistics = new Dictionary<Tetromino.Shape, int>();
+            foreach(Tetromino.Shape shape in Enum.GetValues(typeof(Tetromino.Shape)))
+            {
+                statistics.Add(shape, 0);
+            }
         }
+
+        /// <summary>
+        /// Get the dictionary of the stitistics
+        /// </summary>
+        /// <returns>Statistics of th pieces</returns>
+        public Dictionary<Tetromino.Shape, int> GetStatistics() => statistics.ToDictionary(entry => entry.Key, entry => entry.Value);
 
         /// <summary>
         /// Trigger when a turn must be run
@@ -47,6 +60,9 @@ namespace ClassicTetris
         {
             if (!Down())
             {
+                //Update statistics
+                statistics[CurrentShape.shape]++;
+
                 // Detect Game Over
                 if(CurrentShape.y < 0)
                 {
@@ -136,7 +152,7 @@ namespace ClassicTetris
         /// </summary>
         public void Drop()
         {
-            while (Down()) { };
+            while (Down()) { }
         }
 
         /// <summary>
