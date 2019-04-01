@@ -12,10 +12,11 @@ namespace ClassicTetris
 	class Board : TetrisLogic
     {
         #region Attributes
-        private Tetromino currentShape;
-        private Tetromino nextShape;
-
         private int[][] landedShape;
+        private Dictionary<Tetromino.Shape, int> statistics;
+
+        public Tetromino NextShape { get; private set; }
+        public Tetromino CurrentShape { get; private set; }
 
         #endregion
 
@@ -32,11 +33,24 @@ namespace ClassicTetris
             }
 
             //Create first shape
-            currentShape = Tetromino.Random(Settings.START_X, Settings.START_Y);
+            CurrentShape = Tetromino.Random(Settings.START_X, Settings.START_Y);
 
             //Create next shape
-            nextShape = Tetromino.Random(Settings.START_X, Settings.START_Y);
+            NextShape = Tetromino.Random(Settings.START_X, Settings.START_Y);
+
+            //Statistics
+            statistics = new Dictionary<Tetromino.Shape, int>();
+            foreach(Tetromino.Shape shape in Enum.GetValues(typeof(Tetromino.Shape)))
+            {
+                statistics.Add(shape, 0);
+            }
         }
+
+        /// <summary>
+        /// Get the dictionary of the stitistics
+        /// </summary>
+        /// <returns>Statistics of th pieces</returns>
+        public Dictionary<Tetromino.Shape, int> GetStatistics() => statistics.ToDictionary(entry => entry.Key, entry => entry.Value);
 
         /// <summary>
         /// Trigger when a turn must be run
@@ -46,8 +60,11 @@ namespace ClassicTetris
         {
             if (!Down())
             {
+                //Update statistics
+                statistics[CurrentShape.shape]++;
+
                 // Detect Game Over
-                if(currentShape.y < 0)
+                if(CurrentShape.y < 0)
                 {
                     Console.WriteLine("Game Over !");
                     return -1;
@@ -57,13 +74,13 @@ namespace ClassicTetris
                 this.landedShape = MergeGridWithShape();
 
                 //Clear lines
-                int nbLignesRemoved = ClearLines(currentShape.y);
+                int nbLignesRemoved = ClearLines(CurrentShape.y);
 
                 //Change current shape
-                currentShape = nextShape;
+                CurrentShape = NextShape;
                 
                 //Generate next shape
-                nextShape = Tetromino.Random(Settings.START_X, Settings.START_Y);
+                NextShape = Tetromino.Random(Settings.START_X, Settings.START_Y);
                 return nbLignesRemoved;
             }
             else
@@ -79,10 +96,10 @@ namespace ClassicTetris
         public bool Turn()
         {
             //turn currentShape
-            Tetromino nextShape = currentShape.Rotate();
+            Tetromino nextShape = CurrentShape.Rotate();
             if(CanMove(nextShape))
             {
-                currentShape = nextShape;
+                CurrentShape = nextShape;
                 return true;
             }
             return false;
@@ -93,10 +110,10 @@ namespace ClassicTetris
         /// </summary>
         public bool Right()
         {
-            Tetromino nextShape = currentShape.Right();
+            Tetromino nextShape = CurrentShape.Right();
             if (CanMove(nextShape))
             {
-                currentShape = nextShape;
+                CurrentShape = nextShape;
                 return true;
             }
             return false;
@@ -107,10 +124,10 @@ namespace ClassicTetris
         /// </summary>
         public bool Left()
         {
-            Tetromino nextShape = currentShape.Left();
+            Tetromino nextShape = CurrentShape.Left();
             if (CanMove(nextShape))
             {
-                currentShape = nextShape;
+                CurrentShape = nextShape;
                 return true;
             }
             return false;
@@ -121,10 +138,10 @@ namespace ClassicTetris
         /// </summary>
         public bool Down()
         {
-            Tetromino movedShape = currentShape.Down();
+            Tetromino movedShape = CurrentShape.Down();
             if (CanMove(movedShape))
             {
-                currentShape = movedShape;
+                CurrentShape = movedShape;
                 return true;
             }
             return false;
@@ -135,7 +152,7 @@ namespace ClassicTetris
         /// </summary>
         public void Drop()
         {
-            while (Down()) { };
+            while (Down()) { }
         }
 
         /// <summary>
@@ -179,7 +196,7 @@ namespace ClassicTetris
         /// <returns>Complete grid</returns>
         private int[][] MergeGridWithShape()
         {
-            int[,] shape = currentShape.Grid;
+            int[,] shape = CurrentShape.Grid;
             int[][] grid = CopyArrayLinq(landedShape);
 
             int n = shape.GetLength(0);
@@ -187,9 +204,9 @@ namespace ClassicTetris
             {
                 for (int j = 0; j < n; ++j)
                 {
-                    if(shape[i, j] > 0 && currentShape.y + i >= 0)
+                    if(shape[i, j] > 0 && CurrentShape.y + i >= 0)
                     {
-                        grid[currentShape.y + i][currentShape.x + j]
+                        grid[CurrentShape.y + i][CurrentShape.x + j]
                             = shape[i, j];
                     }
                 }
@@ -204,7 +221,7 @@ namespace ClassicTetris
         /// <returns>Number of row removed</returns>
         private int ClearLines(int startLine)
         {
-            int nbRow = currentShape.Grid.GetLength(0);   //check four row
+            int nbRow = CurrentShape.Grid.GetLength(0);   //check four row
             int row = Math.Min(startLine + nbRow, Settings.BOARD_HEIGHT) - 1;
 
             int nbRowRemoved = 0;

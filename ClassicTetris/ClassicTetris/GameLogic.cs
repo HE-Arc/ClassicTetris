@@ -23,7 +23,6 @@ namespace ClassicTetris
 
         public int Score { get => score; set => score = value; }
         public int Level { get => level; set => level = value; }
-        public int[] Statistics { get => statistics; set => statistics = value; }
         public int Type { get => type; set => type = value; }
         internal static GameLogic Instance
         {
@@ -39,11 +38,10 @@ namespace ClassicTetris
 
         protected GameLogic()
         {
-            this.Score = 0;
-            this.Level = 1;
-            this.Statistics = new int[7] { 0, 0, 0, 0, 0, 0, 0 };
-            this.Type = 0;
-			this.board = new Board();
+            Score = 0;
+            Level = 1;
+            Type = 0;
+			board = new Board();
             timer = new Timer(800);
             timer.Elapsed += (sender, e) => Tick();
 
@@ -55,7 +53,17 @@ namespace ClassicTetris
             timer.Start();
         }
 
-		public int Tick()
+        public Tetromino GetNextShape()
+        {
+            return board.NextShape;
+        }
+        
+        public Dictionary<Tetromino.Shape, int> GetStatistics()
+        {
+            return board.GetStatistics();
+        }
+
+        public int Tick()
 		{
 			int test = board.Tick();
 			if (test >= 4)
@@ -120,5 +128,5 @@ namespace ClassicTetris
 		{
 			return board.GetGrid();
 		}
-	}
+    }
 }

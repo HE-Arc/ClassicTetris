@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace ClassicTetris
 {
 	/// <summary>
@@ -13,5 +15,6 @@ namespace ClassicTetris
 		bool Down();
 		void Drop();
 		int[][] GetGrid();
+        Dictionary<Tetromino.Shape, int> GetStatistics();
     }
 }

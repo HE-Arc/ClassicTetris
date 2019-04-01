@@ -26,6 +26,9 @@ namespace ClassicTetris
 
         public const int BOARD_OFFSET_X = 383;
         public const int BOARD_OFFSET_Y = 162;
+        public const int NEXT_TETRO_OFFSET_X = 768;
+        public const int NEXT_TETRO_OFFSET_Y = 420;
+
         public const int SQUARE_SIZE = 32;
     }
 }
