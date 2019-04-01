@@ -55,6 +55,11 @@ namespace ClassicTetris
             timer.Start();
         }
 
+        public Tetromino GetNextShape()
+        {
+            return board.NextShape;
+        }
+
 		public int Tick()
 		{
 			int test = board.Tick();

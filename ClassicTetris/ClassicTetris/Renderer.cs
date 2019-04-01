@@ -72,7 +72,7 @@ namespace ClassicTetris
 
         private void DrawNextTetromino(SpriteBatch spriteBatch)
         {
-            int[,] b = GameLogic.Instance.Board.NextShape.Grid;
+            int[,] b = GameLogic.Instance.GetNextShape().Grid;
             int dim = b.GetLength(0);
             int offsetDim = dim != 3 ? 0:15;
             
