@@ -13,6 +13,42 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Audio/Music/01 - Kalinka.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/01 - Kalinka.mp3
+
+#begin Audio/Music/02 - Partisan's Song.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/02 - Partisan's Song.mp3
+
+#begin Audio/Music/03 - Souliko.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/03 - Souliko.mp3
+
+#begin Audio/Music/04 - Korobelniki.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/04 - Korobelniki.mp3
+
+#begin Audio/Music/05 - On the Road.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/05 - On the Road.mp3
+
+#begin Audio/SFX/invalid_keypress.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SFX/invalid_keypress.mp3
+
 #begin Fonts/File.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

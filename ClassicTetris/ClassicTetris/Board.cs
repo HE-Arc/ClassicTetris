@@ -9,7 +9,7 @@ namespace ClassicTetris
     /// <summary>
     /// Main class managing all the logic of Tetris
     /// </summary>
-    class Board
+	class Board : TetrisLogic
     {
         #region Attributes
         private int[][] landedShape;

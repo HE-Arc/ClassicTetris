@@ -141,7 +141,7 @@ namespace ClassicTetris
 
         private void DrawBoard(SpriteBatch spriteBatch)
         {
-            int[][] b = GameLogic.Instance.Board.GetGrid(); 
+            int[][] b = GameLogic.Instance.GetGrid(); 
             int offsetX = Settings.BOARD_OFFSET_X;
             int offsetY = Settings.BOARD_OFFSET_Y;
             int squareSize = Settings.SQUARE_SIZE;
