@@ -30,9 +30,19 @@ namespace ClassicTetris.Audio
         }
 
 		public void Load(ContentManager content)
-        {
-			soundEffects[SFX.HitWall] = content.Load<SoundEffect>("Audio/SFX/invalid_keypress");
-			songs[Music.Theme1] = content.Load<Song>("Audio/Music/01 - Kalinka");
+		{
+			soundEffects[SFX.BlockRotate] = content.Load<SoundEffect>("Audio/SFX/block-rotate");
+			soundEffects[SFX.ForceHit] = content.Load<SoundEffect>("Audio/SFX/force-hit");
+			soundEffects[SFX.GameOver] = content.Load<SoundEffect>("Audio/SFX/gameover");
+			soundEffects[SFX.LineDrop] = content.Load<SoundEffect>("Audio/SFX/line-drop");
+			soundEffects[SFX.LineRemoval4] = content.Load<SoundEffect>("Audio/SFX/line-removal4");
+			soundEffects[SFX.LineRemove] = content.Load<SoundEffect>("Audio/SFX/line-remove");
+			soundEffects[SFX.Pause] = content.Load<SoundEffect>("Audio/SFX/pause");
+			soundEffects[SFX.Select] = content.Load<SoundEffect>("Audio/SFX/select");
+			soundEffects[SFX.SlowHit] = content.Load<SoundEffect>("Audio/SFX/slow-hit");
+			soundEffects[SFX.Start] = content.Load<SoundEffect>("Audio/SFX/start");
+			soundEffects[SFX.Whoosh] = content.Load<SoundEffect>("Audio/SFX/whoosh");
+			songs[Music.Theme1] = content.Load<Song>("Audio/Music/music");
         }
         
 		public void Play(SFX sfx)

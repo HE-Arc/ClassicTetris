@@ -3,8 +3,16 @@ namespace ClassicTetris.Audio
 {
     public enum SFX
     {
-		HitWall,
-        NRows,
-        FourRows,
+		BlockRotate,
+		ForceHit,
+		GameOver,
+		LineDrop,
+		LineRemoval4,
+		LineRemove,
+		Pause,
+		Select,
+		SlowHit,
+		Start,
+        Whoosh,
     }
 }
