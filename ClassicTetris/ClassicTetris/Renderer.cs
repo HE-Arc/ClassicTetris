@@ -2,11 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static ClassicTetris.Tetromino;
 
 namespace ClassicTetris
@@ -16,7 +12,6 @@ namespace ClassicTetris
         private Texture2D background;
         private SpriteFont tetrisFont;
         private Texture2D[,] texturesTetrominos;
-        private int level = 4;
         private static Shape[] shapeStatisticsOrder =
         {
             Shape.T,
@@ -141,6 +136,7 @@ namespace ClassicTetris
 
         private void DrawNextTetromino(SpriteBatch spriteBatch)
         {
+            int level = GameLogic.Instance.Level;
             int[,] b = GameLogic.Instance.GetNextShape().Grid;
             int dim = b.GetLength(0);
             int offsetDim = dim != 3 ? 0:15;
@@ -195,7 +191,6 @@ namespace ClassicTetris
 
         }
   
-
         private void DrawCurrentScore(SpriteBatch spriteBatch)
         {
             int score = GameLogic.Instance.Score;
@@ -210,6 +205,7 @@ namespace ClassicTetris
 
         private void DrawBoard(SpriteBatch spriteBatch)
         {
+            int level = GameLogic.Instance.Level;
             int[][] b = GameLogic.Instance.GetGrid(); 
             int offsetX = Settings.BOARD_OFFSET_X;
             int offsetY = Settings.BOARD_OFFSET_Y;
