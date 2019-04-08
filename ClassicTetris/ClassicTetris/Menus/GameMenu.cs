@@ -9,10 +9,13 @@ namespace ClassicTetris.Menus
 {
 	public class GameMenu : IMenus
     {      
-        SpriteBatch spriteBatch;
-        GameRenderer renderer;
+		private SpriteBatch spriteBatch;
+        private GameRenderer renderer;      
+        private int leftCounter;
+        private int rightCounter;
+        private int downCounter;
 
-		Tetris tetris;
+		private Tetris tetris;
 
 		public GameMenu(Tetris tetris)
 		{
@@ -39,34 +42,72 @@ namespace ClassicTetris.Menus
 
 		public void Update(GameTime gameTime)
 		{
-			if (Actions.GetInstance()[Action.Left].IsPressed())
-            {
-                GameLogic.Instance.Left();
-            }
+            //DAS initial delay is 16 frames, and then every 6 frames
+			GameLogic.Instance.update();
+            if (GameLogic.Instance.GameEnded) return;
+
+
+            //Priotity given to right action like in NES
             if (Actions.GetInstance()[Action.Right].IsPressed())
             {
                 GameLogic.Instance.Right();
+                rightCounter = Settings.DELAY_AUTO_SHIFT_INITIAL;
             }
+            else if (Actions.GetInstance()[Action.Right].IsDown())
+            {
+                --rightCounter;
+                if (rightCounter < 0)
+                {
+                    GameLogic.Instance.Right();
+                    rightCounter = Settings.DELAY_AUTO_SHIFT;
+                }
+            }
+            else if (Actions.GetInstance()[Action.Left].IsPressed())
+            {
+                GameLogic.Instance.Left();
+                leftCounter = Settings.DELAY_AUTO_SHIFT_INITIAL;
+            }
+            else if (Actions.GetInstance()[Action.Left].IsDown())
+            {
+                --leftCounter;
+                if (leftCounter < 0)
+                {
+                    GameLogic.Instance.Left();
+                    leftCounter = Settings.DELAY_AUTO_SHIFT;
+                }
+            }
+
+            if (Actions.GetInstance()[Action.Down].IsPressed())
+            {
+                GameLogic.Instance.Down();
+                downCounter = Settings.DELAY_AUTO_SHIFT_INITIAL;
+            }
+            else if (Actions.GetInstance()[Action.Down].IsDown())
+            {
+                --downCounter;
+                if (downCounter < 0)
+                {
+                    GameLogic.Instance.Down();
+                    downCounter = Settings.DELAY_AUTO_SHIFT;
+                }
+            }
+
             if (Actions.GetInstance()[Action.Rotate].IsPressed())
             {
                 GameLogic.Instance.Turn();
             }
-            if (Actions.GetInstance()[Action.Down].IsDown())
-            {
-                GameLogic.Instance.Down();
-            }
+
+            //TODO: Remove for debug purposes
             if (Actions.GetInstance()[Action.ForceDown].IsPressed())
             {
                 GameLogic.Instance.Drop();
             }
+
             if (Actions.GetInstance()[Action.Quit].IsPressed())
             {
                 tetris.Exit();
             }
-            if (Actions.GetInstance()[Action.Debug].IsPressed())
-            {
-                GameLogic.Instance.Tick();
-            }
+
 		}
       
         public void Draw(GameTime gameTime)

@@ -204,7 +204,8 @@ namespace ClassicTetris.Renderer
         }
 
         private void DrawBoard(SpriteBatch spriteBatch)
-        {
+		{
+			int level = GameLogic.Instance.Level;
             int[][] b = GameLogic.Instance.GetGrid(); 
             int offsetX = Settings.BOARD_OFFSET_X;
             int offsetY = Settings.BOARD_OFFSET_Y;
