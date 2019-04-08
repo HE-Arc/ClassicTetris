@@ -29,7 +29,7 @@ namespace ClassicTetris
 
         public Tetris()
         {
-			currentMenu = EMenu.Game;
+			currentMenu = EMenu.MainMenu;
 			menus = new Dictionary<EMenu, IMenus>();
 
             graphics = new GraphicsDeviceManager(this);
