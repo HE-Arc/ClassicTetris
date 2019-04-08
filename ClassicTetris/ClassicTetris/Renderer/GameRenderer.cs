@@ -5,9 +5,9 @@ using System;
 using System.Diagnostics;
 using static ClassicTetris.Tetromino;
 
-namespace ClassicTetris
+namespace ClassicTetris.Renderer
 {
-    class Renderer
+    class GameRenderer
     {
         private Texture2D background;
         private SpriteFont tetrisFont;
@@ -23,13 +23,13 @@ namespace ClassicTetris
             Shape.I
         };
 
-        public Renderer(ContentManager content, SpriteBatch sb)
+        public GameRenderer(ContentManager content, SpriteBatch sb)
         {
             texturesTetrominos = new Texture2D[Settings.NB_COLORS_LEVELS,Settings.NB_TEXTURES];
             LoadContent(content, sb);
-
         }
-        private void LoadContent(ContentManager content, SpriteBatch sb)
+
+		private void LoadContent(ContentManager content, SpriteBatch sb)
         {
             background = content.Load<Texture2D>("Textures/tetris_exemple");
             tetrisFont = content.Load<SpriteFont>("Fonts/classic_tetris_font");
@@ -63,17 +63,17 @@ namespace ClassicTetris
             texturesTetrominos[4, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_4_PRIMARY);
             texturesTetrominos[4, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_4_PRIMARY);
             texturesTetrominos[4, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_4_SECONDARY);
-                               
+
             texturesTetrominos[5, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_5_PRIMARY);
             texturesTetrominos[5, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_5_PRIMARY);
             texturesTetrominos[5, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_5_PRIMARY);
             texturesTetrominos[5, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_5_SECONDARY);
-                               
+
             texturesTetrominos[6, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_6_PRIMARY);
             texturesTetrominos[6, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_6_PRIMARY);
             texturesTetrominos[6, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_6_PRIMARY);
             texturesTetrominos[6, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_6_SECONDARY);
-                               
+
             texturesTetrominos[7, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_7_PRIMARY);
             texturesTetrominos[7, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_7_PRIMARY);
             texturesTetrominos[7, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_7_PRIMARY);
@@ -140,7 +140,7 @@ namespace ClassicTetris
             int[,] b = GameLogic.Instance.GetNextShape().Grid;
             int dim = b.GetLength(0);
             int offsetDim = dim != 3 ? 0:15;
-            
+
             int offsetX = Settings.NEXT_TETRO_OFFSET_X + offsetDim;
             int offsetY = Settings.NEXT_TETRO_OFFSET_Y;
             int squareSize = Settings.SQUARE_SIZE;
@@ -149,7 +149,7 @@ namespace ClassicTetris
             {
                 for (int j = 0; j < dim; j++)
                 {
-                    
+
                     if (b[i,j] <= 0)
                     {
                         //DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Black);
@@ -205,7 +205,6 @@ namespace ClassicTetris
 
         private void DrawBoard(SpriteBatch spriteBatch)
         {
-            int level = GameLogic.Instance.Level;
             int[][] b = GameLogic.Instance.GetGrid(); 
             int offsetX = Settings.BOARD_OFFSET_X;
             int offsetY = Settings.BOARD_OFFSET_Y;
@@ -215,7 +214,7 @@ namespace ClassicTetris
             {
                 for (int j = 0; j < Settings.BOARD_WIDTH; j++) //todo settings
                 {
-                    
+
                     if(b[i][j] <= 0)
                     {
                         //DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Black);
@@ -254,7 +253,7 @@ namespace ClassicTetris
                 coor.X = offsetX;
                 coor.Y += squareSize + Settings.SQUARE_SPREARD;
             }
-            
+
         }
 
         private void DrawTexture(SpriteBatch sb, Texture2D texture, Vector2 coor)
@@ -277,10 +276,10 @@ namespace ClassicTetris
             Debug.Assert(number < Convert.ToInt32(Math.Pow(10, n)));
             String formattedNumber = new String('0', n).Substring(1, n - number.ToString().Length) + number.ToString();
             return formattedNumber;
-            
+
         }
 
-        
+
         private void DrawRectangle(SpriteBatch sb, Vector2 coor, int sizeX, int sizeY, Color color)
         {
             Texture2D rect = new Texture2D(sb.GraphicsDevice, sizeX, sizeY);

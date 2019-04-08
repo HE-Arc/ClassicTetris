@@ -25,11 +25,16 @@ namespace ClassicTetris
             {
                 if (instance == null)
                 {
-                    instance = new GameLogic();
+					Reset();
                 }
                 return instance;
             }
         }
+
+        public static void Reset()
+		{
+            instance = new GameLogic();
+		}
 
         protected GameLogic()
         {
