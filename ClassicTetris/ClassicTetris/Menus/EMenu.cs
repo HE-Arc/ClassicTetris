@@ -1,7 +1,7 @@
 ﻿using System;
 namespace ClassicTetris.Menus
 {
-    public enum Menu
+    public enum EMenu
     {
 		MainMenu,
         Game

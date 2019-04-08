@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Input;
 using ClassicTetris.Inputs;
 using ClassicTetris.Audio;
 using ClassicTetris.Menus;
+using System.Collections.Generic;
+using System;
 
 namespace ClassicTetris
 {
@@ -14,80 +16,66 @@ namespace ClassicTetris
     public class Tetris : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        Renderer renderer;
-		Menu currentMenu;
+        
+		Dictionary<EMenu, IMenus> menus;
+        EMenu currentMenu;
 
         public Tetris()
         {
-			currentMenu = Menu.Game;
-            graphics = new GraphicsDeviceManager(this);
+			currentMenu = EMenu.Game;
+			menus = new Dictionary<EMenu, IMenus>();
+
+            graphics = new GraphicsDeviceManager(this);         
             graphics.PreferredBackBufferWidth = 1025;
             graphics.PreferredBackBufferHeight = 895;
-            Content.RootDirectory = "Content";
+			Content.RootDirectory = "Content";
         }
 
         protected override void Initialize()
-        {
+		{
+            menus[EMenu.MainMenu] = new MainMenu(this);
+            menus[EMenu.Game] = new GameMenu(this);
             base.Initialize();
+			foreach(KeyValuePair<EMenu, IMenus> menu in menus)
+			{
+				menu.Value.Initialize();
+			}
         }
+
         protected override void LoadContent()
-        {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            AudioManager.GetInstance().Load(Content);
-			//AudioManager.GetInstance().Play(Music.Theme1);
-            renderer = new Renderer(Content);
+		{
+            base.LoadContent();
+			foreach (KeyValuePair<EMenu, IMenus> menu in menus)
+            {
+				menu.Value.LoadContent(Content, GraphicsDevice);
+            }
         }
 
         protected override void UnloadContent()
         {
+			base.UnloadContent();
+			foreach (KeyValuePair<EMenu, IMenus> menu in menus)
+            {
+				menu.Value.UnloadContent();
+            }
         }
 
         protected override void Update(GameTime gameTime)
-        {
-			Actions.GetInstance().Update(Keyboard.GetState());
-
-			if(Actions.GetInstance()[Action.Left].IsPressed())
-			{
-				GameLogic.Instance.Left();
-			}
-			if (Actions.GetInstance()[Action.Right].IsPressed())
-            {
-                GameLogic.Instance.Right();
-            }
-			if (Actions.GetInstance()[Action.Rotate].IsPressed())
-            {
-                GameLogic.Instance.Turn();
-            }
-			if (Actions.GetInstance()[Action.Down].IsDown())
-			{
-				GameLogic.Instance.Down();
-            }
-			if (Actions.GetInstance()[Action.ForceDown].IsPressed())
-            {
-                GameLogic.Instance.Drop();
-			}
-			if (Actions.GetInstance()[Action.Quit].IsPressed())
-            {
-                Exit();
-			}
-			if (Actions.GetInstance()[Action.Debug].IsPressed())
-            {
-				//board.Tick();
-                GameLogic.Instance.Tick();
-            }
-
+		{
             base.Update(gameTime);
+            Actions.GetInstance().Update(Keyboard.GetState());
+			menus[currentMenu].Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            renderer.DrawScene(spriteBatch);
-
-            base.Draw(gameTime);
+		{
+			base.Draw(gameTime);
+			menus[currentMenu].Draw(gameTime);
         }
+
+		public void ChangeMenu(EMenu menu)
+		{
+			currentMenu = menu;
+		}
     }
 }

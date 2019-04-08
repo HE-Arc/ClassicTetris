@@ -8,18 +8,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassicTetris
+namespace ClassicTetris.Renderer
 {
-    class Renderer
+    class GameRenderer
     {
         private Texture2D background;
         private SpriteFont tetrisFont;
 
-        public Renderer(ContentManager content)
+        public GameRenderer(ContentManager content)
         {
-            LoadContent(content);
-
+            LoadContent(content);         
         }
+
         private void LoadContent(ContentManager content)
         {
             background = content.Load<Texture2D>("Textures/tetris_exemple");
@@ -139,8 +139,7 @@ namespace ClassicTetris
             }
             
         }
-
-
+      
         /// <summary>
         /// Converts a number into a string of n characters.
         /// Example for n = 6 : (100 -> "000100", 50000 -> "050000)
