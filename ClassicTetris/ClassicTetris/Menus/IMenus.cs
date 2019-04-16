@@ -12,5 +12,7 @@ namespace ClassicTetris.Menus
 		void UnloadContent();
 		void Update(GameTime gameTime);
 		void Draw(GameTime gameTime);
+        void Start();
+        void Stop();
     }
 }

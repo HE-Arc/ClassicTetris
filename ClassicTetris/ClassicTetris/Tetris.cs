@@ -17,15 +17,12 @@ namespace ClassicTetris
     public class Tetris : Game
     {
         private GraphicsDeviceManager graphics;
-        private GameLogic gameLogic;
-        private SpriteBatch spriteBatch;
 
 		private Dictionary<EMenu, IMenus> menus;
         private EMenu currentMenu;
 
         public Tetris()
         {
-			currentMenu = EMenu.Game;
 			menus = new Dictionary<EMenu, IMenus>();
 
             graphics = new GraphicsDeviceManager(this);
@@ -35,9 +32,13 @@ namespace ClassicTetris
         }
 
         protected override void Initialize()
-		{
-            menus[EMenu.MainMenu] = new MainMenu(this);
+        {
+            menus[EMenu.CreditMenu] = new CreditMenu(this);
+            menus[EMenu.PressStartMenu] = new PressStartMenu(this);
+            menus[EMenu.GameTypeMenu] = new GameTypeMenu(this);
+            menus[EMenu.TypeAMenu] = new TypeAMenu(this);
             menus[EMenu.Game] = new GameMenu(this);
+            ChangeMenu(EMenu.Game);
             base.Initialize();
 			foreach(KeyValuePair<EMenu, IMenus> menu in menus)
 			{
@@ -61,7 +62,6 @@ namespace ClassicTetris
             {
 				menu.Value.UnloadContent();
             }
-            // TODO: Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -84,7 +84,9 @@ namespace ClassicTetris
 
 		public void ChangeMenu(EMenu menu)
 		{
+            menus[currentMenu].Stop();
 			currentMenu = menu;
+            menus[currentMenu].Start();
 		}
     }
 }
