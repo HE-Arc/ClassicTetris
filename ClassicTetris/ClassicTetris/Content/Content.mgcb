@@ -85,13 +85,6 @@
 /processorParam:Quality=Best
 /build:Audio/SFX/whoosh.mp3
 
-#begin Fonts/File.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/File.spritefont;Fonts/classic_tetris_font.spritefont
-
 #begin Textures/tetris_exemple.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -103,4 +96,11 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/tetris_exemple.png
+
+#begin Fonts/classic_tetris_font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/classic_tetris_font.spritefont
 
