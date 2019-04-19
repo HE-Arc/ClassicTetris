@@ -19,6 +19,8 @@ namespace ClassicTetris
         public int Type { get; private set; } //0 = A, 1 = B
         public bool GameEnded { get; private set; }
 
+        private int state = 0;
+
         internal static GameLogic Instance
         {
             get
@@ -71,8 +73,17 @@ namespace ClassicTetris
             --counterUpdate;
             if (counterUpdate <= 0)
             {
+                // Animate remove line
                 Tick();
-                counterUpdate = Settings.SPEED_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];
+
+                if (board.RemovingLineState)
+                {
+                    counterUpdate = Settings.SPEED_LINE_REMOVAL;
+                }
+                else
+                {
+                    counterUpdate = Settings.SPEED_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];
+                }
             }
         }
 
@@ -82,6 +93,9 @@ namespace ClassicTetris
 			int nbLineRemoved = board.Tick();
             switch (nbLineRemoved)
             {
+                case -1:
+                    GameEnded = true;
+                    break;
                 case 1:
                     Score += 40 * (Level + 1);
                     break;
@@ -118,6 +132,7 @@ namespace ClassicTetris
                 ++Level;
                 lineLevel += Settings.LINE_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];
             }
+
             return nbLineRemoved;
 		}
 

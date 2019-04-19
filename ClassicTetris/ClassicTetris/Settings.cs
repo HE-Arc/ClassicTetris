@@ -17,6 +17,7 @@ namespace ClassicTetris
 
         public const int DELAY_AUTO_SHIFT_INITIAL = 16;
         public const int DELAY_AUTO_SHIFT = 6;
+        public const int SPEED_LINE_REMOVAL = 2;
         #endregion
 
         #region HUD
