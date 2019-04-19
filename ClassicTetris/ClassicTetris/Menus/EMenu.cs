@@ -3,7 +3,10 @@ namespace ClassicTetris.Menus
 {
     public enum EMenu
     {
-		MainMenu,
+        CreditMenu,
+        PressStartMenu,
+        GameTypeMenu,
+        TypeAMenu,
         Game
     }
 }

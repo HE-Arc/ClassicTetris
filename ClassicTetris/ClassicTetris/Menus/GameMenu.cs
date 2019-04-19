@@ -32,7 +32,6 @@ namespace ClassicTetris.Menus
 			spriteBatch = new SpriteBatch(GraphicsDevice);
 			renderer = new GameRenderer(Content, spriteBatch);
             AudioManager.GetInstance().Load(Content);
-            AudioManager.GetInstance().Play(Music.Theme1);
 		}
 
 		public void UnloadContent()
@@ -114,5 +113,15 @@ namespace ClassicTetris.Menus
         {
             renderer.DrawScene(spriteBatch);
         }
-	}
+
+        public void Start()
+        {
+            //AudioManager.GetInstance().Play(Music.Theme1);
+        }
+
+        public void Stop()
+        {
+
+        }
+    }
 }
