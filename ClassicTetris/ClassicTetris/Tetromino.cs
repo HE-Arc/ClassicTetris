@@ -36,17 +36,26 @@ namespace ClassicTetris
 
         #region Static random
         
-    /// <summary>
-    /// Create a new random Tetromino
-    /// </summary>
-    /// <param name="x">X location</param>
-    /// <param name="y">Y location</param>
-    /// <returns>New newly created tetromino</returns>
-    public static Tetromino Random(int x, int y)
+        /// <summary>
+        /// Create a new random Tetromino
+        /// </summary>
+        /// <param name="x">X location</param>
+        /// <param name="y">Y location</param>
+        /// <returns>New newly created tetromino</returns>
+        public static Tetromino Random(int x, int y)
         {
             Shape[] values = (Shape[])Enum.GetValues(typeof(Shape));
             Shape randomShape = (Shape)values.GetValue(random.Next(1,values.Length));
-            return new Tetromino(x, randomShape.Equals(Shape.I)?y-1:y, randomShape); // For Shape I, we put it on line higer 
+            return new Tetromino(x, randomShape.Equals(Shape.I)?y-1:y, randomShape); // For Shape I, we put it one line higer 
+        }
+
+        /// <summary>
+        /// Create an empty shape
+        /// </summary>
+        /// <returns>Empty shape</returns>
+        public static Tetromino Empty()
+        {
+            return new Tetromino(0, 0, Shape.None); // For Shape I, we put it one line higer 
         }
 
         #endregion
@@ -181,6 +190,15 @@ namespace ClassicTetris
                 {empty, empty, shape},
                 {empty, shape, shape},
                 {empty, shape, empty}
+            };
+
+            //None
+            shape = (int)Shape.None;
+            sequence[Shape.None] = new int[1][,];
+            sequence[Shape.None][0] = new int[,] {
+                {empty, empty, empty},
+                {empty, empty, empty},
+                {empty, empty, empty}
             };
         }
 

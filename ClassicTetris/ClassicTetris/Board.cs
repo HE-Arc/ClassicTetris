@@ -14,7 +14,9 @@ namespace ClassicTetris
         private Dictionary<Tetromino.Shape, int> statistics;
         private List<int> linesToRemoveId;
         private int lineRemoveState = 0;
+        private int endGameState = -1;
 
+        public bool AnimationEndGame => endGameState > -1 && endGameState <= Settings.BOARD_HEIGHT;
         public bool RemovingLineState => lineRemoveState > 0;
         public Tetromino NextShape { get; private set; }
         public Tetromino CurrentShape { get; private set; }
@@ -56,14 +58,27 @@ namespace ClassicTetris
         /// </summary>
         /// <returns>Statistics of th pieces</returns>
         public Dictionary<Tetromino.Shape, int> GetStatistics() => statistics.ToDictionary(entry => entry.Key, entry => entry.Value);
-
+        
         /// <summary>
         /// Trigger when a turn must be run
         /// </summary>
         /// <returns>Nb line removed - (-1) for Game Over</returns>
         public int Tick()
         {
-            if(lineRemoveState > 0)
+            if (endGameState >= Settings.BOARD_HEIGHT)
+            {
+                return -1;
+            }
+
+            if (AnimationEndGame)
+            {
+                Console.WriteLine(endGameState);
+                EndLineAnimate(endGameState);
+                ++endGameState;
+                return -1;
+            }
+
+            if (lineRemoveState > 0)
             {
                 switch (lineRemoveState)
                 {
@@ -88,6 +103,9 @@ namespace ClassicTetris
                 if(CurrentShape.y < 0)
                 {
                     Console.WriteLine("Game Over !");
+                    ++endGameState;
+                    landedShape = MergeGridWithShape();
+                    CurrentShape = Tetromino.Empty();
                     return -1;
                 }
                 
@@ -95,7 +113,7 @@ namespace ClassicTetris
                 statistics[CurrentShape.shape]++;
 
                 //Merge shape to current grid
-                this.landedShape = MergeGridWithShape();
+                landedShape = MergeGridWithShape();
 
                 //Clear lines
                 linesToRemoveId = CompletedLines(CurrentShape.y);
@@ -190,6 +208,17 @@ namespace ClassicTetris
         public int[][] GetGrid() => MergeGridWithShape();
 
         #region Private methods
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void EndLineAnimate(int lineId)
+        {
+            for(int i = 0; i < Settings.BOARD_WIDTH; ++i)
+            {
+                landedShape[lineId][i] = Settings.END_GAME_TEXTURE;
+            }
+        }
 
         /// <summary>
         /// Check if a row is full

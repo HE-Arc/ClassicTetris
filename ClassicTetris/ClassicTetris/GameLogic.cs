@@ -11,11 +11,12 @@ namespace ClassicTetris
         private Board board;
         private int counterUpdate;
         private int lineLevel;
-
+        
         #endregion
 
         public int Score { get; private set; }
         public int Level { get; private set; }
+        public int NbLines { get; private set; }
         public int Type { get; private set; } //0 = A, 1 = B
         public bool GameEnded { get; private set; }
 
@@ -66,7 +67,10 @@ namespace ClassicTetris
 
         public void update()
         {
-            if (GameEnded) return;
+            if (GameEnded && !board.AnimationEndGame)
+            {
+                return;
+            }
 
             --counterUpdate;
             if (counterUpdate <= 0)
@@ -74,7 +78,11 @@ namespace ClassicTetris
                 // Animate remove line
                 Tick();
 
-                if (board.RemovingLineState)
+                if(board.AnimationEndGame)
+                {
+                    counterUpdate = Settings.SPEED_ENDGAME_ANIMATION;
+                }
+                else if (board.RemovingLineState)
                 {
                     counterUpdate = Settings.SPEED_LINE_REMOVAL;
                 }
@@ -124,6 +132,7 @@ namespace ClassicTetris
             }
 
             // Check level up
+            NbLines += nbLineRemoved;
             lineLevel -= nbLineRemoved;
             if(lineLevel < 0)
             {

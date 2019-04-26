@@ -12,6 +12,9 @@ namespace ClassicTetris.Renderer
         private Texture2D background;
         private SpriteFont tetrisFont;
         private Texture2D[,] texturesTetrominos;
+
+        private int endGameStateCounter = -1;
+
         private static Shape[] shapeStatisticsOrder =
         {
             Shape.T,

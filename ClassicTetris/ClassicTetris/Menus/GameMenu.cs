@@ -40,11 +40,11 @@ namespace ClassicTetris.Menus
 		}
 
 		public void Update(GameTime gameTime)
-		{
-            //DAS initial delay is 16 frames, and then every 6 frames
-			GameLogic.Instance.update();
-            if (GameLogic.Instance.GameEnded) return;
+        {
+            GameLogic.Instance.update();
 
+            //DAS initial delay is 16 frames, and then every 6 frames
+            if (GameLogic.Instance.GameEnded) return;
 
             //Priotity given to right action like in NES
             if (Actions.GetInstance()[Action.Right].IsPressed())
@@ -79,7 +79,7 @@ namespace ClassicTetris.Menus
             if (Actions.GetInstance()[Action.Down].IsPressed())
             {
                 GameLogic.Instance.Down();
-                downCounter = Settings.DELAY_AUTO_SHIFT_INITIAL;
+                downCounter = Settings.FAST_DROP_GRAVITY;
             }
             else if (Actions.GetInstance()[Action.Down].IsDown())
             {
@@ -106,8 +106,8 @@ namespace ClassicTetris.Menus
             {
                 tetris.Exit();
             }
-
-		}
+            
+        }
       
         public void Draw(GameTime gameTime)
         {
