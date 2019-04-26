@@ -56,14 +56,14 @@ namespace ClassicTetris.Menus
 		{
 			if (GameLogic.Instance.GameEnded)
             {
-                if (Actions.GetInstance()[Action.MenuValidate].IsPressed())
+				if (Actions.GetInstance()[Action.Start].IsPressed())
                 {
                     tetris.ChangeMenu(new TypeAMenu(tetris, baseLevel, musicType));
 					return;
                 }
             }
 
-			if (Actions.GetInstance()[Action.Pause].IsPressed())
+			if (Actions.GetInstance()[Action.Start].IsPressed())
 				isPause ^= true;
 
 			if (isPause)
@@ -119,18 +119,18 @@ namespace ClassicTetris.Menus
                 }
             }
 
-            if (Actions.GetInstance()[Action.Rotate].IsPressed())
+			if (Actions.GetInstance()[Action.A].IsPressed())
             {
                 GameLogic.Instance.Turn();
             }
 
             //TODO: Remove for debug purposes
-            if (Actions.GetInstance()[Action.ForceDown].IsPressed())
+			if (Actions.GetInstance()[Action.Debug].IsPressed())
             {
                 GameLogic.Instance.Drop();
             }
 
-            if (Actions.GetInstance()[Action.Quit].IsPressed())
+			if (Actions.GetInstance()[Action.Shutdown].IsPressed())
             {
                 tetris.Exit();
             }

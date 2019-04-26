@@ -81,7 +81,7 @@ namespace ClassicTetris.Menus
         public void Update(GameTime gameTime)
         {
 			frameCount += 1;
-            if (Actions.GetInstance()[Inputs.Action.MenuValidate].IsPressed())
+			if (Actions.GetInstance()[Inputs.Action.Start].IsPressed())
             {
 				if (currentGameType == GameType.TypeA)
 				{
@@ -94,24 +94,24 @@ namespace ClassicTetris.Menus
                 }
             }
 
-			if (Actions.GetInstance()[Inputs.Action.MenuBack].IsPressed())
+			if (Actions.GetInstance()[Inputs.Action.Select].IsPressed())
             {
 				tetris.ChangeMenu(new PressStartMenu(tetris));
             }
 
-            if (Actions.GetInstance()[Inputs.Action.MenuDown].IsPressed())
+			if (Actions.GetInstance()[Inputs.Action.Down].IsPressed())
             {
                 currentMusicType = (MusicType)(TetrisMath.mod(((int)currentMusicType + 1), Enum.GetNames(typeof(MusicType)).Length));
             }
-            if (Actions.GetInstance()[Inputs.Action.MenuUp].IsPressed())
+            if (Actions.GetInstance()[Inputs.Action.Up].IsPressed())
             {
                 currentMusicType = (MusicType)(TetrisMath.mod(((int)currentMusicType - 1), Enum.GetNames(typeof(MusicType)).Length));
             }
-            if (Actions.GetInstance()[Inputs.Action.MenuRight].IsPressed())
+			if (Actions.GetInstance()[Inputs.Action.Right].IsPressed())
             {
                 currentGameType = (GameType)(TetrisMath.mod(((int)currentGameType + 1), Enum.GetNames(typeof(GameType)).Length));
             }
-            if (Actions.GetInstance()[Inputs.Action.MenuLeft].IsPressed())
+			if (Actions.GetInstance()[Inputs.Action.Left].IsPressed())
             {
                 currentGameType = (GameType)(TetrisMath.mod(((int)currentGameType - 1), Enum.GetNames(typeof(GameType)).Length));
             }

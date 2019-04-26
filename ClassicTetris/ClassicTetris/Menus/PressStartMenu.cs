@@ -43,7 +43,7 @@ namespace ClassicTetris.Menus
 
         public void Update(GameTime gameTime)
         {
-            if (Actions.GetInstance()[Inputs.Action.MenuValidate].IsPressed())
+			if (Actions.GetInstance()[Inputs.Action.Start].IsPressed())
             {
 				tetris.ChangeMenu(new GameTypeMenu(tetris));
             }
