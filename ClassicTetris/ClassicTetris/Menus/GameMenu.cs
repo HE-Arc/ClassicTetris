@@ -54,6 +54,15 @@ namespace ClassicTetris.Menus
 
 		public void Update(GameTime gameTime)
 		{
+			if (GameLogic.Instance.GameEnded)
+            {
+                if (Actions.GetInstance()[Action.MenuValidate].IsPressed())
+                {
+                    tetris.ChangeMenu(new TypeAMenu(tetris, baseLevel, musicType));
+					return;
+                }
+            }
+
 			if (Actions.GetInstance()[Action.Pause].IsPressed())
 				isPause ^= true;
 
@@ -63,10 +72,7 @@ namespace ClassicTetris.Menus
             //DAS initial delay is 16 frames, and then every 6 frames
 
 			GameLogic.Instance.update();
-            if (GameLogic.Instance.GameEnded)
-			{
-				tetris.ChangeMenu(new TypeAMenu(tetris, baseLevel, musicType));	
-			}
+            
 
             //Priotity given to right action like in NES
             if (Actions.GetInstance()[Action.Right].IsPressed())
