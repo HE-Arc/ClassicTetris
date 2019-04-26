@@ -43,52 +43,63 @@ namespace ClassicTetris.Renderer
             texturesTetrominos[0, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_0_PRIMARY);
             texturesTetrominos[0, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_0_PRIMARY);
             texturesTetrominos[0, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_0_SECONDARY);
+            texturesTetrominos[0, 4] = CreateTextureTypeEnd(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_0_PRIMARY, Settings.COLOR_LEVEL_0_SECONDARY);
 
             texturesTetrominos[1, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_1_PRIMARY);
             texturesTetrominos[1, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_1_PRIMARY);
             texturesTetrominos[1, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_1_PRIMARY);
             texturesTetrominos[1, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_1_SECONDARY);
+            texturesTetrominos[1, 4] = CreateTextureTypeEnd(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_1_PRIMARY, Settings.COLOR_LEVEL_1_SECONDARY);
 
             texturesTetrominos[2, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_2_PRIMARY);
             texturesTetrominos[2, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_2_PRIMARY);
             texturesTetrominos[2, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_2_PRIMARY);
             texturesTetrominos[2, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_2_SECONDARY);
+            texturesTetrominos[2, 4] = CreateTextureTypeEnd(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_2_PRIMARY, Settings.COLOR_LEVEL_2_SECONDARY);
 
             texturesTetrominos[3, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_3_PRIMARY);
             texturesTetrominos[3, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_3_PRIMARY);
             texturesTetrominos[3, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_3_PRIMARY);
             texturesTetrominos[3, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_3_SECONDARY);
+            texturesTetrominos[3, 4] = CreateTextureTypeEnd(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_3_PRIMARY, Settings.COLOR_LEVEL_3_SECONDARY);
 
             texturesTetrominos[4, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_4_PRIMARY);
             texturesTetrominos[4, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_4_PRIMARY);
             texturesTetrominos[4, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_4_PRIMARY);
             texturesTetrominos[4, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_4_SECONDARY);
+            texturesTetrominos[4, 4] = CreateTextureTypeEnd(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_4_PRIMARY, Settings.COLOR_LEVEL_4_SECONDARY);
 
             texturesTetrominos[5, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_5_PRIMARY);
             texturesTetrominos[5, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_5_PRIMARY);
             texturesTetrominos[5, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_5_PRIMARY);
             texturesTetrominos[5, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_5_SECONDARY);
+            texturesTetrominos[5, 4] = CreateTextureTypeEnd(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_5_PRIMARY, Settings.COLOR_LEVEL_5_SECONDARY);
 
             texturesTetrominos[6, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_6_PRIMARY);
             texturesTetrominos[6, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_6_PRIMARY);
             texturesTetrominos[6, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_6_PRIMARY);
             texturesTetrominos[6, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_6_SECONDARY);
+            texturesTetrominos[6, 4] = CreateTextureTypeEnd(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_6_PRIMARY, Settings.COLOR_LEVEL_6_SECONDARY);
 
             texturesTetrominos[7, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_7_PRIMARY);
             texturesTetrominos[7, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_7_PRIMARY);
             texturesTetrominos[7, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_7_PRIMARY);
             texturesTetrominos[7, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_7_SECONDARY);
+            texturesTetrominos[7, 4] = CreateTextureTypeEnd(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_7_PRIMARY, Settings.COLOR_LEVEL_7_SECONDARY);
 
             texturesTetrominos[8, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_8_PRIMARY);
             texturesTetrominos[8, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_8_PRIMARY);
             texturesTetrominos[8, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_8_PRIMARY);
             texturesTetrominos[8, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_8_SECONDARY);
+            texturesTetrominos[8, 4] = CreateTextureTypeEnd(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_8_PRIMARY, Settings.COLOR_LEVEL_8_SECONDARY);
 
             texturesTetrominos[9, 0] = CreateTextureType0(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_9_PRIMARY);
             texturesTetrominos[9, 1] = CreateTextureType1(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_9_PRIMARY);
             texturesTetrominos[9, 2] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_9_PRIMARY);
             texturesTetrominos[9, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_9_SECONDARY);
+            texturesTetrominos[9, 4] = CreateTextureTypeEnd(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_9_PRIMARY, Settings.COLOR_LEVEL_9_SECONDARY);
         }
+
 
         private void DrawBackground(SpriteBatch spriteBatch)
         {
@@ -250,6 +261,10 @@ namespace ClassicTetris.Renderer
                     else if (b[i,j] <= 7) //Z
                     {
                         DrawTexture(spriteBatch, texturesTetrominos[level, 3], coor);
+                    }
+                    else if (b[i, j] <= 8) //END
+                    {
+                        DrawTexture(spriteBatch, texturesTetrominos[level, 4], coor);
                     }
                     coor.X += squareSize + Settings.SQUARE_SPREARD;
 
@@ -426,7 +441,31 @@ namespace ClassicTetris.Renderer
                     data[i + k * sizeX + 2* (edgeSize * sizeX) + edgeSize] = Color.White;
                 }
             }
+            rect.SetData(data);
+            return rect;
+        }
 
+        private Texture2D CreateTextureTypeEnd(SpriteBatch sb, int sizeX, int sizeY, Color colorPrimary, Color colorSecondary)
+        {
+            Texture2D rect = new Texture2D(sb.GraphicsDevice, sizeX, sizeY);
+            Color[] data = new Color[sizeX * sizeY];
+            int n = data.Length;
+            for (int k = 0; k < n; ++k)
+            {
+                if (k < n / 3)
+                {
+                    data[k] = colorSecondary;
+                }
+                else if( k < 2*n / 3)
+                {
+                    data[k] = Color.White;
+                }
+
+                else
+                {
+                    data[k] = colorSecondary;
+                }
+            }
             rect.SetData(data);
             return rect;
         }

@@ -40,7 +40,7 @@ namespace ClassicTetris
         public const int EDGE_SIZE = SQUARE_SIZE / 6;
 
         public const int NB_COLORS_LEVELS = 10;
-        public const int NB_TEXTURES = 4;
+        public const int NB_TEXTURES = 5;
 
         public static Color COLOR_LEVEL_0_PRIMARY => Color.FromNonPremultiplied(32, 56, 236, 255);
         public static Color COLOR_LEVEL_0_SECONDARY => Color.FromNonPremultiplied(60, 188, 252, 255);
