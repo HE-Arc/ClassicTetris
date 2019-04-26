@@ -125,6 +125,7 @@ namespace ClassicTetris.Renderer
 
         private void DrawLines(SpriteBatch spriteBatch)
         {
+            //int nLines = GameLogic.NbLines;
             int nLines = 0; //TODO
             spriteBatch.DrawString(tetrisFont, $"LINES - {FormatNumberToNDigits(nLines, Settings.LINES_DIGITS)}", new Vector2(400, 50), Color.White);
         }
