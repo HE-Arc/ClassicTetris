@@ -72,7 +72,6 @@ namespace ClassicTetris
 
             if (AnimationEndGame)
             {
-                Console.WriteLine(endGameState);
                 EndLineAnimate(endGameState);
                 ++endGameState;
                 return -1;

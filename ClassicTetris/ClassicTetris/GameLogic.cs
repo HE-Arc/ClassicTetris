@@ -12,6 +12,7 @@ namespace ClassicTetris
         private Board board;
         private int counterUpdate;
         private int lineLevel;
+        private bool ended;
         
         #endregion
 
@@ -19,7 +20,7 @@ namespace ClassicTetris
         public int Level { get; private set; }
         public int NbLines { get; private set; }
 		public GameType Type { get; private set; } //0 = A, 1 = B
-        public bool GameEnded { get; private set; }
+        public bool GameEnded => ended && !board.AnimationEndGame;
 
         internal static GameLogic Instance
         {
@@ -43,7 +44,7 @@ namespace ClassicTetris
             Score = 0;
             Level = level;
 			Type = gameType;
-            GameEnded = true;
+            ended = true;
             counterUpdate = Settings.SPEED_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];
             lineLevel = Settings.LINE_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];
 
@@ -53,7 +54,7 @@ namespace ClassicTetris
 
         private void StartGame()
         {
-            GameEnded = false;
+            ended = true;
         }
 
         public Tetromino GetNextShape()
@@ -68,7 +69,7 @@ namespace ClassicTetris
 
         public void update()
         {
-            if (GameEnded && !board.AnimationEndGame)
+            if (ended && !board.AnimationEndGame)
             {
                 return;
             }
@@ -101,7 +102,7 @@ namespace ClassicTetris
             switch (nbLineRemoved)
             {
                 case -1:
-                    GameEnded = true;
+                    ended = true;
                     break;
                 case 1:
                     Score += 40 * (Level + 1);
@@ -128,7 +129,7 @@ namespace ClassicTetris
 			}
             else if(nbLineRemoved < 0){
                 //TODO: Add loose animation + delay
-                GameEnded = true;
+                ended = true;
                 return 0;
             }
 
