@@ -78,37 +78,37 @@ namespace ClassicTetris.Menus
         {
 			frameCount += 1;
 
-            if (Actions.GetInstance()[Inputs.Action.MenuValidate].IsPressed())
+			if (Actions.GetInstance()[Inputs.Action.Start].IsPressed())
             {
 				//set level
 				tetris.ChangeMenu(new GameMenu(tetris, level, GameType.TypeA, musicType));
             }
 
-			if (Actions.GetInstance()[Inputs.Action.MenuBack].IsPressed())
+			if (Actions.GetInstance()[Inputs.Action.Select].IsPressed())
             {
 				tetris.ChangeMenu(new GameTypeMenu(tetris));
             }
 
-            if (Actions.GetInstance()[Inputs.Action.MenuDown].IsPressed())
+			if (Actions.GetInstance()[Inputs.Action.Down].IsPressed())
             {
 				if (level < maxmenu / 2)
                 {
 					level += maxmenu / 2;
                 }
             }
-            if (Actions.GetInstance()[Inputs.Action.MenuUp].IsPressed())
+            if (Actions.GetInstance()[Inputs.Action.Up].IsPressed())
             {
 				if(level >= maxmenu / 2)
 				{
 					level -= maxmenu / 2;
 				}
             }
-            if (Actions.GetInstance()[Inputs.Action.MenuRight].IsPressed())
+			if (Actions.GetInstance()[Inputs.Action.Right].IsPressed())
             {
 				level += 1;
 				level %= maxmenu;
             }
-            if (Actions.GetInstance()[Inputs.Action.MenuLeft].IsPressed())
+			if (Actions.GetInstance()[Inputs.Action.Left].IsPressed())
             {
 				level -= 1;
 				level = TetrisMath.mod(level, maxmenu);
