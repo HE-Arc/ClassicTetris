@@ -131,8 +131,7 @@ namespace ClassicTetris.Renderer
 
         private void DrawLines(SpriteBatch spriteBatch)
         {
-            //int nLines = GameLogic.NbLines;
-            int nLines = 0; //TODO
+            int nLines = GameLogic.Instance.NbLines;
             spriteBatch.DrawString(TetrisFont, $"LINES - {FormatNumberToNDigits(nLines, Settings.LINES_DIGITS)}", new Vector2(400, 50), Color.White);
         }
 
@@ -288,7 +287,7 @@ namespace ClassicTetris.Renderer
 
         private void DrawTopScore(SpriteBatch spriteBatch)
         {
-            int topScore = 5000;
+            int topScore = 5000; //TODO
             spriteBatch.DrawString(TetrisFont, "TOP", new Vector2(765, 80), Color.White);
             spriteBatch.DrawString(TetrisFont, FormatNumberToNDigits(topScore, Settings.SCORE_DIGITS), new Vector2(770, 120), Color.White);
 
