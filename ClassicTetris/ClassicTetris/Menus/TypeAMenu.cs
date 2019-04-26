@@ -26,23 +26,25 @@ namespace ClassicTetris.Menus
 		private const int offsetY = 305;
 		private const int border = 9;
 
+		private int frameCount = 0;
+
         public TypeAMenu(Tetris tetris)
         {
             this.tetris = tetris;
 			selectedIndex = 0;
-            
-            
-            
         }
 
         public void Draw(GameTime gameTime)
         {
             sb.Begin();
             sb.Draw(bg, Vector2.Zero, Color.White);
-            
-			int x = offsetX + (sizeX + border) * (selectedIndex % (maxmenu / 2));
-			int y = offsetY + (sizeX + border) * (selectedIndex / (maxmenu / 2));
-			sb.Draw(rect, new Vector2(x,y), Color.White);
+
+			if (frameCount % 2 == 0)
+			{
+				int x = offsetX + (sizeX + border) * (selectedIndex % (maxmenu / 2));
+				int y = offsetY + (sizeX + border) * (selectedIndex / (maxmenu / 2));
+				sb.Draw(rect, new Vector2(x, y), Color.White);
+			}
             
             sb.End();
         }
@@ -63,31 +65,21 @@ namespace ClassicTetris.Menus
             for (int k = 0; k < data.Length; ++k) data[k] = color;
             rect.SetData(data);
         }
-
-        public void Start()
-        {
-        }
-
-        public void Stop()
-        {
-        }
-
+              
         public void UnloadContent()
         {
         }
 
         public void Update(GameTime gameTime)
         {
+			frameCount += 1;
+
             if (Actions.GetInstance()[Inputs.Action.MenuValidate].IsPressed())
             {
 				//set level
-                tetris.ChangeMenu(EMenu.Game);
+				tetris.ChangeMenu(new GameMenu(tetris));
             }
 
-			if (Actions.GetInstance()[Inputs.Action.MenuValidate].IsPressed())
-            {
-                tetris.ChangeMenu(EMenu.TypeAMenu);
-            }
             if (Actions.GetInstance()[Inputs.Action.MenuDown].IsPressed())
             {
 				if (selectedIndex < maxmenu / 2)

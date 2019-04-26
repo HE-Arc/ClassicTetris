@@ -17,6 +17,8 @@ namespace ClassicTetris.Menus
         private Texture2D arrow_right;
         private Texture2D arrow_left;
 
+		private int frameCount;
+
         private enum GameType
         {
             TypeA,
@@ -40,7 +42,8 @@ namespace ClassicTetris.Menus
         public GameTypeMenu(Tetris tetris)
         {
             this.tetris = tetris;
-            currentGameType = GameType.TypeA;
+			frameCount = 0;
+			currentGameType = GameType.TypeA;
             currentMusicType = MusicType.Music1;
 
             arrowsPositionsGameType = new Dictionary<GameType, Tuple<Vector2, Vector2>>();
@@ -57,11 +60,14 @@ namespace ClassicTetris.Menus
         {
             sb.Begin();
             sb.Draw(bg, Vector2.Zero, Color.White);
-            sb.Draw(arrow_left, arrowsPositionsGameType[currentGameType].Item1, Color.White);
-            sb.Draw(arrow_right, arrowsPositionsGameType[currentGameType].Item2, Color.White);
+			if (frameCount % 2 == 0)
+			{
+				sb.Draw(arrow_left, arrowsPositionsGameType[currentGameType].Item1, Color.White);
+				sb.Draw(arrow_right, arrowsPositionsGameType[currentGameType].Item2, Color.White);
 
-            sb.Draw(arrow_left, arrowsPositionsMusicType[currentMusicType].Item1, Color.White);
-            sb.Draw(arrow_right, arrowsPositionsMusicType[currentMusicType].Item2, Color.White);
+				sb.Draw(arrow_left, arrowsPositionsMusicType[currentMusicType].Item1, Color.White);
+				sb.Draw(arrow_right, arrowsPositionsMusicType[currentMusicType].Item2, Color.White);
+			}
             sb.End();
         }
 
@@ -77,23 +83,16 @@ namespace ClassicTetris.Menus
             arrow_left = Content.Load<Texture2D>("Textures/arrow_left");
         }
 
-        public void Start()
-        {
-        }
-
-        public void Stop()
-        {
-        }
-
         public void UnloadContent()
         {
         }
 
         public void Update(GameTime gameTime)
         {
+			frameCount += 1;
             if (Actions.GetInstance()[Inputs.Action.MenuValidate].IsPressed())
             {
-                tetris.ChangeMenu(EMenu.TypeAMenu);
+				tetris.ChangeMenu(new TypeAMenu(tetris));
             }
             if (Actions.GetInstance()[Inputs.Action.MenuDown].IsPressed())
             {

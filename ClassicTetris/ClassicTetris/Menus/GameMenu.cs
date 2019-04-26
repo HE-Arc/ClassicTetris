@@ -15,11 +15,15 @@ namespace ClassicTetris.Menus
         private int rightCounter;
         private int downCounter;
 
+		private int baseLevel;
+
 		private Tetris tetris;
 
-		public GameMenu(Tetris tetris)
+		public GameMenu(Tetris tetris, int baseLevel)
 		{
             this.tetris = tetris;
+			this.baseLevel = baseLevel;
+			GameLogic.Reset(baseLevel);
         }
 
 		public void Initialize()
@@ -112,16 +116,6 @@ namespace ClassicTetris.Menus
         public void Draw(GameTime gameTime)
         {
             renderer.DrawScene(spriteBatch);
-        }
-
-        public void Start()
-        {
-            //AudioManager.GetInstance().Play(Music.Theme1);
-        }
-
-        public void Stop()
-        {
-
         }
     }
 }
