@@ -54,7 +54,7 @@ namespace ClassicTetris
 
         private void StartGame()
         {
-            ended = true;
+            ended = false;
         }
 
         public Tetromino GetNextShape()
