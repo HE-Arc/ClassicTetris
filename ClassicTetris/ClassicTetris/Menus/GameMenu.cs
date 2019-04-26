@@ -20,8 +20,14 @@ namespace ClassicTetris.Menus
 		private MusicType musicType;
 		private Tetris tetris;
 
+		private bool isPause;
+
+        private const string pauseText = "PAUSE";
+		private const Color colorPause = new Color(92, 148, 252);
+
 		public GameMenu(Tetris tetris, int baseLevel, GameType gameType, MusicType musicType)
 		{
+            this.isPause = false;
 			this.tetris = tetris;
 			this.baseLevel = baseLevel;
 			this.gameType = gameType;
@@ -48,6 +54,12 @@ namespace ClassicTetris.Menus
 
 		public void Update(GameTime gameTime)
 		{
+			if (Actions.GetInstance()[Action.Pause].IsPressed())
+				isPause ^= true;
+
+			if (isPause)
+				return;
+			
             //DAS initial delay is 16 frames, and then every 6 frames
 			GameLogic.Instance.update();
             if (GameLogic.Instance.GameEnded)
@@ -121,7 +133,26 @@ namespace ClassicTetris.Menus
       
         public void Draw(GameTime gameTime)
         {
-            renderer.DrawScene(spriteBatch);
+			if (isPause)
+			{
+				spriteBatch.Begin();
+
+				GraphicsDevice gd = spriteBatch.GraphicsDevice;
+
+				gd.Clear(Color.Black);
+
+				Vector2 size = renderer.TetrisFont.MeasureString(pauseText);
+				Vector2 pos = new Vector2();
+				pos.X = (gd.Viewport.Width - size.X) / 2;
+				pos.Y = (gd.Viewport.Height - size.Y) / 2;
+
+				spriteBatch.DrawString(renderer.TetrisFont, pauseText, pos, colorPause);
+				spriteBatch.End();
+			}
+			else
+			{
+				renderer.DrawScene(spriteBatch);
+			}
         }
     }
 }
