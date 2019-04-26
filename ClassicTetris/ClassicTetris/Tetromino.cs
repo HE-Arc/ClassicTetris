@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ClassicTetris
 {
@@ -47,7 +46,7 @@ namespace ClassicTetris
         {
             Shape[] values = (Shape[])Enum.GetValues(typeof(Shape));
             Shape randomShape = (Shape)values.GetValue(random.Next(1,values.Length));
-            return new Tetromino(x, y, randomShape);
+            return new Tetromino(x, randomShape.Equals(Shape.I)?y-1:y, randomShape); // For Shape I, we put it on line higer 
         }
 
         #endregion

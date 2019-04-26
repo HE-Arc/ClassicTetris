@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClassicTetris
 {
@@ -14,7 +12,10 @@ namespace ClassicTetris
         #region Attributes
         private int[][] landedShape;
         private Dictionary<Tetromino.Shape, int> statistics;
+        private List<int> linesToRemoveId;
+        private int lineRemoveState = 0;
 
+        public bool RemovingLineState => lineRemoveState > 0;
         public Tetromino NextShape { get; private set; }
         public Tetromino CurrentShape { get; private set; }
 
@@ -25,6 +26,10 @@ namespace ClassicTetris
         /// </summary>
         public Board()
         {
+            //Init line remove
+            linesToRemoveId = new List<int>();
+            lineRemoveState = 0;
+
             //Init grid
             landedShape = new int[Settings.BOARD_HEIGHT][];
             for (int i = 0; i < landedShape.Length; i++)
@@ -58,30 +63,53 @@ namespace ClassicTetris
         /// <returns>Nb line removed - (-1) for Game Over</returns>
         public int Tick()
         {
+            if(lineRemoveState > 0)
+            {
+                switch (lineRemoveState)
+                {
+                    //Last state, move down all the lines
+                    case 1:
+                        ClearLines(linesToRemoveId);
+                        break;
+                    
+                    //Default we remove two squares
+                    default:
+                        RemoveAnimate(linesToRemoveId, lineRemoveState);
+                        break;
+                }
+
+                --lineRemoveState;
+                return 0;
+            }
+
             if (!Down())
             {
-                //Update statistics
-                statistics[CurrentShape.shape]++;
-
                 // Detect Game Over
                 if(CurrentShape.y < 0)
                 {
                     Console.WriteLine("Game Over !");
                     return -1;
                 }
+                
+                //Update statistics
+                statistics[CurrentShape.shape]++;
 
                 //Merge shape to current grid
                 this.landedShape = MergeGridWithShape();
 
                 //Clear lines
-                int nbLignesRemoved = ClearLines(CurrentShape.y);
+                linesToRemoveId = CompletedLines(CurrentShape.y);
 
                 //Change current shape
                 CurrentShape = NextShape;
                 
                 //Generate next shape
                 NextShape = Tetromino.Random(Settings.START_X, Settings.START_Y);
-                return nbLignesRemoved;
+
+                //Set removing line state
+                lineRemoveState = 6;
+
+                return linesToRemoveId.Count();
             }
             else
             {
@@ -214,34 +242,52 @@ namespace ClassicTetris
             return grid;
         }
 
+        private void RemoveAnimate(List<int> linesToRemove, int lineRemoveState)
+        {
+            //lineRemoveState 
+            // From 6 to 2
+            int indiceOne = lineRemoveState - 2;
+            int indiceTwo = 9 - (lineRemoveState - 2);
+
+            linesToRemove.ForEach(i =>
+            {
+                landedShape[i][indiceOne] = (int)Tetromino.Shape.None;
+                landedShape[i][indiceTwo] = (int)Tetromino.Shape.None;
+            });
+        }
+
         /// <summary>
         /// Remove all full lines
         /// </summary>
         /// <param name="startLine"></param>
         /// <returns>Number of row removed</returns>
-        private int ClearLines(int startLine)
+        private void ClearLines(List<int> lines)
         {
+            lines.Sort();
+            lines.ForEach(i => MoveDownAllRowAbove(i));
+        }
+
+        /// <summary>
+        /// Return aq list of all completed lines indices
+        /// </summary>
+        /// <param name="startLine"></param>
+        /// <returns>Indices of completed lines</returns>
+        private List<int> CompletedLines(int startLine)
+        {
+            List<int> linesToRemove = new List<int>();
             int nbRow = CurrentShape.Grid.GetLength(0);   //check four row
             int row = Math.Min(startLine + nbRow, Settings.BOARD_HEIGHT) - 1;
-
-            int nbRowRemoved = 0;
-
+            
             while (nbRow > 0)
             {
                 if (RowIsFull(row))
                 {
-                    //Move all content above one line below
-                    MoveDownAllRowAbove(row);
-                    ++nbRowRemoved;
+                    linesToRemove.Add(row);
                 }
-                else
-                {
-                    //Look at the row above
-                    --row;
-                }
+                --row;
                 --nbRow;
             }
-            return nbRowRemoved;
+            return linesToRemove;
         }
 
         /// <summary>

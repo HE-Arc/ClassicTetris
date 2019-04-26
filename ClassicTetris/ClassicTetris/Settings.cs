@@ -1,9 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClassicTetris
 {
@@ -11,18 +6,25 @@ namespace ClassicTetris
     {
         public const int WINDOW_WIDTH = 1024;
         public const int WINDOW_HEIGHT = 896;
+        #region GameLogic
 
         public const int BOARD_WIDTH = 10;
         public const int BOARD_HEIGHT = 20;
 
-
         public const int START_X = BOARD_WIDTH / 2 - 2;
         public const int START_Y = -1;
-
         public const int TETROMINOES = 7;
+        public static readonly int[] SPEED_LEVEL = { 48, 43, 38, 33, 28, 23, 18, 13, 8, 6, 5, 5, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 };
+        public static readonly int[] LINE_LEVEL = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100, 100, 100, 100, 100, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 200, 200, 200 };
+        public const int MAX_LEVEL_THEORICAL = 30;
 
+        public const int FAST_DROP_GRAVITY = 5;
+        public const int DELAY_AUTO_SHIFT_INITIAL = 16;
+        public const int DELAY_AUTO_SHIFT = 6;
+        public const int SPEED_LINE_REMOVAL = 2;
+        #endregion
 
-        // HUD - COLORS
+        #region HUD
         public const int SCORE_DIGITS = 6;
         public const int STATS_DIGITS = 3;
         public const int LEVEL_DIGITS = 2;
@@ -69,6 +71,6 @@ namespace ClassicTetris
 
         public static Color COLOR_LEVEL_9_PRIMARY => COLOR_LEVEL_6_PRIMARY;
         public static Color COLOR_LEVEL_9_SECONDARY => Color.FromNonPremultiplied(252, 152, 56, 255);
-
+        #endregion
     }
 }

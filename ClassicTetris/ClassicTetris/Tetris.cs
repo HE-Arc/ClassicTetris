@@ -4,6 +4,10 @@ using Microsoft.Xna.Framework.Input;
 
 using ClassicTetris.Inputs;
 using ClassicTetris.Audio;
+using ClassicTetris.Renderer;
+using ClassicTetris.Menus;
+using System.Collections.Generic;
+using System;
 
 namespace ClassicTetris
 {
@@ -12,55 +16,52 @@ namespace ClassicTetris
     /// </summary>
     public class Tetris : Game
     {
-        GraphicsDeviceManager graphics;
-        GameLogic gameLogic;
-        SpriteBatch spriteBatch;
-        Renderer renderer;
-        bool isReadyToDraw;
+        private GraphicsDeviceManager graphics;
+
+		private Dictionary<EMenu, IMenus> menus;
+        private EMenu currentMenu;
 
         public Tetris()
         {
+			menus = new Dictionary<EMenu, IMenus>();
+
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = Settings.WINDOW_WIDTH;
             graphics.PreferredBackBufferHeight = Settings.WINDOW_HEIGHT;
-            gameLogic = GameLogic.Instance;
             Content.RootDirectory = "Content";
-            isReadyToDraw = false;
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            menus[EMenu.CreditMenu] = new CreditMenu(this);
+            menus[EMenu.PressStartMenu] = new PressStartMenu(this);
+            menus[EMenu.GameTypeMenu] = new GameTypeMenu(this);
+            menus[EMenu.TypeAMenu] = new TypeAMenu(this);
+            menus[EMenu.Game] = new GameMenu(this);
+			ChangeMenu(EMenu.Game);
             base.Initialize();
+			foreach(KeyValuePair<EMenu, IMenus> menu in menus)
+			{
+				menu.Value.Initialize();
+			}
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            renderer = new Renderer(Content, spriteBatch);
-            AudioManager.GetInstance().Load(Content);
-            isReadyToDraw = true;
-            // TODO: use this.Content to load your game content here
+            base.LoadContent();
+			foreach (KeyValuePair<EMenu, IMenus> menu in menus)
+            {
+				menu.Value.LoadContent(Content, GraphicsDevice);
+            }
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            base.UnloadContent();
+			foreach (KeyValuePair<EMenu, IMenus> menu in menus)
+            {
+				menu.Value.UnloadContent();
+            }
         }
 
         /// <summary>
@@ -70,54 +71,22 @@ namespace ClassicTetris
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-			Actions.GetInstance().Update(Keyboard.GetState());
-
-			if(Actions.GetInstance()[Action.Left].IsPressed())
-			{
-				GameLogic.Instance.Left();
-			}
-			if (Actions.GetInstance()[Action.Right].IsPressed())
-            {
-                GameLogic.Instance.Right();
-            }
-			if (Actions.GetInstance()[Action.Rotate].IsPressed())
-            {
-                GameLogic.Instance.Turn();
-            }
-			if (Actions.GetInstance()[Action.Down].IsDown())
-			{
-				GameLogic.Instance.Down();
-            }
-			if (Actions.GetInstance()[Action.ForceDown].IsPressed())
-            {
-                GameLogic.Instance.Drop();
-			}
-			if (Actions.GetInstance()[Action.Quit].IsPressed())
-            {
-                Exit();
-			}
-			if (Actions.GetInstance()[Action.Debug].IsPressed())
-            {
-                GameLogic.Instance.Tick();
-            }
-
-            base.Update(gameTime);
+			base.Update(gameTime);
+            Actions.GetInstance().Update(Keyboard.GetState());
+            menus[currentMenu].Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
-        {
-            if(isReadyToDraw)
-            {
-                GraphicsDevice.Clear(Color.CornflowerBlue);
-
-                renderer.DrawScene(spriteBatch);
-
-                base.Draw(gameTime);
-            }
+		{
+			base.Draw(gameTime);
+			menus[currentMenu].Draw(gameTime);
         }
+
+		public void ChangeMenu(EMenu menu)
+		{
+            menus[currentMenu].Stop();
+			currentMenu = menu;
+            menus[currentMenu].Start();
+		}
     }
 }

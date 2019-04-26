@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Timers;
 using ClassicTetris.Audio;
 
@@ -10,47 +6,52 @@ namespace ClassicTetris
 {
 	class GameLogic : TetrisLogic
     {
-
         #region Attributes
         private static GameLogic instance = null;
-        private int score;
-        private int level;
-        private int[] statistics; //Array of size=7, containing the number of time that the nth tetromino has spawned.
-        private int type; //0 = A, 1 = B
         private Board board;
-        private Timer timer;
+        private int counterUpdate;
+        private int lineLevel;
+
         #endregion
 
-        public int Score { get => score; set => score = value; }
-        public int Level { get => level; set => level = value; }
-        public int Type { get => type; set => type = value; }
+        public int Score { get; private set; }
+        public int Level { get; private set; }
+        public int Type { get; private set; } //0 = A, 1 = B
+        public bool GameEnded { get; private set; }
+
         internal static GameLogic Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new GameLogic();
+					Reset(0, 0);
                 }
                 return instance;
             }
         }
 
-        protected GameLogic()
+        public static void Reset(int level, int type)
+		{
+            instance = new GameLogic(level, type);
+		}
+
+        protected GameLogic(int level, int type)
         {
             Score = 0;
-            Level = 1;
-            Type = 0;
-			board = new Board();
-            timer = new Timer(800);
-            timer.Elapsed += (sender, e) => Tick();
+            Level = level;
+            Type = type;
+            GameEnded = true;
+            counterUpdate = Settings.SPEED_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];
+            lineLevel = Settings.LINE_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];
 
+            board = new Board();
             StartGame();
         }
 
         private void StartGame()
         {
-            timer.Start();
+            GameEnded = false;
         }
 
         public Tetromino GetNextShape()
@@ -63,19 +64,74 @@ namespace ClassicTetris
             return board.GetStatistics();
         }
 
+        public void update()
+        {
+            if (GameEnded) return;
+
+            --counterUpdate;
+            if (counterUpdate <= 0)
+            {
+                // Animate remove line
+                Tick();
+
+                if (board.RemovingLineState)
+                {
+                    counterUpdate = Settings.SPEED_LINE_REMOVAL;
+                }
+                else
+                {
+                    counterUpdate = Settings.SPEED_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];
+                }
+            }
+        }
+
         public int Tick()
 		{
-			int test = board.Tick();
-			if (test >= 4)
+            //Down on the board
+			int nbLineRemoved = board.Tick();
+            switch (nbLineRemoved)
+            {
+                case -1:
+                    GameEnded = true;
+                    break;
+                case 1:
+                    Score += 40 * (Level + 1);
+                    break;
+                case 2:
+                    Score += 100 * (Level + 1);
+                    break;
+                case 3:
+                    Score += 300 * (Level + 1);
+                    break;
+                case 4:
+                    Score += 1200 * (Level + 1);
+                    break;
+            }
+
+            // Add sound
+			if (nbLineRemoved >= 4)
             {
 				AudioManager.GetInstance().Play(SFX.LineRemoval4);
             }
-			else if(test >= 1)
+			else if(nbLineRemoved >= 1)
 			{
 				AudioManager.GetInstance().Play(SFX.LineRemove);
 			}
-            score += 10 * test;
-			return score;
+            else if(nbLineRemoved < 0){
+                //TODO: Add loose animation + delay
+                GameEnded = true;
+                return 0;
+            }
+
+            // Check level up
+            lineLevel -= nbLineRemoved;
+            if(lineLevel < 0)
+            {
+                ++Level;
+                lineLevel += Settings.LINE_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];
+            }
+
+            return nbLineRemoved;
 		}
 
 		public bool Turn()
