@@ -19,30 +19,28 @@ namespace ClassicTetris
         public int Type { get; private set; } //0 = A, 1 = B
         public bool GameEnded { get; private set; }
 
-        private int state = 0;
-
         internal static GameLogic Instance
         {
             get
             {
                 if (instance == null)
                 {
-					Reset();
+					Reset(0, 0);
                 }
                 return instance;
             }
         }
 
-        public static void Reset()
+        public static void Reset(int level, int type)
 		{
-            instance = new GameLogic();
+            instance = new GameLogic(level, type);
 		}
 
-        protected GameLogic()
+        protected GameLogic(int level, int type)
         {
             Score = 0;
-            Level = 0;
-            Type = 0;
+            Level = level;
+            Type = type;
             GameEnded = true;
             counterUpdate = Settings.SPEED_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];
             lineLevel = Settings.LINE_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];

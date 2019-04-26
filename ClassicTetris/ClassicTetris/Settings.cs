@@ -15,6 +15,7 @@ namespace ClassicTetris
         public static readonly int[] LINE_LEVEL = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100, 100, 100, 100, 100, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 200, 200, 200 };
         public const int MAX_LEVEL_THEORICAL = 30;
 
+        public const int FAST_DROP_GRAVITY = 5;
         public const int DELAY_AUTO_SHIFT_INITIAL = 16;
         public const int DELAY_AUTO_SHIFT = 6;
         public const int SPEED_LINE_REMOVAL = 2;

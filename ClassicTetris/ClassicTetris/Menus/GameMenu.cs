@@ -87,7 +87,7 @@ namespace ClassicTetris.Menus
                 if (downCounter < 0)
                 {
                     GameLogic.Instance.Down();
-                    downCounter = Settings.DELAY_AUTO_SHIFT;
+                    downCounter = Settings.FAST_DROP_GRAVITY;
                 }
             }
 

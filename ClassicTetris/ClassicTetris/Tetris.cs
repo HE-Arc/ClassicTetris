@@ -38,7 +38,7 @@ namespace ClassicTetris
             menus[EMenu.GameTypeMenu] = new GameTypeMenu(this);
             menus[EMenu.TypeAMenu] = new TypeAMenu(this);
             menus[EMenu.Game] = new GameMenu(this);
-			ChangeMenu(EMenu.TypeAMenu);
+			ChangeMenu(EMenu.Game);
             base.Initialize();
 			foreach(KeyValuePair<EMenu, IMenus> menu in menus)
 			{
