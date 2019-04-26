@@ -237,10 +237,9 @@ namespace ClassicTetris.Renderer
             {
                 for (int j = 0; j < dim; j++)
                 {
-
                     if (b[i,j] <= 0)
                     {
-                        //DrawRectangle(spriteBatch, coor, squareSize, squareSize, Color.Black);
+                        //DrawTexture(spriteBatch, texturesTetrominos[level, 4], coor);
                     }
                     else if (b[i,j] <= 1) //I
                     {
@@ -269,10 +268,6 @@ namespace ClassicTetris.Renderer
                     else if (b[i,j] <= 7) //Z
                     {
                         DrawTexture(spriteBatch, texturesTetrominos[level, 3], coor);
-                    }
-                    else if (b[i, j] <= 8) //END
-                    {
-                        DrawTexture(spriteBatch, texturesTetrominos[level, 4], coor);
                     }
                     coor.X += squareSize + Settings.SQUARE_SPREARD;
 
@@ -343,6 +338,12 @@ namespace ClassicTetris.Renderer
                     else if (b[i][j] <= 7) //Z
                     {
                         DrawTexture(spriteBatch, texturesTetrominos[level, 3], coor);
+                    }
+                    else if (b[i][j] <= 8) //END
+                    {
+                        coor.X -= Settings.SQUARE_SPREARD / 2;
+                        DrawTexture(spriteBatch, texturesTetrominos[level, 4], coor);
+                        coor.X += Settings.SQUARE_SPREARD / 2;
                     }
                     coor.X += squareSize + Settings.SQUARE_SPREARD;
 
@@ -457,6 +458,7 @@ namespace ClassicTetris.Renderer
 
         private Texture2D CreateTextureTypeEnd(SpriteBatch sb, int sizeX, int sizeY, Color colorPrimary, Color colorSecondary)
         {
+            sizeX += Settings.SQUARE_SPREARD;
             Texture2D rect = new Texture2D(sb.GraphicsDevice, sizeX, sizeY);
             Color[] data = new Color[sizeX * sizeY];
             int n = data.Length;
@@ -473,7 +475,7 @@ namespace ClassicTetris.Renderer
 
                 else
                 {
-                    data[k] = colorSecondary;
+                    data[k] = colorPrimary;
                 }
             }
             rect.SetData(data);
