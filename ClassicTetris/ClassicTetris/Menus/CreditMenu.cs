@@ -37,14 +37,6 @@ namespace ClassicTetris.Menus
             bg = Content.Load<Texture2D>("Textures/creditMenu");
         }
 
-        public void Start()
-        {
-        }
-
-        public void Stop()
-        {
-        }
-
         public void UnloadContent()
         {
         }
@@ -53,7 +45,7 @@ namespace ClassicTetris.Menus
         {
             if(Actions.GetInstance()[Inputs.Action.MenuValidate].IsPressed())
             {
-                tetris.ChangeMenu(EMenu.PressStartMenu);
+				tetris.ChangeMenu(new PressStartMenu(tetris));
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Timers;
 using ClassicTetris.Audio;
+using ClassicTetris.Menus;
 
 namespace ClassicTetris
 {
@@ -11,12 +12,13 @@ namespace ClassicTetris
         private Board board;
         private int counterUpdate;
         private int lineLevel;
-
+        
         #endregion
 
         public int Score { get; private set; }
         public int Level { get; private set; }
-        public int Type { get; private set; } //0 = A, 1 = B
+        public int NbLines { get; private set; }
+		public GameType Type { get; private set; } //0 = A, 1 = B
         public bool GameEnded { get; private set; }
 
         internal static GameLogic Instance
@@ -31,16 +33,16 @@ namespace ClassicTetris
             }
         }
 
-        public static void Reset(int level, int type)
+		public static void Reset(int level, GameType gameType)
 		{
-            instance = new GameLogic(level, type);
+			instance = new GameLogic(level, gameType);
 		}
 
-        protected GameLogic(int level, int type)
+		protected GameLogic(int level, GameType gameType)
         {
             Score = 0;
             Level = level;
-            Type = type;
+			Type = gameType;
             GameEnded = true;
             counterUpdate = Settings.SPEED_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];
             lineLevel = Settings.LINE_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];
@@ -66,7 +68,10 @@ namespace ClassicTetris
 
         public void update()
         {
-            if (GameEnded) return;
+            if (GameEnded && !board.AnimationEndGame)
+            {
+                return;
+            }
 
             --counterUpdate;
             if (counterUpdate <= 0)
@@ -74,7 +79,11 @@ namespace ClassicTetris
                 // Animate remove line
                 Tick();
 
-                if (board.RemovingLineState)
+                if(board.AnimationEndGame)
+                {
+                    counterUpdate = Settings.SPEED_ENDGAME_ANIMATION;
+                }
+                else if (board.RemovingLineState)
                 {
                     counterUpdate = Settings.SPEED_LINE_REMOVAL;
                 }
@@ -124,6 +133,7 @@ namespace ClassicTetris
             }
 
             // Check level up
+            NbLines += nbLineRemoved;
             lineLevel -= nbLineRemoved;
             if(lineLevel < 0)
             {

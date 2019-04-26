@@ -37,14 +37,15 @@ namespace ClassicTetris
 			Binds[Action.Rotate] = new Bind(Keys.Up, Keys.W);
 			Binds[Action.ForceDown] = new Bind(Keys.Space);
 			Binds[Action.Quit] = new Bind(Keys.Escape);
-            Binds[Action.Debug] = new Bind(Keys.Enter);
+            Binds[Action.Pause] = new Bind(Keys.Enter);
 
             // Menu
             Binds[Action.MenuDown] = new Bind(Keys.Down);
             Binds[Action.MenuLeft] = new Bind(Keys.Left);
             Binds[Action.MenuRight] = new Bind(Keys.Right);
-            Binds[Action.MenuUp] = new Bind(Keys.Up);
-            Binds[Action.MenuValidate] = new Bind(Keys.Enter);
+			Binds[Action.MenuUp] = new Bind(Keys.Up);
+			Binds[Action.MenuValidate] = new Bind(Keys.Enter);
+			Binds[Action.MenuBack] = new Bind(Keys.Back);
         }
 
         /// <summary>

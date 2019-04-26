@@ -10,8 +10,14 @@ namespace ClassicTetris.Renderer
     class GameRenderer
     {
         private Texture2D background;
-        private SpriteFont tetrisFont;
-        private Texture2D[,] texturesTetrominos;
+		public SpriteFont TetrisFont
+		{
+			get;
+			private set;
+		}
+
+		private Texture2D[,] texturesTetrominos;
+
         private static Shape[] shapeStatisticsOrder =
         {
             Shape.T,
@@ -32,7 +38,7 @@ namespace ClassicTetris.Renderer
 		private void LoadContent(ContentManager content, SpriteBatch sb)
         {
             background = content.Load<Texture2D>("Textures/tetris_exemple");
-            tetrisFont = content.Load<SpriteFont>("Fonts/classic_tetris_font");
+			TetrisFont = content.Load<SpriteFont>("Fonts/classic_tetris_font");
             CreateTextures(sb);
         }
 
@@ -127,13 +133,14 @@ namespace ClassicTetris.Renderer
         {
             //int nLines = GameLogic.NbLines;
             int nLines = 0; //TODO
-            spriteBatch.DrawString(tetrisFont, $"LINES - {FormatNumberToNDigits(nLines, Settings.LINES_DIGITS)}", new Vector2(400, 50), Color.White);
+            spriteBatch.DrawString(TetrisFont, $"LINES - {FormatNumberToNDigits(nLines, Settings.LINES_DIGITS)}", new Vector2(400, 50), Color.White);
         }
 
         private void DrawType(SpriteBatch spriteBatch)
         {
             //TODO
-            spriteBatch.DrawString(tetrisFont, "A-TYPE", new Vector2(95, 83), Color.White);
+            spriteBatch.DrawString(TetrisFont, "A-TYPE", new Vector2(95, 83), Color.White);
+
         }
 
         private void DrawStatistics(SpriteBatch spriteBatch)
@@ -142,13 +149,13 @@ namespace ClassicTetris.Renderer
             int yCoord = 250;
             int level = GameLogic.Instance.Level;
             int[] piecesOrder = new int[8] {0, 6, 3, 7, 2, 5, 4, 1 };
-            spriteBatch.DrawString(tetrisFont, "STATISTICS", new Vector2(xCoord - 4*Settings.SQUARE_SIZE, yCoord), Color.White);
+            spriteBatch.DrawString(TetrisFont, "STATISTICS", new Vector2(xCoord - 4*Settings.SQUARE_SIZE, yCoord), Color.White);
             xCoord += Settings.SQUARE_SIZE;
             yCoord += (int)(2.5 * Settings.SQUARE_SIZE);
             for (int a = 0; a < shapeStatisticsOrder.Length; a++)
             {
                 int stat = GameLogic.Instance.GetStatistics()[shapeStatisticsOrder[a]];
-                spriteBatch.DrawString(tetrisFont, FormatNumberToNDigits(stat, Settings.STATS_DIGITS), new Vector2(xCoord, yCoord), Color.Red);
+                spriteBatch.DrawString(TetrisFont, FormatNumberToNDigits(stat, Settings.STATS_DIGITS), new Vector2(xCoord, yCoord), Color.Red);
 
                 int[,] b = Tetromino.sequence[(Shape)(piecesOrder[a+1])][0];
                 int dim = b.GetLength(0);
@@ -210,13 +217,13 @@ namespace ClassicTetris.Renderer
         private void DrawLevel(SpriteBatch spriteBatch)
         {
             int level = GameLogic.Instance.Level;
-            spriteBatch.DrawString(tetrisFont, "LEVEL", new Vector2(780, 590), Color.White);
-            spriteBatch.DrawString(tetrisFont, FormatNumberToNDigits(level, Settings.LEVEL_DIGITS), new Vector2(820, 630), Color.White);
+            spriteBatch.DrawString(TetrisFont, "LEVEL", new Vector2(780, 590), Color.White);
+            spriteBatch.DrawString(TetrisFont, FormatNumberToNDigits(level, Settings.LEVEL_DIGITS), new Vector2(820, 630), Color.White);
         }
 
         private void DrawNextTetromino(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(tetrisFont, "NEXT", new Vector2(765, 375), Color.White);
+            spriteBatch.DrawString(TetrisFont, "NEXT", new Vector2(765, 375), Color.White);
             int level = GameLogic.Instance.Level;
             int[,] b = GameLogic.Instance.GetNextShape().Grid;
             int dim = b.GetLength(0);
@@ -279,15 +286,17 @@ namespace ClassicTetris.Renderer
         private void DrawCurrentScore(SpriteBatch spriteBatch)
         {
             int score = GameLogic.Instance.Score;
-            spriteBatch.DrawString(tetrisFont, "SCORE", new Vector2(765, 175), Color.White);
-            spriteBatch.DrawString(tetrisFont, FormatNumberToNDigits(score, Settings.SCORE_DIGITS), new Vector2(770, 215), Color.White);
+            spriteBatch.DrawString(TetrisFont, "SCORE", new Vector2(765, 175), Color.White);
+            spriteBatch.DrawString(TetrisFont, FormatNumberToNDigits(score, Settings.SCORE_DIGITS), new Vector2(770, 215), Color.White);
+
         }
 
         private void DrawTopScore(SpriteBatch spriteBatch)
         {
             int topScore = 5000;
-            spriteBatch.DrawString(tetrisFont, "TOP", new Vector2(765, 80), Color.White);
-            spriteBatch.DrawString(tetrisFont, FormatNumberToNDigits(topScore, Settings.SCORE_DIGITS), new Vector2(770, 120), Color.White);
+            spriteBatch.DrawString(TetrisFont, "TOP", new Vector2(765, 80), Color.White);
+            spriteBatch.DrawString(TetrisFont, FormatNumberToNDigits(topScore, Settings.SCORE_DIGITS), new Vector2(770, 120), Color.White);
+
         }
 
         private void DrawBoard(SpriteBatch spriteBatch)

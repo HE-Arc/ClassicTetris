@@ -16,16 +16,11 @@ namespace ClassicTetris
     /// </summary>
     public class Tetris : Game
     {
-        private GraphicsDeviceManager graphics;
-
-		private Dictionary<EMenu, IMenus> menus;
-        private EMenu currentMenu;
+		private IMenus currentMenu;
 
         public Tetris()
         {
-			menus = new Dictionary<EMenu, IMenus>();
-
-            graphics = new GraphicsDeviceManager(this);
+            GraphicsDeviceManager graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = Settings.WINDOW_WIDTH;
             graphics.PreferredBackBufferHeight = Settings.WINDOW_HEIGHT;
             Content.RootDirectory = "Content";
@@ -33,35 +28,19 @@ namespace ClassicTetris
 
         protected override void Initialize()
         {
-            menus[EMenu.CreditMenu] = new CreditMenu(this);
-            menus[EMenu.PressStartMenu] = new PressStartMenu(this);
-            menus[EMenu.GameTypeMenu] = new GameTypeMenu(this);
-            menus[EMenu.TypeAMenu] = new TypeAMenu(this);
-            menus[EMenu.Game] = new GameMenu(this);
-			ChangeMenu(EMenu.Game);
+			ChangeMenu(new CreditMenu(this));
             base.Initialize();
-			foreach(KeyValuePair<EMenu, IMenus> menu in menus)
-			{
-				menu.Value.Initialize();
-			}
         }
 
         protected override void LoadContent()
         {
-            base.LoadContent();
-			foreach (KeyValuePair<EMenu, IMenus> menu in menus)
-            {
-				menu.Value.LoadContent(Content, GraphicsDevice);
-            }
+			AudioManager.GetInstance().Load(Content);
+			base.LoadContent();
         }
 
         protected override void UnloadContent()
         {
             base.UnloadContent();
-			foreach (KeyValuePair<EMenu, IMenus> menu in menus)
-            {
-				menu.Value.UnloadContent();
-            }
         }
 
         /// <summary>
@@ -73,20 +52,21 @@ namespace ClassicTetris
         {
 			base.Update(gameTime);
             Actions.GetInstance().Update(Keyboard.GetState());
-            menus[currentMenu].Update(gameTime);
+            currentMenu.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
 		{
 			base.Draw(gameTime);
-			menus[currentMenu].Draw(gameTime);
+			currentMenu.Draw(gameTime);
         }
 
-		public void ChangeMenu(EMenu menu)
+		public void ChangeMenu(IMenus menu)
 		{
-            menus[currentMenu].Stop();
-			currentMenu = menu;
-            menus[currentMenu].Start();
+			currentMenu?.UnloadContent(); // ?. to avoid crash on the first menu load
+            currentMenu = menu;
+			currentMenu.Initialize();
+			currentMenu.LoadContent(Content, GraphicsDevice);
 		}
     }
 }

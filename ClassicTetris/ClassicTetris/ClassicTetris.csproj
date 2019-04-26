@@ -59,13 +59,13 @@
     <Compile Include="Inputs\Actions.cs" />
     <Compile Include="Inputs\Action.cs" />
     <Compile Include="Audio\AudioManager.cs" />
-    <Compile Include="Audio\Music.cs" />
     <Compile Include="Audio\SFX.cs" />
     <Compile Include="TetrisLogic.cs" />
-    <Compile Include="Menus\EMenu.cs" />
     <Compile Include="Menus\GameMenu.cs" />
     <Compile Include="Menus\IMenus.cs" />
     <Compile Include="Renderer\GameRenderer.cs" />
+    <Compile Include="Menus\GameType.cs" />
+    <Compile Include="Audio\MusicType.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
