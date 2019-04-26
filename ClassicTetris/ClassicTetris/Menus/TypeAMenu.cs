@@ -16,13 +16,10 @@ namespace ClassicTetris.Menus
         private Tetris tetris;
         private SpriteBatch sb;
         private Texture2D bg;
-
 		private SpriteFont font;
-
 		private Texture2D rect;
 
 		private int level;
-		private MusicType musicType;
 		private const int maxmenu = 10;
 		private const int sizeX = 55;
         private const int sizeY = sizeX;
@@ -37,11 +34,10 @@ namespace ClassicTetris.Menus
 
 		private int frameCount = 0;
 
-		public TypeAMenu(Tetris tetris, int level, MusicType musicType)
+		public TypeAMenu(Tetris tetris, int level)
         {
             this.tetris = tetris;
 			this.level = level;
-			this.musicType = musicType;
         }
 
         public void Draw(GameTime gameTime)
@@ -107,7 +103,7 @@ namespace ClassicTetris.Menus
 			if (Actions.GetInstance()[Inputs.Action.Start].IsPressed())
             {
 				//set level
-				tetris.ChangeMenu(new GameMenu(tetris, level, GameType.TypeA, musicType));
+				tetris.ChangeMenu(new GameMenu(tetris, level, GameType.TypeA));
             }
 
 			if (Actions.GetInstance()[Inputs.Action.Select].IsPressed())

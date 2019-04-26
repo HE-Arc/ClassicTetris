@@ -67,7 +67,7 @@ namespace ClassicTetris.Menus
 
                 Vector2 pos = new Vector2(scoreOffsetX, scoreOffsetY + i * scoreSpacing);
 
-				if (this.score > scoreEntry.Score && !isIt)
+				if (this.score >= scoreEntry.Score && !isIt)
 				{
 					for (int j = 0; j < selectedIndexChar.Length; j++)
 					{

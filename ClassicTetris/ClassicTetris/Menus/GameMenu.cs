@@ -18,7 +18,6 @@ namespace ClassicTetris.Menus
 
 		private int baseLevel;
 		private GameType gameType;
-		private MusicType musicType;
 		private Tetris tetris;
 
 		private bool isPause;
@@ -26,18 +25,16 @@ namespace ClassicTetris.Menus
         private const string pauseText = "PAUSE";
 		private static readonly Color colorPause = new Color(92, 148, 252);
 
-		public GameMenu(Tetris tetris, int baseLevel, GameType gameType, MusicType musicType)
+		public GameMenu(Tetris tetris, int baseLevel, GameType gameType)
 		{
             this.isPause = false;
 			this.tetris = tetris;
 			this.baseLevel = baseLevel;
 			this.gameType = gameType;
-			this.musicType = musicType;
         }
 
 		public void Initialize()
 		{
-			AudioManager.GetInstance().Play(musicType);
             GameLogic.Reset(baseLevel, gameType);
 		}
 
@@ -59,7 +56,7 @@ namespace ClassicTetris.Menus
             {
 				if (Actions.GetInstance()[Action.Start].IsPressed())
                 {
-					IMenus menu = new TypeAMenu(tetris, baseLevel, musicType);
+					IMenus menu = new TypeAMenu(tetris, baseLevel);
 
 					int score = GameLogic.Instance.Score;
 					int level = GameLogic.Instance.Level;
@@ -67,7 +64,7 @@ namespace ClassicTetris.Menus
 					List<ScoreEntry> scores = Scores.Instance.GetTopScores();
 					int thirdScore = scores[System.Math.Min(2, scores.Count - 1)].Score;
 
-					if(score > thirdScore)
+					if(score >= thirdScore)
 					{
 						tetris.ChangeMenu(new CongratulationMenu(tetris, score, level, menu));
 						return;
@@ -148,7 +145,6 @@ namespace ClassicTetris.Menus
             {
                 tetris.Exit();
             }
-            
         }
       
         public void Draw(GameTime gameTime)

@@ -44,7 +44,7 @@ namespace ClassicTetris.Menus
             this.tetris = tetris;
 			frameCount = 0;
 			currentGameType = GameType.TypeA;
-            currentMusicType = MusicType.Music1;
+            SelectMusic(MusicType.Music1);
         }
 
         public void Draw(GameTime gameTime)
@@ -78,6 +78,12 @@ namespace ClassicTetris.Menus
         {
         }
 
+        public void SelectMusic(MusicType music)
+        {
+            currentMusicType = music;
+            AudioManager.GetInstance().Play(music);
+        }
+
         public void Update(GameTime gameTime)
         {
 			frameCount += 1;
@@ -85,7 +91,7 @@ namespace ClassicTetris.Menus
             {
 				if (currentGameType == GameType.TypeA)
 				{
-					tetris.ChangeMenu(new TypeAMenu(tetris, 0, currentMusicType));
+					tetris.ChangeMenu(new TypeAMenu(tetris, 0));
 				}
 
 				if (currentGameType == GameType.TypeB)
@@ -101,19 +107,19 @@ namespace ClassicTetris.Menus
 
 			if (Actions.GetInstance()[Inputs.Action.Down].IsPressed())
             {
-                currentMusicType = (MusicType)(TetrisMath.mod(((int)currentMusicType + 1), Enum.GetNames(typeof(MusicType)).Length));
+                SelectMusic((MusicType)TetrisMath.mod((int)currentMusicType + 1, Enum.GetNames(typeof(MusicType)).Length));
             }
             if (Actions.GetInstance()[Inputs.Action.Up].IsPressed())
             {
-                currentMusicType = (MusicType)(TetrisMath.mod(((int)currentMusicType - 1), Enum.GetNames(typeof(MusicType)).Length));
+                SelectMusic((MusicType)TetrisMath.mod((int)currentMusicType - 1, Enum.GetNames(typeof(MusicType)).Length));
             }
 			if (Actions.GetInstance()[Inputs.Action.Right].IsPressed())
             {
-                currentGameType = (GameType)(TetrisMath.mod(((int)currentGameType + 1), Enum.GetNames(typeof(GameType)).Length));
+                currentGameType = (GameType)TetrisMath.mod((int)currentGameType + 1, Enum.GetNames(typeof(GameType)).Length);
             }
 			if (Actions.GetInstance()[Inputs.Action.Left].IsPressed())
             {
-                currentGameType = (GameType)(TetrisMath.mod(((int)currentGameType - 1), Enum.GetNames(typeof(GameType)).Length));
+                currentGameType = (GameType)TetrisMath.mod((int)currentGameType - 1, Enum.GetNames(typeof(GameType)).Length);
             }
         }
     }
