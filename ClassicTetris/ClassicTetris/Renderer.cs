@@ -119,31 +119,34 @@ namespace ClassicTetris
 
         private void DrawLines(SpriteBatch spriteBatch)
         {
-            int nLines = 0;
-            spriteBatch.DrawString(tetrisFont, $"LINES-{FormatNumberToNDigits(nLines, Settings.LINES_DIGITS)}", new Vector2(400, 50), Color.White);
+            int nLines = 0; //TODO
+            spriteBatch.DrawString(tetrisFont, $"LINES - {FormatNumberToNDigits(nLines, Settings.LINES_DIGITS)}", new Vector2(400, 50), Color.White);
         }
 
         private void DrawType(SpriteBatch spriteBatch)
         {
+            //TODO
             spriteBatch.DrawString(tetrisFont, "A-TYPE", new Vector2(95, 83), Color.White);
         }
 
         private void DrawStatistics(SpriteBatch spriteBatch)
         {
-            int xCoord = 200;
-            int yCoord = 330;
-            spriteBatch.DrawString(tetrisFont, "STATISTICS", new Vector2(xCoord-145, yCoord-80), Color.White);
+            int xCoord = 190;
+            int yCoord = 250;
+            int[] piecesOrder = new int[8] {0, 6, 3, 7, 2, 5, 4, 1 };
+            spriteBatch.DrawString(tetrisFont, "STATISTICS", new Vector2(xCoord - 4*Settings.SQUARE_SIZE, yCoord), Color.White);
+            xCoord += Settings.SQUARE_SIZE;
+            yCoord += (int)(2.5 * Settings.SQUARE_SIZE);
             for (int a = 0; a < shapeStatisticsOrder.Length; a++)
             {
                 int stat = GameLogic.Instance.GetStatistics()[shapeStatisticsOrder[a]];
                 spriteBatch.DrawString(tetrisFont, FormatNumberToNDigits(stat, Settings.STATS_DIGITS), new Vector2(xCoord, yCoord), Color.Red);
 
-                int[,] b = Tetromino.sequence[(Shape)(a+1)][0];
+                int[,] b = Tetromino.sequence[(Shape)(piecesOrder[a+1])][0];
                 int dim = b.GetLength(0);
                 int offsetDim = dim != 3 ? 0 : 15;
                 int offsetX = xCoord + offsetDim - 150;
                 int offsetY = yCoord - 20;
-                int squareSize = Settings.SQUARE_SIZE;
                 Vector2 coor = new Vector2(offsetX, offsetY);
                 for (int i = 0; i < dim; i++)
                 {
@@ -156,7 +159,9 @@ namespace ClassicTetris
                         }
                         else if (b[i, j] <= 1) //I
                         {
+                            coor.Y -= Settings.SQUARE_SIZE;
                             DrawTexture(spriteBatch, texturesTetrominos[level, 1], coor);
+                            coor.Y += Settings.SQUARE_SIZE;
                         }
                         else if (b[i, j] <= 2) //0
                         {
@@ -182,14 +187,14 @@ namespace ClassicTetris
                         {
                             DrawTexture(spriteBatch, texturesTetrominos[level, 3], coor);
                         }
-                        coor.X += squareSize + Settings.SQUARE_SPREARD;
+                        coor.X += Settings.SQUARE_SIZE + Settings.SQUARE_SPREARD;
 
                     }
                     coor.X = offsetX;
-                    coor.Y += squareSize + Settings.SQUARE_SPREARD;
+                    coor.Y += Settings.SQUARE_SIZE + Settings.SQUARE_SPREARD;
                 }
 
-                yCoord += 70;
+                yCoord += 2*Settings.SQUARE_SIZE + 10;
             }
 
         }

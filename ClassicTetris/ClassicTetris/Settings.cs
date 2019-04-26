@@ -9,6 +9,9 @@ namespace ClassicTetris
 {
     class Settings
     {
+        public const int WINDOW_WIDTH = 1024;
+        public const int WINDOW_HEIGHT = 896;
+
         public const int BOARD_WIDTH = 10;
         public const int BOARD_HEIGHT = 20;
 
