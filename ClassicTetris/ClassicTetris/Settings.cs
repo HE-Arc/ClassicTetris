@@ -23,6 +23,7 @@ namespace ClassicTetris
         public const int SCORE_DIGITS = 6;
         public const int STATS_DIGITS = 3;
         public const int LEVEL_DIGITS = 2;
+        public const int LINES_DIGITS = 3;
 
         public const int BOARD_OFFSET_X = 383;
         public const int BOARD_OFFSET_Y = 162;

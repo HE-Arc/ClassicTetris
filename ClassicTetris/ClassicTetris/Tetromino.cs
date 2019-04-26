@@ -30,7 +30,7 @@ namespace ClassicTetris
 		///     - second array : 2d grid with the pattern
         /// </summary>
         ///
-		private static readonly Dictionary<Shape, int[][,]> sequence = new Dictionary<Shape, int[][,]>();
+		public static readonly Dictionary<Shape, int[][,]> sequence = new Dictionary<Shape, int[][,]>();
         private static readonly Random random = new Random();
 
         #endregion
