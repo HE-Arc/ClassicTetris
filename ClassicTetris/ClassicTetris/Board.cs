@@ -16,7 +16,7 @@ namespace ClassicTetris
         private int lineRemoveState = 0;
         private int endGameState = -1;
 
-        public bool AnimationEndGame => endGameState > -1 && endGameState <= Settings.BOARD_HEIGHT;
+        public bool AnimationEndGame => endGameState > -1 && endGameState < Settings.BOARD_HEIGHT;
         public bool RemovingLineState => lineRemoveState > 0;
         public Tetromino NextShape { get; private set; }
         public Tetromino CurrentShape { get; private set; }
