@@ -13,11 +13,23 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Audio/Music/music.mp3
+#begin Audio/Music/original_nes_tetris_music_1.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
-/build:Audio/Music/music.mp3
+/build:Audio/Music/original_nes_tetris_music_1.mp3
+
+#begin Audio/Music/original_nes_tetris_music_2.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/original_nes_tetris_music_2.mp3
+
+#begin Audio/Music/original_nes_tetris_music_3.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/original_nes_tetris_music_3.mp3
 
 #begin Audio/SFX/block-rotate.mp3
 /importer:Mp3Importer
