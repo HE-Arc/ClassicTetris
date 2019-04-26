@@ -94,6 +94,11 @@ namespace ClassicTetris.Menus
                 }
             }
 
+			if (Actions.GetInstance()[Inputs.Action.MenuBack].IsPressed())
+            {
+				tetris.ChangeMenu(new PressStartMenu(tetris));
+            }
+
             if (Actions.GetInstance()[Inputs.Action.MenuDown].IsPressed())
             {
                 currentMusicType = (MusicType)(TetrisMath.mod(((int)currentMusicType + 1), Enum.GetNames(typeof(MusicType)).Length));

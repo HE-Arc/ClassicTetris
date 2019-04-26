@@ -84,6 +84,11 @@ namespace ClassicTetris.Menus
 				tetris.ChangeMenu(new GameMenu(tetris, level, GameType.TypeA, musicType));
             }
 
+			if (Actions.GetInstance()[Inputs.Action.MenuBack].IsPressed())
+            {
+				tetris.ChangeMenu(new GameTypeMenu(tetris));
+            }
+
             if (Actions.GetInstance()[Inputs.Action.MenuDown].IsPressed())
             {
 				if (level < maxmenu / 2)
