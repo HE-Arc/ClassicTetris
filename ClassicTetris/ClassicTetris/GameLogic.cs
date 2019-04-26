@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Timers;
 using ClassicTetris.Audio;
+using ClassicTetris.Menus;
 
 namespace ClassicTetris
 {
@@ -16,7 +17,7 @@ namespace ClassicTetris
 
         public int Score { get; private set; }
         public int Level { get; private set; }
-        public int Type { get; private set; } //0 = A, 1 = B
+		public GameType Type { get; private set; } //0 = A, 1 = B
         public bool GameEnded { get; private set; }
 
         internal static GameLogic Instance
@@ -25,22 +26,22 @@ namespace ClassicTetris
             {
                 if (instance == null)
                 {
-					Reset();
+					Reset(0, 0);
                 }
                 return instance;
             }
         }
 
-        public static void Reset()
+		public static void Reset(int level, GameType gameType)
 		{
-            instance = new GameLogic();
+			instance = new GameLogic(level, gameType);
 		}
 
-        protected GameLogic()
+		protected GameLogic(int level, GameType gameType)
         {
             Score = 0;
-            Level = 0;
-            Type = 0;
+            Level = level;
+			Type = gameType;
             GameEnded = true;
             counterUpdate = Settings.SPEED_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];
             lineLevel = Settings.LINE_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];
@@ -71,8 +72,17 @@ namespace ClassicTetris
             --counterUpdate;
             if (counterUpdate <= 0)
             {
+                // Animate remove line
                 Tick();
-                counterUpdate = Settings.SPEED_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];
+
+                if (board.RemovingLineState)
+                {
+                    counterUpdate = Settings.SPEED_LINE_REMOVAL;
+                }
+                else
+                {
+                    counterUpdate = Settings.SPEED_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];
+                }
             }
         }
 
@@ -82,6 +92,9 @@ namespace ClassicTetris
 			int nbLineRemoved = board.Tick();
             switch (nbLineRemoved)
             {
+                case -1:
+                    GameEnded = true;
+                    break;
                 case 1:
                     Score += 40 * (Level + 1);
                     break;
@@ -118,6 +131,7 @@ namespace ClassicTetris
                 ++Level;
                 lineLevel += Settings.LINE_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];
             }
+
             return nbLineRemoved;
 		}
 

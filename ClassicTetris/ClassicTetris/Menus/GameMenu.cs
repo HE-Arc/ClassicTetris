@@ -16,14 +16,17 @@ namespace ClassicTetris.Menus
         private int downCounter;
 
 		private int baseLevel;
-
+		private GameType gameType;
+		private MusicType musicType;
 		private Tetris tetris;
 
-		public GameMenu(Tetris tetris, int baseLevel)
+		public GameMenu(Tetris tetris, int baseLevel, GameType gameType, MusicType musicType)
 		{
-            this.tetris = tetris;
+			this.tetris = tetris;
 			this.baseLevel = baseLevel;
-			GameLogic.Reset(baseLevel);
+			this.gameType = gameType;
+			this.musicType = musicType;
+			GameLogic.Reset(baseLevel, gameType);
         }
 
 		public void Initialize()
@@ -47,7 +50,10 @@ namespace ClassicTetris.Menus
 		{
             //DAS initial delay is 16 frames, and then every 6 frames
 			GameLogic.Instance.update();
-            if (GameLogic.Instance.GameEnded) return;
+            if (GameLogic.Instance.GameEnded)
+			{
+				tetris.ChangeMenu(new TypeAMenu(tetris, baseLevel, musicType));	
+			}
 
 
             //Priotity given to right action like in NES
@@ -91,7 +97,7 @@ namespace ClassicTetris.Menus
                 if (downCounter < 0)
                 {
                     GameLogic.Instance.Down();
-                    downCounter = Settings.DELAY_AUTO_SHIFT;
+                    downCounter = Settings.FAST_DROP_GRAVITY;
                 }
             }
 

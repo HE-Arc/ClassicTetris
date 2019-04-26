@@ -277,7 +277,6 @@ namespace ClassicTetris.Renderer
             Debug.Assert(number < Convert.ToInt32(Math.Pow(10, n)));
             String formattedNumber = new String('0', n).Substring(1, n - number.ToString().Length) + number.ToString();
             return formattedNumber;
-
         }
 
 

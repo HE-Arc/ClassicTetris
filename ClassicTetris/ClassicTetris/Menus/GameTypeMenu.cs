@@ -19,34 +19,15 @@ namespace ClassicTetris.Menus
 
 		private int frameCount;
 
-        private enum GameType
-        {
-            TypeA,
-            TypeB
-        }
-
-        private enum MusicType
-        {
-            Music1,
-            Music2,
-            Music3,
-            OFF,
-        }
-
         private GameType currentGameType;
         private MusicType currentMusicType;
 
-        private Dictionary<GameType, Tuple<Vector2, Vector2>> arrowsPositionsGameType;
-        private Dictionary<MusicType, Tuple<Vector2, Vector2>> arrowsPositionsMusicType;
+        private static Dictionary<GameType, Tuple<Vector2, Vector2>> arrowsPositionsGameType;
+		private static  Dictionary<MusicType, Tuple<Vector2, Vector2>> arrowsPositionsMusicType;
 
-        public GameTypeMenu(Tetris tetris)
-        {
-            this.tetris = tetris;
-			frameCount = 0;
-			currentGameType = GameType.TypeA;
-            currentMusicType = MusicType.Music1;
-
-            arrowsPositionsGameType = new Dictionary<GameType, Tuple<Vector2, Vector2>>();
+		static GameTypeMenu()
+		{
+			arrowsPositionsGameType = new Dictionary<GameType, Tuple<Vector2, Vector2>>();
             arrowsPositionsGameType[GameType.TypeA] = new Tuple<Vector2, Vector2>(new Vector2(246, 226), new Vector2(480, 226));
             arrowsPositionsGameType[GameType.TypeB] = new Tuple<Vector2, Vector2>(new Vector2(630, 226), new Vector2(866, 226));
             arrowsPositionsMusicType = new Dictionary<MusicType, Tuple<Vector2, Vector2>>();
@@ -54,6 +35,14 @@ namespace ClassicTetris.Menus
             arrowsPositionsMusicType[MusicType.Music2] = new Tuple<Vector2, Vector2>(new Vector2(406, 608), new Vector2(706, 608));
             arrowsPositionsMusicType[MusicType.Music3] = new Tuple<Vector2, Vector2>(new Vector2(406, 676), new Vector2(706, 676));
             arrowsPositionsMusicType[MusicType.OFF] = new Tuple<Vector2, Vector2>(new Vector2(406, 733), new Vector2(706, 733));
+		}
+
+        public GameTypeMenu(Tetris tetris)
+        {
+            this.tetris = tetris;
+			frameCount = 0;
+			currentGameType = GameType.TypeA;
+            currentMusicType = MusicType.Music1;
         }
 
         public void Draw(GameTime gameTime)
@@ -92,8 +81,17 @@ namespace ClassicTetris.Menus
 			frameCount += 1;
             if (Actions.GetInstance()[Inputs.Action.MenuValidate].IsPressed())
             {
-				tetris.ChangeMenu(new TypeAMenu(tetris));
+				if (currentGameType == GameType.TypeA)
+				{
+					tetris.ChangeMenu(new TypeAMenu(tetris, 0, currentMusicType));
+				}
+
+				if (currentGameType == GameType.TypeB)
+                {
+                    //tetris.ChangeMenu(new TypeBMenu(tetris, currentMusicType));
+                }
             }
+
             if (Actions.GetInstance()[Inputs.Action.MenuDown].IsPressed())
             {
                 currentMusicType = (MusicType)(TetrisMath.mod(((int)currentMusicType + 1), Enum.GetNames(typeof(MusicType)).Length));
