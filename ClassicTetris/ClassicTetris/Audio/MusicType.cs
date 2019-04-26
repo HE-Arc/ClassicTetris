@@ -1,5 +1,5 @@
 ﻿using System;
-namespace ClassicTetris.Menus
+namespace ClassicTetris.Audio
 {
 	public enum MusicType
     {

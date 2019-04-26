@@ -15,7 +15,7 @@ namespace ClassicTetris.Audio
         private static AudioManager Instance = null;
 
 		private static readonly Dictionary<SFX, SoundEffect> soundEffects = new Dictionary<SFX, SoundEffect>();
-		private static readonly Dictionary<Music, Song> songs = new Dictionary<Music, Song>();
+		private static readonly Dictionary<MusicType, Song> songs = new Dictionary<MusicType, Song>();
 
 		public static AudioManager GetInstance()
 		{
@@ -26,7 +26,7 @@ namespace ClassicTetris.Audio
 
 		private AudioManager()
         {
-
+			
         }
 
         /// <summary>
@@ -46,7 +46,9 @@ namespace ClassicTetris.Audio
 			soundEffects[SFX.SlowHit] = content.Load<SoundEffect>("Audio/SFX/slow-hit");
 			soundEffects[SFX.Start] = content.Load<SoundEffect>("Audio/SFX/start");
 			soundEffects[SFX.Whoosh] = content.Load<SoundEffect>("Audio/SFX/whoosh");
-			songs[Music.Theme1] = content.Load<Song>("Audio/Music/music");
+			songs[MusicType.Music1] = content.Load<Song>("Audio/Music/music");
+			songs[MusicType.Music2] = content.Load<Song>("Audio/Music/music");
+            songs[MusicType.Music3] = content.Load<Song>("Audio/Music/music");
         }
         
         /// <summary>
@@ -62,9 +64,12 @@ namespace ClassicTetris.Audio
         /// Play the specified music.
         /// </summary>
         /// <param name="music">Music.</param>
-		public void Play(Music music)
+		public void Play(MusicType music)
         {
-			MediaPlayer.Play(songs[music]);
+			if (music == MusicType.OFF)
+				MediaPlayer.Stop();
+			else
+			    MediaPlayer.Play(songs[music]);
         }
     }
 }

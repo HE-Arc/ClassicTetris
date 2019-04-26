@@ -34,6 +34,7 @@ namespace ClassicTetris
 
         protected override void LoadContent()
         {
+			AudioManager.GetInstance().Load(Content);
 			base.LoadContent();
         }
 

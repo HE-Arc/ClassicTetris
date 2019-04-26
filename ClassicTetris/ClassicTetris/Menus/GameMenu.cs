@@ -26,12 +26,12 @@ namespace ClassicTetris.Menus
 			this.baseLevel = baseLevel;
 			this.gameType = gameType;
 			this.musicType = musicType;
-			GameLogic.Reset(baseLevel, gameType);
         }
 
 		public void Initialize()
 		{
-			
+			AudioManager.GetInstance().Play(musicType);
+            GameLogic.Reset(baseLevel, gameType);
 		}
 
 		public void LoadContent(ContentManager Content, GraphicsDevice GraphicsDevice)
@@ -43,7 +43,7 @@ namespace ClassicTetris.Menus
 
 		public void UnloadContent()
 		{
-			
+			AudioManager.GetInstance().Play(MusicType.OFF);
 		}
 
 		public void Update(GameTime gameTime)
