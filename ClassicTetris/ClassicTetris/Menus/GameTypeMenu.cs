@@ -51,7 +51,7 @@ namespace ClassicTetris.Menus
         {
             sb.Begin();
             sb.Draw(bg, Vector2.Zero, Color.White);
-			if (frameCount % 2 == 0)
+			if ((frameCount % 4) / 2 == 0)
 			{
 				sb.Draw(arrow_left, arrowsPositionsGameType[currentGameType].Item1, Color.White);
 				sb.Draw(arrow_right, arrowsPositionsGameType[currentGameType].Item2, Color.White);

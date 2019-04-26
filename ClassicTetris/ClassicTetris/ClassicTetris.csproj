@@ -66,6 +66,9 @@
     <Compile Include="Renderer\GameRenderer.cs" />
     <Compile Include="Menus\GameType.cs" />
     <Compile Include="Audio\MusicType.cs" />
+    <Compile Include="Scores.cs" />
+    <Compile Include="ScoreEntry.cs" />
+    <Compile Include="Menus\CongratulationMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

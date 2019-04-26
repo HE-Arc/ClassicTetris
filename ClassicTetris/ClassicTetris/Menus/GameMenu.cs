@@ -1,4 +1,5 @@
-﻿using ClassicTetris.Audio;
+﻿using System.Collections.Generic;
+using ClassicTetris.Audio;
 using ClassicTetris.Inputs;
 using ClassicTetris.Renderer;
 using Microsoft.Xna.Framework;
@@ -58,7 +59,20 @@ namespace ClassicTetris.Menus
             {
 				if (Actions.GetInstance()[Action.Start].IsPressed())
                 {
-                    tetris.ChangeMenu(new TypeAMenu(tetris, baseLevel, musicType));
+					IMenus menu = new TypeAMenu(tetris, baseLevel, musicType);
+
+					int score = GameLogic.Instance.Score;
+					int level = GameLogic.Instance.Level;
+
+					List<ScoreEntry> scores = Scores.Instance.GetTopScores();
+					int thirdScore = scores[System.Math.Min(2, scores.Count - 1)].Score;
+
+					if(score > thirdScore)
+					{
+						tetris.ChangeMenu(new CongratulationMenu(tetris, score, level, menu));
+						return;
+					}
+					tetris.ChangeMenu(menu);
 					return;
                 }
             }

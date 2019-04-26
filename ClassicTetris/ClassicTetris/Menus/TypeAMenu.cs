@@ -17,6 +17,8 @@ namespace ClassicTetris.Menus
         private SpriteBatch sb;
         private Texture2D bg;
 
+		private SpriteFont font;
+
 		private Texture2D rect;
 
 		private int level;
@@ -28,6 +30,10 @@ namespace ClassicTetris.Menus
 		private const int offsetX = 213;
 		private const int offsetY = 305;
 		private const int border = 9;
+
+		private const int scoreOffsetX = 318;
+		private const int scoreOffsetY = 600;
+		private const int scoreSpacing = 60;
 
 		private int frameCount = 0;
 
@@ -42,27 +48,46 @@ namespace ClassicTetris.Menus
         {
             sb.Begin();
             sb.Draw(bg, Vector2.Zero, Color.White);
-
-			if (frameCount % 2 == 0)
-			{
-				int x = offsetX + (sizeX + border) * (level % (maxmenu / 2));
-				int y = offsetY + (sizeX + border) * (level / (maxmenu / 2));
-				sb.Draw(rect, new Vector2(x, y), Color.White);
-			}
+			DrawSelection();
+			DrawScores();         
             
             sb.End();
         }
+      
+        private void DrawSelection()
+        {
+            if ((frameCount % 4) / 2 == 0)
+            {
+                int x = offsetX + (sizeX + border) * (level % (maxmenu / 2));
+                int y = offsetY + (sizeX + border) * (level / (maxmenu / 2));
+                sb.Draw(rect, new Vector2(x, y), Color.White);
+            }
+        }
 
-        public void Initialize()
+		private void DrawScores()
+		{
+			List<ScoreEntry> scores = Scores.Instance.GetTopScores();
+			for (int i = 0; i < Math.Min(3, scores.Count); i++)
+			{
+				ScoreEntry scoreEntry = scores[i];
+				Vector2 pos = new Vector2(scoreOffsetX, scoreOffsetY + i*scoreSpacing);
+				sb.DrawString(font, scoreEntry.Name, pos, Color.White);
+				pos.X += 200;
+				sb.DrawString(font, ("" + scoreEntry.Score).PadLeft(6, '0'), pos, Color.White);
+                pos.X += 220;
+				sb.DrawString(font, ("" + scoreEntry.Level).PadLeft(2, '0'), pos, Color.White);
+			}
+		}
+
+		public void Initialize()
         {
         }
 
         public void LoadContent(ContentManager Content, GraphicsDevice graphicDevice)
         {
-            sb = new SpriteBatch(graphicDevice);
-            bg = Content.Load<Texture2D>("Textures/typeAMenu");
-
-
+			sb = new SpriteBatch(graphicDevice);
+			bg = Content.Load<Texture2D>("Textures/typeAMenu");
+			font = Content.Load<SpriteFont>("Fonts/classic_tetris_font");
 			rect = new Texture2D(sb.GraphicsDevice, sizeX, sizeY);
 			Color[] data = new Color[sizeX * sizeY];
             Color color = new Color(255, 127, 0, 127);
@@ -72,6 +97,7 @@ namespace ClassicTetris.Menus
               
         public void UnloadContent()
         {
+
         }
 
         public void Update(GameTime gameTime)

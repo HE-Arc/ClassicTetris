@@ -25,7 +25,7 @@ namespace ClassicTetris
             graphics.PreferredBackBufferHeight = Settings.WINDOW_HEIGHT;
             Content.RootDirectory = "Content";
         }
-
+        
         protected override void Initialize()
         {
 			ChangeMenu(new CreditMenu(this));
