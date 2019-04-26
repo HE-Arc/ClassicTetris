@@ -43,8 +43,9 @@ namespace ClassicTetris
             Binds[Action.MenuDown] = new Bind(Keys.Down);
             Binds[Action.MenuLeft] = new Bind(Keys.Left);
             Binds[Action.MenuRight] = new Bind(Keys.Right);
-            Binds[Action.MenuUp] = new Bind(Keys.Up);
-            Binds[Action.MenuValidate] = new Bind(Keys.Enter);
+			Binds[Action.MenuUp] = new Bind(Keys.Up);
+			Binds[Action.MenuValidate] = new Bind(Keys.Enter);
+			Binds[Action.MenuBack] = new Bind(Keys.Back);
         }
 
         /// <summary>

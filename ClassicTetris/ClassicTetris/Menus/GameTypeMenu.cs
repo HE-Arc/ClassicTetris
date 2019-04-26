@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ClassicTetris.Audio;
+
 namespace ClassicTetris.Menus
 {
     class GameTypeMenu : IMenus
@@ -17,33 +19,17 @@ namespace ClassicTetris.Menus
         private Texture2D arrow_right;
         private Texture2D arrow_left;
 
-        private enum GameType
-        {
-            TypeA,
-            TypeB
-        }
-
-        private enum MusicType
-        {
-            Music1,
-            Music2,
-            Music3,
-            OFF,
-        }
+		private int frameCount;
 
         private GameType currentGameType;
         private MusicType currentMusicType;
 
-        private Dictionary<GameType, Tuple<Vector2, Vector2>> arrowsPositionsGameType;
-        private Dictionary<MusicType, Tuple<Vector2, Vector2>> arrowsPositionsMusicType;
+        private static Dictionary<GameType, Tuple<Vector2, Vector2>> arrowsPositionsGameType;
+		private static  Dictionary<MusicType, Tuple<Vector2, Vector2>> arrowsPositionsMusicType;
 
-        public GameTypeMenu(Tetris tetris)
-        {
-            this.tetris = tetris;
-            currentGameType = GameType.TypeA;
-            currentMusicType = MusicType.Music1;
-
-            arrowsPositionsGameType = new Dictionary<GameType, Tuple<Vector2, Vector2>>();
+		static GameTypeMenu()
+		{
+			arrowsPositionsGameType = new Dictionary<GameType, Tuple<Vector2, Vector2>>();
             arrowsPositionsGameType[GameType.TypeA] = new Tuple<Vector2, Vector2>(new Vector2(246, 226), new Vector2(480, 226));
             arrowsPositionsGameType[GameType.TypeB] = new Tuple<Vector2, Vector2>(new Vector2(630, 226), new Vector2(866, 226));
             arrowsPositionsMusicType = new Dictionary<MusicType, Tuple<Vector2, Vector2>>();
@@ -51,17 +37,28 @@ namespace ClassicTetris.Menus
             arrowsPositionsMusicType[MusicType.Music2] = new Tuple<Vector2, Vector2>(new Vector2(406, 608), new Vector2(706, 608));
             arrowsPositionsMusicType[MusicType.Music3] = new Tuple<Vector2, Vector2>(new Vector2(406, 676), new Vector2(706, 676));
             arrowsPositionsMusicType[MusicType.OFF] = new Tuple<Vector2, Vector2>(new Vector2(406, 733), new Vector2(706, 733));
+		}
+
+        public GameTypeMenu(Tetris tetris)
+        {
+            this.tetris = tetris;
+			frameCount = 0;
+			currentGameType = GameType.TypeA;
+            currentMusicType = MusicType.Music1;
         }
 
         public void Draw(GameTime gameTime)
         {
             sb.Begin();
             sb.Draw(bg, Vector2.Zero, Color.White);
-            sb.Draw(arrow_left, arrowsPositionsGameType[currentGameType].Item1, Color.White);
-            sb.Draw(arrow_right, arrowsPositionsGameType[currentGameType].Item2, Color.White);
+			if (frameCount % 2 == 0)
+			{
+				sb.Draw(arrow_left, arrowsPositionsGameType[currentGameType].Item1, Color.White);
+				sb.Draw(arrow_right, arrowsPositionsGameType[currentGameType].Item2, Color.White);
 
-            sb.Draw(arrow_left, arrowsPositionsMusicType[currentMusicType].Item1, Color.White);
-            sb.Draw(arrow_right, arrowsPositionsMusicType[currentMusicType].Item2, Color.White);
+				sb.Draw(arrow_left, arrowsPositionsMusicType[currentMusicType].Item1, Color.White);
+				sb.Draw(arrow_right, arrowsPositionsMusicType[currentMusicType].Item2, Color.White);
+			}
             sb.End();
         }
 
@@ -77,24 +74,31 @@ namespace ClassicTetris.Menus
             arrow_left = Content.Load<Texture2D>("Textures/arrow_left");
         }
 
-        public void Start()
-        {
-        }
-
-        public void Stop()
-        {
-        }
-
         public void UnloadContent()
         {
         }
 
         public void Update(GameTime gameTime)
         {
+			frameCount += 1;
             if (Actions.GetInstance()[Inputs.Action.MenuValidate].IsPressed())
             {
-                tetris.ChangeMenu(EMenu.TypeAMenu);
+				if (currentGameType == GameType.TypeA)
+				{
+					tetris.ChangeMenu(new TypeAMenu(tetris, 0, currentMusicType));
+				}
+
+				if (currentGameType == GameType.TypeB)
+                {
+                    //tetris.ChangeMenu(new TypeBMenu(tetris, currentMusicType));
+                }
             }
+
+			if (Actions.GetInstance()[Inputs.Action.MenuBack].IsPressed())
+            {
+				tetris.ChangeMenu(new PressStartMenu(tetris));
+            }
+
             if (Actions.GetInstance()[Inputs.Action.MenuDown].IsPressed())
             {
                 currentMusicType = (MusicType)(TetrisMath.mod(((int)currentMusicType + 1), Enum.GetNames(typeof(MusicType)).Length));

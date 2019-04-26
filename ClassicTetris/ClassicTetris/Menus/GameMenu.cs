@@ -15,16 +15,23 @@ namespace ClassicTetris.Menus
         private int rightCounter;
         private int downCounter;
 
+		private int baseLevel;
+		private GameType gameType;
+		private MusicType musicType;
 		private Tetris tetris;
 
-		public GameMenu(Tetris tetris)
+		public GameMenu(Tetris tetris, int baseLevel, GameType gameType, MusicType musicType)
 		{
-            this.tetris = tetris;
+			this.tetris = tetris;
+			this.baseLevel = baseLevel;
+			this.gameType = gameType;
+			this.musicType = musicType;
         }
 
 		public void Initialize()
 		{
-			
+			AudioManager.GetInstance().Play(musicType);
+            GameLogic.Reset(baseLevel, gameType);
 		}
 
 		public void LoadContent(ContentManager Content, GraphicsDevice GraphicsDevice)
@@ -36,7 +43,7 @@ namespace ClassicTetris.Menus
 
 		public void UnloadContent()
 		{
-			
+			AudioManager.GetInstance().Play(MusicType.OFF);
 		}
 
 		public void Update(GameTime gameTime)
@@ -44,7 +51,12 @@ namespace ClassicTetris.Menus
             GameLogic.Instance.update();
 
             //DAS initial delay is 16 frames, and then every 6 frames
-            if (GameLogic.Instance.GameEnded) return;
+
+			GameLogic.Instance.update();
+            if (GameLogic.Instance.GameEnded)
+			{
+				tetris.ChangeMenu(new TypeAMenu(tetris, baseLevel, musicType));	
+			}
 
             //Priotity given to right action like in NES
             if (Actions.GetInstance()[Action.Right].IsPressed())
@@ -112,16 +124,6 @@ namespace ClassicTetris.Menus
         public void Draw(GameTime gameTime)
         {
             renderer.DrawScene(spriteBatch);
-        }
-
-        public void Start()
-        {
-            //AudioManager.GetInstance().Play(Music.Theme1);
-        }
-
-        public void Stop()
-        {
-
         }
     }
 }

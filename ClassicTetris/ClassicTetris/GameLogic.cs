@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Timers;
 using ClassicTetris.Audio;
+using ClassicTetris.Menus;
 
 namespace ClassicTetris
 {
@@ -17,7 +18,7 @@ namespace ClassicTetris
         public int Score { get; private set; }
         public int Level { get; private set; }
         public int NbLines { get; private set; }
-        public int Type { get; private set; } //0 = A, 1 = B
+		public GameType Type { get; private set; } //0 = A, 1 = B
         public bool GameEnded { get; private set; }
 
         internal static GameLogic Instance
@@ -32,16 +33,16 @@ namespace ClassicTetris
             }
         }
 
-        public static void Reset(int level, int type)
+		public static void Reset(int level, GameType gameType)
 		{
-            instance = new GameLogic(level, type);
+			instance = new GameLogic(level, gameType);
 		}
 
-        protected GameLogic(int level, int type)
+		protected GameLogic(int level, GameType gameType)
         {
             Score = 0;
             Level = level;
-            Type = type;
+			Type = gameType;
             GameEnded = true;
             counterUpdate = Settings.SPEED_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];
             lineLevel = Settings.LINE_LEVEL[Level % Settings.MAX_LEVEL_THEORICAL];

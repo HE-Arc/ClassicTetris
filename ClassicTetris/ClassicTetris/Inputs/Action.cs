@@ -20,7 +20,8 @@ namespace ClassicTetris.Inputs
         MenuUp,
         MenuDown,
         MenuLeft,
-        MenuRight,
-        MenuValidate,
+		MenuRight,
+		MenuValidate,
+        MenuBack,
     }
 }
