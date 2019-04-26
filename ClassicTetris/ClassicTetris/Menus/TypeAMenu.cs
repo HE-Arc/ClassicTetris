@@ -16,11 +16,9 @@ namespace ClassicTetris.Menus
         private Tetris tetris;
         private SpriteBatch sb;
         private Texture2D bg;
-
 		private Texture2D rect;
 
 		private int level;
-		private MusicType musicType;
 		private const int maxmenu = 10;
 		private const int sizeX = 55;
         private const int sizeY = sizeX;
@@ -31,11 +29,10 @@ namespace ClassicTetris.Menus
 
 		private int frameCount = 0;
 
-		public TypeAMenu(Tetris tetris, int level, MusicType musicType)
+		public TypeAMenu(Tetris tetris, int level)
         {
             this.tetris = tetris;
 			this.level = level;
-			this.musicType = musicType;
         }
 
         public void Draw(GameTime gameTime)
@@ -61,8 +58,7 @@ namespace ClassicTetris.Menus
         {
             sb = new SpriteBatch(graphicDevice);
             bg = Content.Load<Texture2D>("Textures/typeAMenu");
-
-
+            
 			rect = new Texture2D(sb.GraphicsDevice, sizeX, sizeY);
 			Color[] data = new Color[sizeX * sizeY];
             Color color = new Color(255, 127, 0, 127);
@@ -78,37 +74,37 @@ namespace ClassicTetris.Menus
         {
 			frameCount += 1;
 
-            if (Actions.GetInstance()[Inputs.Action.MenuValidate].IsPressed())
+			if (Actions.GetInstance()[Inputs.Action.Start].IsPressed())
             {
 				//set level
-				tetris.ChangeMenu(new GameMenu(tetris, level, GameType.TypeA, musicType));
+				tetris.ChangeMenu(new GameMenu(tetris, level, GameType.TypeA));
             }
 
-			if (Actions.GetInstance()[Inputs.Action.MenuBack].IsPressed())
+			if (Actions.GetInstance()[Inputs.Action.Select].IsPressed())
             {
 				tetris.ChangeMenu(new GameTypeMenu(tetris));
             }
 
-            if (Actions.GetInstance()[Inputs.Action.MenuDown].IsPressed())
+			if (Actions.GetInstance()[Inputs.Action.Down].IsPressed())
             {
 				if (level < maxmenu / 2)
                 {
 					level += maxmenu / 2;
                 }
             }
-            if (Actions.GetInstance()[Inputs.Action.MenuUp].IsPressed())
+            if (Actions.GetInstance()[Inputs.Action.Up].IsPressed())
             {
 				if(level >= maxmenu / 2)
 				{
 					level -= maxmenu / 2;
 				}
             }
-            if (Actions.GetInstance()[Inputs.Action.MenuRight].IsPressed())
+			if (Actions.GetInstance()[Inputs.Action.Right].IsPressed())
             {
 				level += 1;
 				level %= maxmenu;
             }
-            if (Actions.GetInstance()[Inputs.Action.MenuLeft].IsPressed())
+			if (Actions.GetInstance()[Inputs.Action.Left].IsPressed())
             {
 				level -= 1;
 				level = TetrisMath.mod(level, maxmenu);

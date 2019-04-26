@@ -31,21 +31,16 @@ namespace ClassicTetris
         private Actions()
         {
 			// Possible input with the keyboard
-			Binds[Action.Left] = new Bind(Keys.Left, Keys.A);
-            Binds[Action.Right] = new Bind(Keys.Right, Keys.D);
-			Binds[Action.Down] = new Bind(Keys.Down, Keys.S);
-			Binds[Action.Rotate] = new Bind(Keys.Up, Keys.W);
-			Binds[Action.ForceDown] = new Bind(Keys.Space);
-			Binds[Action.Quit] = new Bind(Keys.Escape);
-            Binds[Action.Pause] = new Bind(Keys.Enter);
-
-            // Menu
-            Binds[Action.MenuDown] = new Bind(Keys.Down);
-            Binds[Action.MenuLeft] = new Bind(Keys.Left);
-            Binds[Action.MenuRight] = new Bind(Keys.Right);
-			Binds[Action.MenuUp] = new Bind(Keys.Up);
-			Binds[Action.MenuValidate] = new Bind(Keys.Enter);
-			Binds[Action.MenuBack] = new Bind(Keys.Back);
+			Binds[Action.Left] = new Bind(Keys.Left);
+            Binds[Action.Right] = new Bind(Keys.Right);
+			Binds[Action.Down] = new Bind(Keys.Down);
+			Binds[Action.Up] = new Bind(Keys.Up);
+			Binds[Action.A] = new Bind(Keys.D);
+			Binds[Action.B] = new Bind(Keys.F);
+			Binds[Action.Start] = new Bind(Keys.Enter);
+			Binds[Action.Select] = new Bind(Keys.Back);
+			Binds[Action.Shutdown] = new Bind(Keys.Escape);
+			Binds[Action.Debug] = new Bind(Keys.Space);
         }
 
         /// <summary>

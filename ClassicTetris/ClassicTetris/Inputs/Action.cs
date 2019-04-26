@@ -6,23 +6,18 @@ namespace ClassicTetris.Inputs
     /// </summary>
     public enum Action
     {
-        // game keys
-        Left,
-        Right,
-		Down,
-		Rotate,
-		ForceDown,
-        Pause,
-        // misc
-        Quit,
+        // gamepad
+        Up,
+        Down,
+		Left,
+		Right,
+		Start,
+        Select,
+        A,
+        B,
+        // console
+        Shutdown,
         // debug
         Debug,
-        // menus keys
-        MenuUp,
-        MenuDown,
-        MenuLeft,
-		MenuRight,
-		MenuValidate,
-        MenuBack,
     }
 }

@@ -17,7 +17,6 @@ namespace ClassicTetris.Menus
 
 		private int baseLevel;
 		private GameType gameType;
-		private MusicType musicType;
 		private Tetris tetris;
 
 		private bool isPause;
@@ -25,18 +24,16 @@ namespace ClassicTetris.Menus
         private const string pauseText = "PAUSE";
 		private static readonly Color colorPause = new Color(92, 148, 252);
 
-		public GameMenu(Tetris tetris, int baseLevel, GameType gameType, MusicType musicType)
+		public GameMenu(Tetris tetris, int baseLevel, GameType gameType)
 		{
             this.isPause = false;
 			this.tetris = tetris;
 			this.baseLevel = baseLevel;
 			this.gameType = gameType;
-			this.musicType = musicType;
         }
 
 		public void Initialize()
 		{
-			AudioManager.GetInstance().Play(musicType);
             GameLogic.Reset(baseLevel, gameType);
 		}
 
@@ -56,14 +53,14 @@ namespace ClassicTetris.Menus
 		{
 			if (GameLogic.Instance.GameEnded)
             {
-                if (Actions.GetInstance()[Action.MenuValidate].IsPressed())
+				if (Actions.GetInstance()[Action.Start].IsPressed())
                 {
-                    tetris.ChangeMenu(new TypeAMenu(tetris, baseLevel, musicType));
+                    tetris.ChangeMenu(new TypeAMenu(tetris, baseLevel));
 					return;
                 }
             }
 
-			if (Actions.GetInstance()[Action.Pause].IsPressed())
+			if (Actions.GetInstance()[Action.Start].IsPressed())
 				isPause ^= true;
 
 			if (isPause)
@@ -119,22 +116,21 @@ namespace ClassicTetris.Menus
                 }
             }
 
-            if (Actions.GetInstance()[Action.Rotate].IsPressed())
+			if (Actions.GetInstance()[Action.A].IsPressed())
             {
                 GameLogic.Instance.Turn();
             }
 
             //TODO: Remove for debug purposes
-            if (Actions.GetInstance()[Action.ForceDown].IsPressed())
+			if (Actions.GetInstance()[Action.Debug].IsPressed())
             {
                 GameLogic.Instance.Drop();
             }
 
-            if (Actions.GetInstance()[Action.Quit].IsPressed())
+			if (Actions.GetInstance()[Action.Shutdown].IsPressed())
             {
                 tetris.Exit();
             }
-            
         }
       
         public void Draw(GameTime gameTime)

@@ -46,9 +46,9 @@ namespace ClassicTetris.Audio
 			soundEffects[SFX.SlowHit] = content.Load<SoundEffect>("Audio/SFX/slow-hit");
 			soundEffects[SFX.Start] = content.Load<SoundEffect>("Audio/SFX/start");
 			soundEffects[SFX.Whoosh] = content.Load<SoundEffect>("Audio/SFX/whoosh");
-			songs[MusicType.Music1] = content.Load<Song>("Audio/Music/music");
-			songs[MusicType.Music2] = content.Load<Song>("Audio/Music/music");
-            songs[MusicType.Music3] = content.Load<Song>("Audio/Music/music");
+			songs[MusicType.Music1] = content.Load<Song>("Audio/Music/original_nes_tetris_music_1");
+			songs[MusicType.Music2] = content.Load<Song>("Audio/Music/original_nes_tetris_music_2");
+            songs[MusicType.Music3] = content.Load<Song>("Audio/Music/original_nes_tetris_music_3");
         }
         
         /// <summary>
