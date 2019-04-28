@@ -13,7 +13,6 @@ namespace ClassicTetris
         #region Static attribute
         private static Actions Instance = null;
         private static readonly Dictionary<Action, Bind> Binds = new Dictionary<Action, Bind>();
-
         #endregion
 
         /// <summary>
@@ -45,7 +44,7 @@ namespace ClassicTetris
 			Binds[Action.Start] = new Bind(Keys.Enter);
 			Binds[Action.Select] = new Bind(Keys.Back);
 			Binds[Action.Shutdown] = new Bind(Keys.Escape);
-			Binds[Action.Debug] = new Bind(Keys.Space);
+			Binds[Action.Debug] = new Bind();
         }
 
         /// <summary>

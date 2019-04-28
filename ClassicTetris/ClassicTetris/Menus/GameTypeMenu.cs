@@ -13,17 +13,21 @@ namespace ClassicTetris.Menus
 {
     class GameTypeMenu : IMenus
     {
-        private Tetris tetris;
+        #region attributs
+        private readonly Tetris tetris;
+        private int frameCount;
+        private GameType currentGameType;
+        private MusicType currentMusicType;
+        #endregion
+
+        #region draw
         private SpriteBatch sb;
         private Texture2D bg;
         private Texture2D arrow_right;
         private Texture2D arrow_left;
+        #endregion
 
-		private int frameCount;
-
-        private GameType currentGameType;
-        private MusicType currentMusicType;
-
+        #region static
         private static Dictionary<GameType, Tuple<Vector2, Vector2>> arrowsPositionsGameType;
 		private static Dictionary<MusicType, Tuple<Vector2, Vector2>> arrowsPositionsMusicType;
 
@@ -38,6 +42,7 @@ namespace ClassicTetris.Menus
             arrowsPositionsMusicType[MusicType.Music3] = new Tuple<Vector2, Vector2>(new Vector2(406, 676), new Vector2(706, 676));
             arrowsPositionsMusicType[MusicType.OFF] = new Tuple<Vector2, Vector2>(new Vector2(406, 733), new Vector2(706, 733));
 		}
+        #endregion
 
         public GameTypeMenu(Tetris tetris)
         {
@@ -47,6 +52,10 @@ namespace ClassicTetris.Menus
             SelectMusic(MusicType.Music1);
         }
 
+        /// <summary>
+        /// Draw the game
+        /// </summary>
+        /// <param name="gameTime"></param>
         public void Draw(GameTime gameTime)
         {
             sb.Begin();
@@ -62,10 +71,18 @@ namespace ClassicTetris.Menus
             sb.End();
         }
 
+        /// <summary>
+        /// Initialize nothing, pretty cool huh ?
+        /// </summary>
         public void Initialize()
         {
         }
 
+        /// <summary>
+        /// Load draw content
+        /// </summary>
+        /// <param name="Content"></param>
+        /// <param name="graphicDevice"></param>
         public void LoadContent(ContentManager Content, GraphicsDevice graphicDevice)
         {
             sb = new SpriteBatch(graphicDevice);
@@ -74,16 +91,27 @@ namespace ClassicTetris.Menus
             arrow_left = Content.Load<Texture2D>("Textures/arrow_left");
         }
 
+        /// <summary>
+        /// Unload nothing
+        /// </summary>
         public void UnloadContent()
         {
         }
 
+        /// <summary>
+        /// Sekect music
+        /// </summary>
+        /// <param name="music"></param>
         public void SelectMusic(MusicType music)
         {
             currentMusicType = music;
             AudioManager.GetInstance().Play(music);
         }
 
+        /// <summary>
+        /// Handle controls
+        /// </summary>
+        /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
 			frameCount += 1;

@@ -10,30 +10,44 @@ namespace ClassicTetris.Menus
 {
 	public class CongratulationMenu : IMenus
     {
-		private SpriteBatch sb;
+        #region attributes
+        private readonly Tetris tetris;
+        private readonly int score;
+        private readonly int level;
+        private readonly IMenus nextMenu;
 
-		private Texture2D bg;
-		private Texture2D textureSelection;
-		private const int sizeTextureSelection = 45;
-		private SpriteFont font;
 		private int frameCount;
-		private Tetris tetris;
-		private readonly int score;
-		private readonly int level;
 		private int selectedIndexCharCursor;
-		private Color blinkColor = new Color(252, 116, 96);
+        #endregion
 
+        #region draw
+        private SpriteBatch sb;
+        private Texture2D bg;
+        private Texture2D textureSelection;
+        private SpriteFont font;
+        #endregion
+
+        #region consts
+        private readonly Color blinkColor = new Color(252, 116, 96);
+        private const int sizeTextureSelection = 45;
         private const int scoreOffsetX = 318;
         private const int scoreOffsetY = 600;
         private const int scoreSpacing = 60;
+        #endregion
 
-		private IMenus nextMenu;
 
 		private int[] selectedIndexChar;
 
         //possibles chars, the first is the one displayed
         public const string POSSIBLE_CHARS = "-ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,/()\". ";
         
+        /// <summary>
+        /// Create a congratulation menu
+        /// </summary>
+        /// <param name="tetris"></param>
+        /// <param name="score"></param>
+        /// <param name="level"></param>
+        /// <param name="nextMenu"></param>
 		public CongratulationMenu(Tetris tetris, int score, int level, IMenus nextMenu)
         {
 			this.frameCount = 0;
@@ -104,6 +118,9 @@ namespace ClassicTetris.Menus
             sb.End();
 		}
         
+        /// <summary>
+        /// Do nothing
+        /// </summary>
 		public void Initialize()
 		{
 			//

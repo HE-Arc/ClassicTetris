@@ -9,21 +9,30 @@ using Microsoft.Xna.Framework.Graphics;
 namespace ClassicTetris.Menus
 {
 	public class GameMenu : IMenus
-    {      
-		private SpriteBatch spriteBatch;
-        private GameRenderer renderer;      
+    {
+        #region attributes
+        private readonly Tetris tetris;
+        private readonly int baseLevel;
+		private readonly GameType gameType;
+
+		private bool isPause;
         private int leftCounter;
         private int rightCounter;
         private int downCounter;
+        #endregion
+        
+        #region draw
+        private SpriteBatch spriteBatch;
+        private GameRenderer renderer;
+        #endregion
 
-		private int baseLevel;
-		private GameType gameType;
-		private Tetris tetris;
-
-		private bool isPause;
-
-
-		public GameMenu(Tetris tetris, int baseLevel, GameType gameType)
+        /// <summary>
+        /// Create a menu
+        /// </summary>
+        /// <param name="tetris"></param>
+        /// <param name="baseLevel"></param>
+        /// <param name="gameType"></param>
+        public GameMenu(Tetris tetris, int baseLevel, GameType gameType)
 		{
             this.isPause = false;
 			this.tetris = tetris;
@@ -31,23 +40,38 @@ namespace ClassicTetris.Menus
 			this.gameType = gameType;
         }
 
+        /// <summary>
+        /// Initialize it
+        /// </summary>
 		public void Initialize()
 		{
             GameLogic.Reset(baseLevel, gameType);
-		}
+        }
 
+        /// <summary>
+        /// Load the necessary things
+        /// </summary>
+        /// <param name="Content"></param>
+        /// <param name="GraphicsDevice"></param>
 		public void LoadContent(ContentManager Content, GraphicsDevice GraphicsDevice)
 		{
 			spriteBatch = new SpriteBatch(GraphicsDevice);
 			renderer = new GameRenderer(Content, spriteBatch);
             AudioManager.GetInstance().Load(Content);
-		}
+        }
 
+        /// <summary>
+        /// Unload them
+        /// </summary>
 		public void UnloadContent()
 		{
 			AudioManager.GetInstance().Play(MusicType.OFF);
 		}
 
+        /// <summary>
+        /// Handle inputs for the logic
+        /// </summary>
+        /// <param name="gameTime"></param>
 		public void Update(GameTime gameTime)
 		{
 			if (GameLogic.Instance.GameEnded)
@@ -79,9 +103,7 @@ namespace ClassicTetris.Menus
 				return;
 			
             //DAS initial delay is 16 frames, and then every 6 frames
-
 			GameLogic.Instance.update();
-            
 
             //Priotity given to right action like in NES
             if (Actions.GetInstance()[Action.Right].IsPressed())
@@ -137,7 +159,6 @@ namespace ClassicTetris.Menus
                 GameLogic.Instance.TurnCW();
             }
 
-            //TODO: Remove for debug purposes
             if (Actions.GetInstance()[Action.Debug].IsPressed())
             {
                 GameLogic.Instance.Drop();

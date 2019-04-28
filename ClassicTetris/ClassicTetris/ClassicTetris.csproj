@@ -63,9 +63,9 @@
     <Compile Include="Audio\SFX.cs" />
     <Compile Include="Logic\TetrisLogic.cs" />
     <Compile Include="Menus\GameMenu.cs" />
-    <Compile Include="Menus\IMenus.cs" />
+    <Compile Include="Menus\_IMenus.cs" />
     <Compile Include="Renderer\GameRenderer.cs" />
-    <Compile Include="Menus\GameType.cs" />
+    <Compile Include="Logic\GameType.cs" />
     <Compile Include="Audio\MusicType.cs" />
     <Compile Include="Scores\Scores.cs" />
     <Compile Include="Scores\ScoreEntry.cs" />

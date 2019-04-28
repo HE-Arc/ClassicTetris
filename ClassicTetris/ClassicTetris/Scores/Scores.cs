@@ -20,10 +20,9 @@ namespace ClassicTetris
         public Scores()
         {
 			scores = new List<ScoreEntry>();
-			AddScore(new ScoreEntry("RAPH", 30, 0));
-            AddScore(new ScoreEntry("BAST", 40, 5));
-			AddScore(new ScoreEntry("DAMIAN", 60, 9));
-            AddScore(new ScoreEntry("OUT", 100, 0));
+            AddScore(new ScoreEntry("BAST", 10000, 9));
+			AddScore(new ScoreEntry("DAMIAN", 7500, 5));
+            AddScore(new ScoreEntry("RAPH", 5000, 0));
         }
 
         /// <summary>
@@ -41,7 +40,7 @@ namespace ClassicTetris
         /// <returns>Scores' entry</returns>
 		public List<ScoreEntry> GetTopScores()
 		{
-			return scores.OrderBy(x => -x.Score).ToList();
+			return scores.OrderBy(x => -x.Score).ThenBy(x => -x.Id).ToList();
 		}
     }
 }

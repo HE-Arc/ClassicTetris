@@ -11,14 +11,18 @@ namespace ClassicTetris.Menus
 {
     class ControlsMenu : IMenus
     {
+        #region attributs
+        private readonly Tetris tetris;
+        
+        private int frameCount;
+        #endregion
+
+        #region draw
         private SpriteBatch sb;
         public Texture2D BG { get; private set; }
         public Texture2D CONTROLS { get; private set; }
-
-        private int frameCount;
-
-        private Tetris tetris;
-
+        #endregion
+        
         public ControlsMenu(Tetris tetris)
         {
             this.frameCount = 0;
@@ -42,6 +46,11 @@ namespace ClassicTetris.Menus
 
         private static Texture2D rect;
 
+        /// <summary>
+        /// https://stackoverflow.com/a/11432298/9263555
+        /// </summary>
+        /// <param name="coords"></param>
+        /// <param name="color"></param>
         private void DrawRectangle(Rectangle coords, Color color)
         {
             if (rect == null)

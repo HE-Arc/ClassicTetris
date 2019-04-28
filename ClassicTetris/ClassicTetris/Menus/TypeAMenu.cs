@@ -13,14 +13,21 @@ namespace ClassicTetris.Menus
 {
     class TypeAMenu : IMenus
     {
-        private Tetris tetris;
+        #region attributs
+        private readonly Tetris tetris;
+        private int level;
+        private int frameCount = 0;
+        #endregion
+
+        #region draw
         private SpriteBatch sb;
         private Texture2D bg;
 		private SpriteFont font;
 		private Texture2D rect;
+        #endregion
 
-		private int level;
-		private const int maxmenu = 10;
+        #region consts
+        private const int maxmenu = 10;
 		private const int sizeX = 55;
         private const int sizeY = sizeX;
 
@@ -31,25 +38,35 @@ namespace ClassicTetris.Menus
 		private const int scoreOffsetX = 318;
 		private const int scoreOffsetY = 600;
 		private const int scoreSpacing = 60;
+        #endregion
 
-		private int frameCount = 0;
-
+        /// <summary>
+        /// Create the type A menu and select the given level
+        /// </summary>
+        /// <param name="tetris"></param>
+        /// <param name="level"></param>
 		public TypeAMenu(Tetris tetris, int level)
         {
             this.tetris = tetris;
 			this.level = level;
         }
 
+        /// <summary>
+        /// Draw the menu
+        /// </summary>
+        /// <param name="gameTime"></param>
         public void Draw(GameTime gameTime)
         {
             sb.Begin();
             sb.Draw(bg, Vector2.Zero, Color.White);
 			DrawSelection();
-			DrawScores();         
-            
+			DrawScores();
             sb.End();
         }
       
+        /// <summary>
+        /// Draw the blinking selection
+        /// </summary>
         private void DrawSelection()
         {
             if ((frameCount % 4) / 2 == 0)
@@ -60,6 +77,9 @@ namespace ClassicTetris.Menus
             }
         }
 
+        /// <summary>
+        /// Draw the scores
+        /// </summary>
 		private void DrawScores()
 		{
 			List<ScoreEntry> scores = Scores.Instance.GetTopScores();
@@ -75,10 +95,18 @@ namespace ClassicTetris.Menus
 			}
 		}
 
+        /// <summary>
+        /// Initiliaze nothing
+        /// </summary>
 		public void Initialize()
         {
         }
 
+        /// <summary>
+        /// Load the content
+        /// </summary>
+        /// <param name="Content"></param>
+        /// <param name="graphicDevice"></param>
         public void LoadContent(ContentManager Content, GraphicsDevice graphicDevice)
         {
 			sb = new SpriteBatch(graphicDevice);
@@ -91,11 +119,17 @@ namespace ClassicTetris.Menus
             rect.SetData(data);
         }
               
+        /// <summary>
+        /// dispose what should be disposen
+        /// </summary>
         public void UnloadContent()
         {
-
         }
 
+        /// <summary>
+        /// Handle controls for the menu selection
+        /// </summary>
+        /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
 			frameCount += 1;
