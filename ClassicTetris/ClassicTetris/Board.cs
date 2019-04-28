@@ -101,7 +101,6 @@ namespace ClassicTetris
                 // Detect Game Over
                 if(CurrentShape.y < 0)
                 {
-                    Console.WriteLine("Game Over !");
                     ++endGameState;
                     landedShape = MergeGridWithShape();
                     CurrentShape = Tetromino.Empty();
@@ -270,6 +269,11 @@ namespace ClassicTetris
             return grid;
         }
 
+        /// <summary>
+        /// Animate the removal of a line
+        /// </summary>
+        /// <param name="linesToRemove">Lines to remove</param>
+        /// <param name="lineRemoveState">Actual state of the removal</param>
         private void RemoveAnimate(List<int> linesToRemove, int lineRemoveState)
         {
             //lineRemoveState 

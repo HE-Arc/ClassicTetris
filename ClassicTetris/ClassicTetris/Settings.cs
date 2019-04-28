@@ -4,8 +4,12 @@ namespace ClassicTetris
 {
     class Settings
     {
+        #region Window
         public const int WINDOW_WIDTH = 1024;
         public const int WINDOW_HEIGHT = 896;
+
+        #endregion
+
         #region GameLogic
 
         public const int BOARD_WIDTH = 10;
