@@ -22,7 +22,7 @@ namespace ClassicTetris.Menus
 		private readonly int level;
 		private int selectedIndexCharCursor;
 		private Color blinkColor = new Color(252, 116, 96);
-        
+
         private const int scoreOffsetX = 318;
         private const int scoreOffsetY = 600;
         private const int scoreSpacing = 60;

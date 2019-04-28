@@ -18,8 +18,11 @@ namespace ClassicTetris.Menus
         private Tetris tetris;
         private Color halfWhite = new Color(255,255,255, 255);
 
+        private int frameCount;
+
         public CreditMenu(Tetris tetris)
         {
+            this.frameCount = 0;
             this.tetris = tetris;
         }
 
@@ -57,7 +60,8 @@ namespace ClassicTetris.Menus
         /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
-			if(Actions.GetInstance()[Inputs.Action.Start].IsPressed())
+            frameCount += 1;
+			if(Actions.GetInstance()[Inputs.Action.Start].IsPressed() || frameCount == 60 * 3)
             {
 				tetris.ChangeMenu(new PressStartMenu(tetris));
             }

@@ -9,8 +9,14 @@ namespace ClassicTetris.Renderer
 {
     class GameRenderer
     {
+        #region Attributes
         private Texture2D background;
-		public SpriteFont TetrisFont
+		private Texture2D[,] texturesTetrominos;
+
+        #endregion
+
+        #region Properties
+        public SpriteFont TetrisFont
 		{
 			get;
 			private set;
@@ -18,10 +24,13 @@ namespace ClassicTetris.Renderer
         private const string pauseText = "PAUSE";
         private static readonly Color colorTextPause = new Color(92, 148, 252);
         private static readonly Color colorBGPause = Color.Black;
+        #endregion
 
-        private Texture2D[,] texturesTetrominos;
-
-        private static Shape[] shapeStatisticsOrder =
+        #region Static
+        /// <summary>
+        /// Order of the shape to display in statistics section
+        /// </summary>
+        private static readonly Shape[] shapeStatisticsOrder =
         {
             Shape.T,
             Shape.J,
@@ -32,12 +41,24 @@ namespace ClassicTetris.Renderer
             Shape.I
         };
 
+        #endregion
+
+        /// <summary>
+        /// Constrctor
+        /// </summary>
+        /// <param name="content">ContentManager</param>
+        /// <param name="sb">Sprite batch</param>
         public GameRenderer(ContentManager content, SpriteBatch sb)
         {
             texturesTetrominos = new Texture2D[Settings.NB_COLORS_LEVELS,Settings.NB_TEXTURES];
             LoadContent(content, sb);
         }
 
+        /// <summary>
+        /// Load textures and fonts
+        /// </summary>
+        /// <param name="content">Content manager</param>
+        /// <param name="sb">Sprite batch</param>
 		private void LoadContent(ContentManager content, SpriteBatch sb)
         {
             background = content.Load<Texture2D>("Textures/tetris_exemple");
@@ -45,6 +66,10 @@ namespace ClassicTetris.Renderer
             CreateTextures(sb);
         }
 
+        /// <summary>
+        /// Create texture for the tetrominos
+        /// </summary>
+        /// <param name="sb">Sprite batch</param>
         private void CreateTextures(SpriteBatch sb)
         {
             // [level , textureshape]
@@ -108,7 +133,7 @@ namespace ClassicTetris.Renderer
             texturesTetrominos[9, 3] = CreateTextureType2(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_9_SECONDARY);
             texturesTetrominos[9, 4] = CreateTextureTypeEnd(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_9_PRIMARY, Settings.COLOR_LEVEL_9_SECONDARY);
         }
-
+        
         public void DrawPause(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
@@ -125,12 +150,20 @@ namespace ClassicTetris.Renderer
             spriteBatch.DrawString(TetrisFont, pauseText, pos, colorTextPause);
             spriteBatch.End();
         }
-
+        
+        /// <summary>
+        /// Draw background image
+        /// </summary>
+        /// <param name="spriteBatch">Sprite batch</param>
         private void DrawBackground(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(background, Vector2.Zero, Color.White);
         }
 
+        /// <summary>
+        /// Draw scene
+        /// </summary>
+        /// <param name="spriteBatch">Sprite batch</param>
         public void DrawScene(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
@@ -148,19 +181,30 @@ namespace ClassicTetris.Renderer
             spriteBatch.End();
         }
 
+        /// <summary>
+        /// Draw lines
+        /// </summary>
+        /// <param name="spriteBatch">Sprite batch</param>
         private void DrawLines(SpriteBatch spriteBatch)
         {
             int nLines = GameLogic.Instance.NbLines;
             spriteBatch.DrawString(TetrisFont, $"LINES - {FormatNumberToNDigits(nLines, Settings.LINES_DIGITS)}", new Vector2(400, 50), Color.White);
         }
 
+        /// <summary>
+        /// Sprite batchzDraw type game
+        /// </summary>
+        /// <param name="spriteBatch">Sprite batch</param>
         private void DrawType(SpriteBatch spriteBatch)
         {
             //TODO
             spriteBatch.DrawString(TetrisFont, "A-TYPE", new Vector2(95, 83), Color.White);
-
         }
 
+        /// <summary>
+        /// Draw statistics section
+        /// </summary>
+        /// <param name="spriteBatch">Sprite batch</param>
         private void DrawStatistics(SpriteBatch spriteBatch)
         {
             int xCoord = 190;
@@ -232,6 +276,10 @@ namespace ClassicTetris.Renderer
 
         }
 
+        /// <summary>
+        /// Draw level section
+        /// </summary>
+        /// <param name="spriteBatch">Sprite batch</param>
         private void DrawLevel(SpriteBatch spriteBatch)
         {
             int level = GameLogic.Instance.Level;
@@ -239,6 +287,10 @@ namespace ClassicTetris.Renderer
             spriteBatch.DrawString(TetrisFont, FormatNumberToNDigits(level, Settings.LEVEL_DIGITS), new Vector2(820, 630), Color.White);
         }
 
+        /// <summary>
+        /// Draw next tetrominos section
+        /// </summary>
+        /// <param name="spriteBatch">Sprite batch</param>
         private void DrawNextTetromino(SpriteBatch spriteBatch)
         {
             spriteBatch.DrawString(TetrisFont, "NEXT", new Vector2(765, 375), Color.White);
@@ -295,23 +347,33 @@ namespace ClassicTetris.Renderer
             }
 
         }
-  
+
+        /// <summary>
+        /// Draw current score section
+        /// </summary>
+        /// <param name="spriteBatch">Sprite batch</param>
         private void DrawCurrentScore(SpriteBatch spriteBatch)
         {
             int score = GameLogic.Instance.Score;
             spriteBatch.DrawString(TetrisFont, "SCORE", new Vector2(765, 175), Color.White);
             spriteBatch.DrawString(TetrisFont, FormatNumberToNDigits(score, Settings.SCORE_DIGITS), new Vector2(770, 215), Color.White);
-
         }
 
+        /// <summary>
+        /// Draw the top score
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         private void DrawTopScore(SpriteBatch spriteBatch)
         {
             int topScore = 5000; //TODO
             spriteBatch.DrawString(TetrisFont, "TOP", new Vector2(765, 80), Color.White);
             spriteBatch.DrawString(TetrisFont, FormatNumberToNDigits(topScore, Settings.SCORE_DIGITS), new Vector2(770, 120), Color.White);
-
         }
 
+        /// <summary>
+        /// Draw the complete board
+        /// </summary>
+        /// <param name="spriteBatch">Sprite batch</param>
         private void DrawBoard(SpriteBatch spriteBatch)
 		{
 			int level = GameLogic.Instance.Level;
@@ -372,11 +434,16 @@ namespace ClassicTetris.Renderer
 
         }
 
+        /// <summary>
+        /// Draw a texture at the given coordinates
+        /// </summary>
+        /// <param name="sb">Sprite batch</param>
+        /// <param name="texture">Texture</param>
+        /// <param name="coor">Coordinates</param>
         private void DrawTexture(SpriteBatch sb, Texture2D texture, Vector2 coor)
         {
             sb.Draw(texture, coor, Color.White);
         }
-
 
         /// <summary>
         /// Converts a number into a string of n characters.
@@ -394,7 +461,14 @@ namespace ClassicTetris.Renderer
             return formattedNumber;
         }
 
-
+        /// <summary>
+        /// Draw a rectangle
+        /// </summary>
+        /// <param name="sb">SpriteBatch</param>
+        /// <param name="coor">coordinates</param>
+        /// <param name="sizeX">Size x</param>
+        /// <param name="sizeY">Size y</param>
+        /// <param name="color">Color</param>
         private void DrawRectangle(SpriteBatch sb, Vector2 coor, int sizeX, int sizeY, Color color)
         {
             Texture2D rect = new Texture2D(sb.GraphicsDevice, sizeX, sizeY);
@@ -404,6 +478,15 @@ namespace ClassicTetris.Renderer
             sb.Draw(rect, coor, Color.White);
         }
 
+        /// <summary>
+        /// Create a texture of type 0
+        /// </summary>
+        /// <param name="sb">SpriteBatch</param>
+        /// <param name="coor">coordinates</param>
+        /// <param name="sizeX">Size x</param>
+        /// <param name="sizeY">Size y</param>
+        /// <param name="color">Color</param>
+        /// <returns>Texture</returns>
         private Texture2D CreateTextureType0(SpriteBatch sb, int sizeX, int sizeY, Color color)
         {
             Texture2D rect = new Texture2D(sb.GraphicsDevice, sizeX, sizeY);
@@ -423,6 +506,15 @@ namespace ClassicTetris.Renderer
             rect.SetData(data);
             return rect;
         }
+        /// <summary>
+        /// Create a texture of type 1
+        /// </summary>
+        /// <param name="sb">SpriteBatch</param>
+        /// <param name="coor">coordinates</param>
+        /// <param name="sizeX">Size x</param>
+        /// <param name="sizeY">Size y</param>
+        /// <param name="color">Color</param>
+        /// <returns>Texture</returns>
         private Texture2D CreateTextureType1(SpriteBatch sb, int sizeX, int sizeY, Color color)
         {
             Texture2D rect = new Texture2D(sb.GraphicsDevice, sizeX, sizeY);
@@ -451,6 +543,15 @@ namespace ClassicTetris.Renderer
             return rect;
         }
 
+        /// <summary>
+        /// Create a texture of type 2
+        /// </summary>
+        /// <param name="sb">SpriteBatch</param>
+        /// <param name="coor">coordinates</param>
+        /// <param name="sizeX">Size x</param>
+        /// <param name="sizeY">Size y</param>
+        /// <param name="color">Color</param>
+        /// <returns>Texture</returns>
         private Texture2D CreateTextureType2(SpriteBatch sb, int sizeX, int sizeY, Color color)
         {
             Texture2D rect = new Texture2D(sb.GraphicsDevice, sizeX, sizeY);
@@ -474,6 +575,15 @@ namespace ClassicTetris.Renderer
             return rect;
         }
 
+        /// <summary>
+        /// Create a texture of type 3
+        /// </summary>
+        /// <param name="sb">SpriteBatch</param>
+        /// <param name="coor">coordinates</param>
+        /// <param name="sizeX">Size x</param>
+        /// <param name="sizeY">Size y</param>
+        /// <param name="color">Color</param>
+        /// <returns>Texture</returns>
         private Texture2D CreateTextureTypeEnd(SpriteBatch sb, int sizeX, int sizeY, Color colorPrimary, Color colorSecondary)
         {
             sizeX += Settings.SQUARE_SPREARD;

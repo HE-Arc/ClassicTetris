@@ -128,7 +128,6 @@ namespace ClassicTetris
 				AudioManager.GetInstance().Play(SFX.LineRemove);
 			}
             else if(nbLineRemoved < 0){
-                //TODO: Add loose animation + delay
                 ended = true;
                 return 0;
             }

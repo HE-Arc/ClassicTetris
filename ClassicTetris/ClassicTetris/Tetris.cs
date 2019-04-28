@@ -18,6 +18,9 @@ namespace ClassicTetris
     {
 		private IMenus currentMenu;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Tetris()
         {
             GraphicsDeviceManager graphics = new GraphicsDeviceManager(this);
@@ -26,21 +29,22 @@ namespace ClassicTetris
             Content.RootDirectory = "Content";
         }
         
+        /// <summary>
+        /// Initialisation of the app
+        /// </summary>
         protected override void Initialize()
         {
 			ChangeMenu(new ControlsMenu(this));
             base.Initialize();
         }
 
+        /// <summary>
+        /// Load assets for the game
+        /// </summary>
         protected override void LoadContent()
         {
 			AudioManager.GetInstance().Load(Content);
 			base.LoadContent();
-        }
-
-        protected override void UnloadContent()
-        {
-            base.UnloadContent();
         }
 
         /// <summary>
@@ -55,12 +59,20 @@ namespace ClassicTetris
             currentMenu.Update(gameTime);
         }
 
+        /// <summary>
+        /// Main function called when need to draw
+        /// </summary>
+        /// <param name="gameTime"></param>
         protected override void Draw(GameTime gameTime)
 		{
 			base.Draw(gameTime);
 			currentMenu.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Switch menu
+        /// </summary>
+        /// <param name="menu">New menu</param>
 		public void ChangeMenu(IMenus menu)
 		{
 			currentMenu?.UnloadContent(); // ?. to avoid crash on the first menu load

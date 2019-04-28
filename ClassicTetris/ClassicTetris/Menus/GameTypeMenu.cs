@@ -25,7 +25,7 @@ namespace ClassicTetris.Menus
         private MusicType currentMusicType;
 
         private static Dictionary<GameType, Tuple<Vector2, Vector2>> arrowsPositionsGameType;
-		private static  Dictionary<MusicType, Tuple<Vector2, Vector2>> arrowsPositionsMusicType;
+		private static Dictionary<MusicType, Tuple<Vector2, Vector2>> arrowsPositionsMusicType;
 
 		static GameTypeMenu()
 		{

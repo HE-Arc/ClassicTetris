@@ -5,11 +5,16 @@ using ClassicTetris.Inputs;
 
 namespace ClassicTetris
 {
+    /// <summary>
+    /// Action available
+    /// </summary>
     public class Actions
     {
-		private static Actions Instance = null;
-
+        #region Static attribute
+        private static Actions Instance = null;
         private static readonly Dictionary<Action, Bind> Binds = new Dictionary<Action, Bind>();
+
+        #endregion
 
         /// <summary>
         /// Singleton function

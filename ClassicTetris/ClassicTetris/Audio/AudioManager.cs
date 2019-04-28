@@ -10,20 +10,33 @@ using Microsoft.Xna.Framework.Content;
 
 namespace ClassicTetris.Audio
 {
+    /// <summary>
+    /// Audio manager
+    /// </summary>
     public class AudioManager
     {
+        #region Static attributes
         private static AudioManager Instance = null;
 
 		private static readonly Dictionary<SFX, SoundEffect> soundEffects = new Dictionary<SFX, SoundEffect>();
 		private static readonly Dictionary<MusicType, Song> songs = new Dictionary<MusicType, Song>();
 
-		public static AudioManager GetInstance()
+        #endregion
+
+        /// <summary>
+        /// Singleton instance
+        /// </summary>
+        /// <returns></returns>
+        public static AudioManager GetInstance()
 		{
 			if (Instance == null)
 				Instance = new AudioManager();
 			return Instance;
 		}
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
 		private AudioManager()
         {
 			
