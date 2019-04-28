@@ -43,8 +43,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="GameLogic.cs" />
+    <Compile Include="Logic\GameLogic.cs" />
     <Compile Include="Inputs\Bind.cs" />
+    <Compile Include="Menus\ControlsMenu.cs" />
     <Compile Include="TetrisMath.cs" />
     <Compile Include="Menus\CreditMenu.cs" />
     <Compile Include="Menus\GameTypeMenu.cs" />
@@ -54,20 +55,20 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Tetromino.cs" />
-    <Compile Include="Board.cs" />
+    <Compile Include="Logic\Tetromino.cs" />
+    <Compile Include="Logic\Board.cs" />
     <Compile Include="Inputs\Actions.cs" />
     <Compile Include="Inputs\Action.cs" />
     <Compile Include="Audio\AudioManager.cs" />
     <Compile Include="Audio\SFX.cs" />
-    <Compile Include="TetrisLogic.cs" />
+    <Compile Include="Logic\TetrisLogic.cs" />
     <Compile Include="Menus\GameMenu.cs" />
     <Compile Include="Menus\IMenus.cs" />
     <Compile Include="Renderer\GameRenderer.cs" />
     <Compile Include="Menus\GameType.cs" />
     <Compile Include="Audio\MusicType.cs" />
-    <Compile Include="Scores.cs" />
-    <Compile Include="ScoreEntry.cs" />
+    <Compile Include="Scores\Scores.cs" />
+    <Compile Include="Scores\ScoreEntry.cs" />
     <Compile Include="Menus\CongratulationMenu.cs" />
   </ItemGroup>
   <ItemGroup>

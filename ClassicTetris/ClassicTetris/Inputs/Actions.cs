@@ -36,7 +36,7 @@ namespace ClassicTetris
 			Binds[Action.Down] = new Bind(Keys.Down);
 			Binds[Action.Up] = new Bind(Keys.Up);
 			Binds[Action.A] = new Bind(Keys.D);
-			Binds[Action.B] = new Bind(Keys.F);
+			Binds[Action.B] = new Bind(Keys.S);
 			Binds[Action.Start] = new Bind(Keys.Enter);
 			Binds[Action.Select] = new Bind(Keys.Back);
 			Binds[Action.Shutdown] = new Bind(Keys.Escape);

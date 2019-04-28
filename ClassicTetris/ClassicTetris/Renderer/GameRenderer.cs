@@ -15,8 +15,11 @@ namespace ClassicTetris.Renderer
 			get;
 			private set;
 		}
+        private const string pauseText = "PAUSE";
+        private static readonly Color colorTextPause = new Color(92, 148, 252);
+        private static readonly Color colorBGPause = Color.Black;
 
-		private Texture2D[,] texturesTetrominos;
+        private Texture2D[,] texturesTetrominos;
 
         private static Shape[] shapeStatisticsOrder =
         {
@@ -106,6 +109,22 @@ namespace ClassicTetris.Renderer
             texturesTetrominos[9, 4] = CreateTextureTypeEnd(sb, Settings.SQUARE_SIZE, Settings.SQUARE_SIZE, Settings.COLOR_LEVEL_9_PRIMARY, Settings.COLOR_LEVEL_9_SECONDARY);
         }
 
+        public void DrawPause(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Begin();
+
+            GraphicsDevice gd = spriteBatch.GraphicsDevice;
+
+            gd.Clear(colorBGPause);
+
+            Vector2 size = TetrisFont.MeasureString(pauseText);
+            Vector2 pos = new Vector2();
+            pos.X = (gd.Viewport.Width - size.X) / 2;
+            pos.Y = (gd.Viewport.Height - size.Y) / 2;
+
+            spriteBatch.DrawString(TetrisFont, pauseText, pos, colorTextPause);
+            spriteBatch.End();
+        }
 
         private void DrawBackground(SpriteBatch spriteBatch)
         {

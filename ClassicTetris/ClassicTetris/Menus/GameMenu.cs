@@ -22,8 +22,6 @@ namespace ClassicTetris.Menus
 
 		private bool isPause;
 
-        private const string pauseText = "PAUSE";
-		private static readonly Color colorPause = new Color(92, 148, 252);
 
 		public GameMenu(Tetris tetris, int baseLevel, GameType gameType)
 		{
@@ -129,14 +127,18 @@ namespace ClassicTetris.Menus
                     downCounter = Settings.FAST_DROP_GRAVITY;
                 }
             }
-
-			if (Actions.GetInstance()[Action.A].IsPressed())
+            
+            if (Actions.GetInstance()[Action.B].IsPressed())
             {
-                GameLogic.Instance.Turn();
+                GameLogic.Instance.TurnCCW();
+            }
+            if (Actions.GetInstance()[Action.A].IsPressed())
+            {
+                GameLogic.Instance.TurnCW();
             }
 
             //TODO: Remove for debug purposes
-			if (Actions.GetInstance()[Action.Debug].IsPressed())
+            if (Actions.GetInstance()[Action.Debug].IsPressed())
             {
                 GameLogic.Instance.Drop();
             }
@@ -146,24 +148,16 @@ namespace ClassicTetris.Menus
                 tetris.Exit();
             }
         }
-      
+        
+        /// <summary>
+        /// Draw the game with the renderer
+        /// </summary>
+        /// <param name="gameTime"></param>
         public void Draw(GameTime gameTime)
         {
 			if (isPause)
 			{
-				spriteBatch.Begin();
-
-				GraphicsDevice gd = spriteBatch.GraphicsDevice;
-
-				gd.Clear(Color.Black);
-
-				Vector2 size = renderer.TetrisFont.MeasureString(pauseText);
-				Vector2 pos = new Vector2();
-				pos.X = (gd.Viewport.Width - size.X) / 2;
-				pos.Y = (gd.Viewport.Height - size.Y) / 2;
-
-				spriteBatch.DrawString(renderer.TetrisFont, pauseText, pos, colorPause);
-				spriteBatch.End();
+                renderer.DrawPause(spriteBatch);
 			}
 			else
 			{

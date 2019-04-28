@@ -28,7 +28,7 @@ namespace ClassicTetris
         
         protected override void Initialize()
         {
-			ChangeMenu(new CreditMenu(this));
+			ChangeMenu(new ControlsMenu(this));
             base.Initialize();
         }
 

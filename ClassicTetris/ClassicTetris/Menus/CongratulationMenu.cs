@@ -18,12 +18,11 @@ namespace ClassicTetris.Menus
 		private SpriteFont font;
 		private int frameCount;
 		private Tetris tetris;
-		private int score;
-		private int level;
+		private readonly int score;
+		private readonly int level;
 		private int selectedIndexCharCursor;
 		private Color blinkColor = new Color(252, 116, 96);
-
-
+        
         private const int scoreOffsetX = 318;
         private const int scoreOffsetY = 600;
         private const int scoreSpacing = 60;
@@ -32,6 +31,7 @@ namespace ClassicTetris.Menus
 
 		private int[] selectedIndexChar;
 
+        //possibles chars, the first is the one displayed
         public const string POSSIBLE_CHARS = "-ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,/()\". ";
         
 		public CongratulationMenu(Tetris tetris, int score, int level, IMenus nextMenu)
@@ -49,6 +49,10 @@ namespace ClassicTetris.Menus
 			}
         }
 
+        /// <summary>
+        /// Draw the menu with selection
+        /// </summary>
+        /// <param name="gameTime"></param>
 		public void Draw(GameTime gameTime)
 		{
 			sb.Begin();
@@ -102,7 +106,7 @@ namespace ClassicTetris.Menus
         
 		public void Initialize()
 		{
-			
+			//
 		}
 
 		public void LoadContent(ContentManager Content, GraphicsDevice graphicDevice)
@@ -118,11 +122,19 @@ namespace ClassicTetris.Menus
 			textureSelection.SetData(data);
 		}
 
+        /// <summary>
+        /// Get ride of the loaded content
+        /// </summary>
 		public void UnloadContent()
-		{
-			
-		}
+        {
+            bg.Dispose();
+            textureSelection.Dispose();
+        }
 
+        /// <summary>
+        /// Handle moves in this menu
+        /// </summary>
+        /// <param name="gameTime"></param>
 		public void Update(GameTime gameTime)
 		{
 			frameCount += 1;
@@ -145,11 +157,9 @@ namespace ClassicTetris.Menus
             {
                 selectedIndexChar[selectedIndexCharCursor] = TetrisMath.mod(selectedIndexChar[selectedIndexCharCursor] - 1, POSSIBLE_CHARS.Length);
             }
-
-
+            
 			if (Actions.GetInstance()[Inputs.Action.Start].IsPressed())
             {
-				
 				ScoreEntry scoreEntry = new ScoreEntry(IndicesToString(), score, level);
 				Scores.Instance.AddScore(scoreEntry);
 				tetris.ChangeMenu(nextMenu);

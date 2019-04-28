@@ -144,16 +144,26 @@ namespace ClassicTetris
 
             return nbLineRemoved;
 		}
-
-		public bool Turn()
-		{
-			bool result = board.Turn();
-			if (!result)
+        
+        public bool TurnCW()
+        {
+            bool result = board.TurnCW();
+            if (!result)
             {
-				AudioManager.GetInstance().Play(SFX.BlockRotate);
+                AudioManager.GetInstance().Play(SFX.BlockRotate);
             }
-			return result;
-		}
+            return result;
+        }
+
+        public bool TurnCCW()
+        {
+            bool result = board.TurnCCW();
+            if (!result)
+            {
+                AudioManager.GetInstance().Play(SFX.BlockRotate);
+            }
+            return result;
+        }
 
 		public bool Right()
 		{

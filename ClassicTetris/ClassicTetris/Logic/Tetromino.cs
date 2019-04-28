@@ -236,13 +236,13 @@ namespace ClassicTetris
         /// Rotate a tetromino Clockwise
         /// </summary>
         /// <returns>The rotated Tetromino</returns>
-        public Tetromino Rotate() => new Tetromino(x, y, shape, (sequenceIndex + 1) % sequence[shape].GetLength(0));
+        public Tetromino RotateCW() => new Tetromino(x, y, shape, TetrisMath.mod(sequenceIndex + 1, sequence[shape].GetLength(0)));
 
         /// <summary>
         /// Rotate a tetromino CounterClockwise
         /// </summary>
         /// <returns>The rotated Tetromino</returns>
-        public Tetromino RotateCounterClockwise() => new Tetromino(x, y, shape, (sequenceIndex - 1) % sequence[shape].GetLength(0));
+        public Tetromino RotateCCW() => new Tetromino(x, y, shape, TetrisMath.mod(sequenceIndex - 1, sequence[shape].GetLength(0)));
         
         /// <summary>
         /// Return a new Tetromino one column left

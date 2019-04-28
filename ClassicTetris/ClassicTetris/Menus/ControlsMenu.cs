@@ -9,17 +9,19 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ClassicTetris.Menus
 {
-    class CreditMenu : IMenus
+    class ControlsMenu : IMenus
     {
         private SpriteBatch sb;
         public Texture2D BG { get; private set; }
         public Texture2D CONTROLS { get; private set; }
 
-        private Tetris tetris;
-        private Color halfWhite = new Color(255,255,255, 255);
+        private int frameCount;
 
-        public CreditMenu(Tetris tetris)
+        private Tetris tetris;
+
+        public ControlsMenu(Tetris tetris)
         {
+            this.frameCount = 0;
             this.tetris = tetris;
         }
 
@@ -33,7 +35,21 @@ namespace ClassicTetris.Menus
             int h = sb.GraphicsDevice.Viewport.Height;
             sb.Begin();
             sb.Draw(BG, Vector2.Zero, Color.White);
+            int opacity = (int)(Math.Abs(Math.Sin((double)frameCount / 30.0)) * 255);
+            DrawRectangle(new Rectangle(300,600,420,110), new Color(0,0, 0, opacity));
             sb.End();
+        }
+
+        private static Texture2D rect;
+
+        private void DrawRectangle(Rectangle coords, Color color)
+        {
+            if (rect == null)
+            {
+                rect = new Texture2D(sb.GraphicsDevice, 1, 1);
+                rect.SetData(new[] { Color.White });
+            }
+            sb.Draw(rect, coords, color);
         }
 
         public void Initialize()
@@ -43,7 +59,7 @@ namespace ClassicTetris.Menus
         public void LoadContent(ContentManager Content, GraphicsDevice graphicDevice)
         {
             sb = new SpriteBatch(graphicDevice);
-            BG = Content.Load<Texture2D>("Textures/creditMenu");
+            BG = Content.Load<Texture2D>("Textures/controls");
         }
 
         public void UnloadContent()
@@ -57,9 +73,10 @@ namespace ClassicTetris.Menus
         /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
+            frameCount += 1;
 			if(Actions.GetInstance()[Inputs.Action.Start].IsPressed())
             {
-				tetris.ChangeMenu(new PressStartMenu(tetris));
+				tetris.ChangeMenu(new CreditMenu(tetris));
             }
         }
     }

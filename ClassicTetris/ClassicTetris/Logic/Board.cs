@@ -138,11 +138,26 @@ namespace ClassicTetris
         /// <summary>
         /// Turn the pieces
         /// </summary>
-        public bool Turn()
+        public bool TurnCW()
         {
             //turn currentShape
-            Tetromino nextShape = CurrentShape.Rotate();
-            if(CanMove(nextShape))
+            Tetromino nextShape = CurrentShape.RotateCW();
+            if (CanMove(nextShape))
+            {
+                CurrentShape = nextShape;
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Turn the pieces
+        /// </summary>
+        public bool TurnCCW()
+        {
+            //turn currentShape
+            Tetromino nextShape = CurrentShape.RotateCCW();
+            if (CanMove(nextShape))
             {
                 CurrentShape = nextShape;
                 return true;
