@@ -20,7 +20,7 @@ namespace ClassicTetris
         public Scores()
         {
 			scores = new List<ScoreEntry>();
-            AddScore(new ScoreEntry("BAST", 10000, 9));
+            AddScore(new ScoreEntry("BAST", 231740, 8));
 			AddScore(new ScoreEntry("DAMIAN", 7500, 5));
             AddScore(new ScoreEntry("RAPH", 5000, 0));
         }
